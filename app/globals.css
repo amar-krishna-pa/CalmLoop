@@ -1,8 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f4f6f4;
+  --foreground: #1a2420;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #141a17;
+    --foreground: #e8ede8;
+  }
 }
 
 @theme inline {
@@ -12,15 +19,70 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+@layer components {
+  /* Backgrounds */
+  .bg-primary {
+    @apply bg-[#F4F6F4] dark:bg-[#141A17];
+  }
+  .bg-surface {
+    @apply bg-[#E8EDE8] dark:bg-[#1E2922];
+  }
+  .bg-card {
+    @apply bg-[#FFFFFF] dark:bg-[#1E2922];
+  }
+
+  /* Text */
+  .text-primary {
+    @apply text-[#1A2420] dark:text-[#E8EDE8];
+  }
+  .text-muted {
+    @apply text-[#6B7F6B] dark:text-[#7A9E84];
+  }
+  .text-on-accent {
+    @apply text-[#F4F6F4] dark:text-[#141A17];
+  }
+  .text-accent {
+    @apply text-[#4A7C59] dark:text-[#5E9E72];
+  }
+
+  /* Border */
+  .border-subtle {
+    @apply border-[#D8E0D8] dark:border-[#2A3830];
+  }
+  .border-accent {
+    @apply border-[#4A7C59] dark:border-[#5E9E72];
+  }
+
+  /* Accent button */
+  .btn-accent {
+    @apply bg-[#4A7C59] dark:bg-[#5E9E72];
+    @apply text-[#F4F6F4] dark:text-[#141A17];
+    @apply hover:bg-[#3A6347] dark:hover:bg-[#4E8A61];
+    @apply text-[13px] font-medium px-3 py-1.5 rounded-lg transition-colors;
+  }
+
+  /* Input */
+  .input-base {
+    @apply bg-[#E8EDE8] dark:bg-[#1E2922];
+    @apply border border-[#D8E0D8] dark:border-[#2A3830];
+    @apply text-[#1A2420] dark:text-[#E8EDE8];
+    @apply focus:outline-none focus:ring-2 focus:ring-[#4A7C59] dark:focus:ring-[#5E9E72];
+    @apply rounded-lg px-3 py-2 text-sm w-full transition-colors;
+  }
+
+  /* Icon button */
+  .icon-btn {
+    @apply w-8 h-8 rounded-lg flex items-center justify-center;
+    @apply bg-[#F4F6F4] dark:bg-[#141A17];
+    @apply border border-[#D8E0D8] dark:border-[#2A3830];
+    @apply text-[#6B7F6B] dark:text-[#7A9E84];
+    @apply hover:opacity-80 transition-opacity;
+    @apply focus:outline-none focus:ring-2 focus:ring-[#4A7C59] dark:focus:ring-[#5E9E72];
+  }
 }
