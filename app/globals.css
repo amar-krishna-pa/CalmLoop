@@ -1,88 +1,161 @@
+/* ─── Pull in the full Tailwind utility library ─────────────────────────── */
 @import "tailwindcss";
 
+/* ─── LIGHT MODE DESIGN TOKENS ──────────────────────────────────────────────
+   CSS custom properties (variables) defined on :root apply globally.
+   Every color in the app reads from these — change one value here and
+   the whole UI updates automatically.                                        */
 :root {
-  --background: #f4f6f4;
-  --foreground: #1a2420;
+  --bg-primary: #f4f6f4; /* Main page background — off-white with a hint of green  */
+  --bg-surface: #e8ede8; /* Slightly darker surface — sidebars, panels, inputs     */
+  --bg-card: #ffffff; /* Pure white — cards, modals, dropdowns                  */
+  --text-primary: #1a2420; /* Near-black — main readable body text                   */
+  --text-muted: #6b7f6b; /* Muted green-grey — labels, placeholders, hints         */
+  --text-on-accent: #f4f6f4; /* Light text for when it sits ON the green accent button */
+  --text-accent: #4a7c59; /* Green-tinted text — links, highlights                  */
+  --accent: #4a7c59; /* Primary brand green — buttons, focus rings             */
+  --accent-hover: #3a6347; /* Darker green — hover state of accent elements          */
+  --border-subtle: #d8e0d8; /* Barely-visible greenish border                         */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #141a17;
-    --foreground: #e8ede8;
-  }
+/* ─── DARK MODE OVERRIDES ────────────────────────────────────────────────────
+   When a "dark" class is added to <html> or <body> (toggled via JS),
+   the SAME variable names are reassigned to dark equivalents.
+   Because all rules below use var(--...), the entire UI repaints
+   automatically — no duplicate style rules needed anywhere.                  */
+.dark {
+  --bg-primary: #141a17; /* Very dark greenish-black — main background              */
+  --bg-surface: #1e2922; /* Slightly lighter dark — panels, sidebars               */
+  --bg-card: #1e2922; /* Same as surface in dark mode (no pure white contrast)  */
+  --text-primary: #e8ede8; /* Near-white — main readable text                        */
+  --text-muted: #7a9e84; /* Softer green — muted labels and hints                  */
+  --text-on-accent: #141a17; /* Dark text on top of the (now lighter) accent           */
+  --text-accent: #5e9e72; /* Brighter green for legibility on dark bg               */
+  --accent: #5e9e72; /* Lighter brand green — stays visible on dark surfaces   */
+  --accent-hover: #4e8a61; /* Slightly darker on hover                               */
+  --border-subtle: #2a3830; /* Subtle dark border — barely visible divider            */
 }
 
+/* ─── TAILWIND V4 THEME BRIDGE ───────────────────────────────────────────────
+   @theme inline maps your CSS variables into Tailwind's own token system.
+   This lets you use them as Tailwind utility classes in your HTML, e.g.
+   bg-background, text-foreground, font-sans, font-mono.                      */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(
+    --bg-primary
+  ); /* → usable as Tailwind class: bg-background  */
+  --color-foreground: var(
+    --text-primary
+  ); /* → usable as Tailwind class: text-foreground */
+  --font-sans: var(
+    --font-geist-sans
+  ); /* Geist Sans (injected by Next.js) as default sans font */
+  --font-mono: var(
+    --font-geist-mono
+  ); /* Geist Mono as default monospace font       */
 }
 
+/* ─── GLOBAL BODY DEFAULTS ───────────────────────────────────────────────────
+   Sets baseline styles for the entire page.
+   All three values come from variables, so they swap automatically
+   when dark mode activates.                                                   */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  background-color: var(--bg-primary); /* Page background                    */
+  color: var(--text-primary); /* Default text colour                */
+  font-family:
+    var(--font-sans), Arial, Helvetica, sans-serif; /* Geist → Arial → Helvetica fallback */
 }
 
+/* ─── REUSABLE COMPONENT CLASSES ─────────────────────────────────────────────
+   @layer components registers these inside Tailwind's component layer.
+   That means Tailwind utility classes (e.g. bg-red-500) can still
+   override these if needed — correct specificity is preserved.               */
 @layer components {
-  /* Backgrounds */
+  /* Background helpers — apply a themed background to any element */
   .bg-primary {
-    @apply bg-[#F4F6F4] dark:bg-[#141A17];
-  }
+    background-color: var(--bg-primary);
+  } /* Main page background  */
   .bg-surface {
-    @apply bg-[#E8EDE8] dark:bg-[#1E2922];
-  }
+    background-color: var(--bg-surface);
+  } /* Panel / sidebar bg    */
   .bg-card {
-    @apply bg-[#FFFFFF] dark:bg-[#1E2922];
-  }
+    background-color: var(--bg-card);
+  } /* Card / modal bg       */
 
-  /* Text */
+  /* Text colour helpers */
   .text-primary {
-    @apply text-[#1A2420] dark:text-[#E8EDE8];
-  }
+    color: var(--text-primary);
+  } /* Main body text        */
   .text-muted {
-    @apply text-[#6B7F6B] dark:text-[#7A9E84];
-  }
+    color: var(--text-muted);
+  } /* Subdued / hint text   */
   .text-on-accent {
-    @apply text-[#F4F6F4] dark:text-[#141A17];
-  }
+    color: var(--text-on-accent);
+  } /* Text on green buttons */
   .text-accent {
-    @apply text-[#4A7C59] dark:text-[#5E9E72];
-  }
+    color: var(--text-accent);
+  } /* Green highlight text  */
 
-  /* Border */
+  /* Border colour helpers */
   .border-subtle {
-    @apply border-[#D8E0D8] dark:border-[#2A3830];
-  }
+    border-color: var(--border-subtle);
+  } /* Soft divider border   */
   .border-accent {
-    @apply border-[#4A7C59] dark:border-[#5E9E72];
-  }
+    border-color: var(--accent);
+  } /* Green accent border   */
 
-  /* Accent button */
+  /* ── Primary action button ─────────────────────────────────────────────── */
   .btn-accent {
-    @apply bg-[#4A7C59] dark:bg-[#5E9E72];
-    @apply text-[#F4F6F4] dark:text-[#141A17];
-    @apply hover:bg-[#3A6347] dark:hover:bg-[#4E8A61];
-    @apply text-[13px] font-medium px-3 py-1.5 rounded-lg transition-colors;
+    background-color: var(
+      --accent
+    ); /* Green background                         */
+    color: var(--text-on-accent); /* Light text on top of the green           */
+    font-size: 13px; /* Slightly smaller than base text          */
+    font-weight: 500; /* Medium weight — not bold, not thin       */
+    padding: 6px 12px; /* Comfortable click target, not too chunky */
+    border-radius: 8px; /* Rounded corners                          */
+    transition: background-color 0.15s; /* Smooth colour shift on hover             */
+  }
+  .btn-accent:hover {
+    background-color: var(
+      --accent-hover
+    ); /* Darkens slightly when hovered            */
   }
 
-  /* Input */
-  .input-base {
-    @apply bg-[#E8EDE8] dark:bg-[#1E2922];
-    @apply border border-[#D8E0D8] dark:border-[#2A3830];
-    @apply text-[#1A2420] dark:text-[#E8EDE8];
-    @apply focus:outline-none focus:ring-2 focus:ring-[#4A7C59] dark:focus:ring-[#5E9E72];
-    @apply rounded-lg px-3 py-2 text-sm w-full transition-colors;
-  }
-
-  /* Icon button */
+  /* ── Small square icon button ───────────────────────────────────────────── */
   .icon-btn {
-    @apply w-8 h-8 rounded-lg flex items-center justify-center;
-    @apply bg-[#F4F6F4] dark:bg-[#141A17];
-    @apply border border-[#D8E0D8] dark:border-[#2A3830];
-    @apply text-[#6B7F6B] dark:text-[#7A9E84];
-    @apply hover:opacity-80 transition-opacity;
-    @apply focus:outline-none focus:ring-2 focus:ring-[#4A7C59] dark:focus:ring-[#5E9E72];
+    width: 32px; /* Fixed 32×32 square                       */
+    height: 32px;
+    border-radius: 8px; /* Rounded, but not a full circle           */
+    display: flex; /* Centres the icon inside                  */
+    align-items: center;
+    justify-content: center;
+    background-color: var(
+      --bg-primary
+    ); /* Blends with the page background          */
+    border: 1px solid var(--border-subtle); /* Subtle visible edge                      */
+    color: var(--text-muted); /* Muted icon colour                        */
+    transition: opacity 0.15s; /* Fades slightly on hover instead of colour shift */
+  }
+  .icon-btn:hover {
+    opacity: 0.8; /* Gentle fade — indicates interactivity    */
+  }
+
+  /* ── Base input / textarea style ────────────────────────────────────────── */
+  .input-base {
+    background-color: var(
+      --bg-surface
+    ); /* Slightly sunken look vs the page bg      */
+    border: 1px solid var(--border-subtle); /* Thin border to define the field edge     */
+    color: var(--text-primary); /* User's typed text colour                 */
+    border-radius: 8px; /* Matches button radius for visual harmony */
+    padding: 8px 12px; /* Roomy enough to type comfortably         */
+    font-size: 14px; /* Slightly smaller than headline text      */
+    width: 100%; /* Stretches to fill its container          */
+    transition: background-color 0.15s; /* Smooth bg shift on focus                 */
+  }
+  .input-base:focus {
+    outline: none; /* Removes the default browser focus ring   */
+    box-shadow: 0 0 0 2px var(--accent); /* Replaces it with a clean green glow ring */
   }
 }
