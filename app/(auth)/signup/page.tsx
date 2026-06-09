@@ -1,0 +1,84 @@
+"use client";
+
+import { GoPasskeyFill } from "react-icons/go";
+import Link from "next/link";
+import { useState } from "react";
+import { FaGithub } from "react-icons/fa";
+import AuthButton from "@/app/components/common/AuthButton";
+import AuthHeroPanel from "@/app/components/auth/AuthHeroPanel";
+
+export default function SignUpPage() {
+  const [loading, setLoading] = useState<"github" | "passkey" | null>(null);
+
+  async function handleGitHub() {
+    setLoading("github");
+
+    await new Promise((r) => setTimeout(r, 1200));
+    setLoading(null);
+  }
+
+  async function handlePasskey() {
+    setLoading("passkey");
+
+    await new Promise((r) => setTimeout(r, 1200));
+    setLoading(null);
+  }
+
+  return (
+    <div className="h-full flex">
+      <AuthHeroPanel />
+
+      <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
+        <div className="w-full max-w-md">
+          <h1 className="text-2xl font-bold tracking-tight mb-1 text-center">
+            Create your account
+          </h1>
+
+          <p className="text-sm text-muted mb-8 text-center">
+            Start journaling for free. No credit card required.
+          </p>
+
+          <div className="flex flex-col gap-3 mb-6 items-center justify-center">
+            <AuthButton
+              handleClick={handleGitHub}
+              loading={loading}
+              method="github"
+              icon={<FaGithub />}
+              text="Continue with GitHub"
+            />
+
+            <AuthButton
+              handleClick={handlePasskey}
+              loading={loading}
+              method="passkey"
+              icon={<GoPasskeyFill />}
+              text="Continue with Passkey"
+            />
+          </div>
+
+          <p className="text-xs text-muted text-center mt-6">
+            Already have an account?
+            <Link
+              href="/login"
+              className="text-accent hover:underline font-medium"
+            >
+              &nbsp;Sign in
+            </Link>
+          </p>
+
+          <p className="text-[11px] text-muted text-center mt-4 leading-relaxed">
+            By creating an account you agree to our &nbsp;
+            <Link href="#" className="underline hover:text-primary">
+              Terms of Service
+            </Link>
+            &nbsp; and &nbsp;
+            <Link href="#" className="underline hover:text-primary">
+              Privacy Policy
+            </Link>
+            .
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
