@@ -39,20 +39,15 @@
 /* ─── TAILWIND V4 THEME BRIDGE ───────────────────────────────────────────────
    @theme inline maps your CSS variables into Tailwind's own token system.
    This lets you use them as Tailwind utility classes in your HTML, e.g.
-   bg-background, text-foreground, font-sans, font-mono.                      */
+   bg-accent, bg-accent/10, text-accent, font-sans, etc.                      */
 @theme inline {
-  --color-background: var(
-    --bg-primary
-  ); /* → usable as Tailwind class: bg-background  */
-  --color-foreground: var(
-    --text-primary
-  ); /* → usable as Tailwind class: text-foreground */
-  --font-sans: var(
-    --font-geist-sans
-  ); /* Geist Sans (injected by Next.js) as default sans font */
-  --font-mono: var(
-    --font-geist-mono
-  ); /* Geist Mono as default monospace font       */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Registering these lets Tailwind generate bg-accent, bg-accent/10,
+     text-accent, border-accent, and opacity-modifier variants automatically */
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
 }
 
 /* ─── GLOBAL BODY DEFAULTS ───────────────────────────────────────────────────

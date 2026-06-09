@@ -24,7 +24,7 @@ export default function Header({ userName }: HeaderProps) {
   useEffect(() => setMounted(true), []);
 
   return (
-    <header className="w-full px-4 sm:px-6 h-14 flex items-center justify-between bg-surface border-b border-subtle">
+    <header className="sticky top-0 z-50 w-full px-4 sm:px-6 h-14 flex items-center justify-between bg-surface/80 backdrop-blur-md border-b border-subtle">
       <Link
         href="/"
         className="text-[15px] font-medium tracking-tight text-primary"

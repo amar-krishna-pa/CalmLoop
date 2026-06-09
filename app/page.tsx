@@ -1,7 +1,23 @@
+import HeroSection from "./components/landing/HeroSection";
+import ChatDemoSection from "./components/landing/ChatDemoSection";
+import StatsSection from "./components/landing/StatsSection";
+import FeaturesSection from "./components/landing/FeaturesSection";
+import PhilosophySection from "./components/landing/PhilosophySection";
+import FaqSection from "./components/landing/FaqSection";
+import CtaSection from "./components/landing/CtaSection";
+import FooterSection from "./components/landing/FooterSection";
+
 export default function Home() {
   return (
-    <main className="min-h-full bg-background flex flex-col items-center justify-center py-12">
-      <h1 className="text-2xl font-semibold">CalmLoop Dashboard</h1>
-    </main>
+    <div className="min-h-screen text-primary overflow-x-hidden relative flex flex-col">
+      <HeroSection />
+      <ChatDemoSection />
+      <StatsSection />
+      <FeaturesSection />
+      <PhilosophySection />
+      <FaqSection />
+      <CtaSection />
+      <FooterSection />
+    </div>
   );
 }
