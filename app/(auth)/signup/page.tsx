@@ -3,17 +3,20 @@
 import { GoPasskeyFill } from "react-icons/go";
 import Link from "next/link";
 import { useState } from "react";
-import { FaGithub } from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa";
 import AuthButton from "@/app/components/common/AuthButton";
 import AuthHeroPanel from "@/app/components/auth/AuthHeroPanel";
+import { authClient } from "@/app/lib/auth-client";
 
 export default function SignUpPage() {
-  const [loading, setLoading] = useState<"github" | "passkey" | null>(null);
+  const [loading, setLoading] = useState<"google" | "passkey" | null>(null);
 
-  async function handleGitHub() {
-    setLoading("github");
+  async function handleGoogleSignup() {
+    setLoading("google");
 
-    await new Promise((r) => setTimeout(r, 1200));
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
     setLoading(null);
   }
 
@@ -40,11 +43,11 @@ export default function SignUpPage() {
 
           <div className="flex flex-col gap-3 mb-6 items-center justify-center">
             <AuthButton
-              handleClick={handleGitHub}
+              handleClick={handleGoogleSignup}
               loading={loading}
-              method="github"
-              icon={<FaGithub />}
-              text="Continue with GitHub"
+              method="google"
+              icon={<FaGoogle />}
+              text="Continue with Google"
             />
 
             <AuthButton

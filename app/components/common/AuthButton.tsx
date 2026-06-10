@@ -3,7 +3,7 @@ import LoadingSpinner from "./LoadingSpinner";
 type AuthButtonProps = {
   handleClick: () => void | Promise<void>;
   loading: string | null;
-  method: "github" | "passkey";
+  method: "google" | "passkey";
   icon: React.ReactNode;
   text: string;
 };
