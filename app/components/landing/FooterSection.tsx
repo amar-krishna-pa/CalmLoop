@@ -4,7 +4,10 @@ export default function FooterSection() {
       <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-6 px-6 text-xs text-muted">
         <div>
           <p className="font-bold text-sm text-primary mb-1">CalmLoop</p>
-          <p>© 2026 CalmLoop. Grounded in ERP & ACT principles.</p>
+          <p>
+            © {new Date().getFullYear()} CalmLoop. Grounded in ERP & ACT
+            principles.
+          </p>
         </div>
 
         <div className="flex gap-6">

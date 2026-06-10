@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { IoIosArrowDown } from "react-icons/io";
 
-interface FaqItemProps {
+type FaqItemProps = {
   question: string;
   answer: string;
-}
+};
 
 function FaqItem({ question, answer }: FaqItemProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,19 +26,7 @@ function FaqItem({ question, answer }: FaqItemProps) {
             isOpen ? "rotate-180" : ""
           }`}
         >
-          <svg
-            className="w-5 h-5 text-muted"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
+          <IoIosArrowDown className="text-muted" size={20} />
         </span>
       </button>
 
@@ -84,8 +73,12 @@ export default function FaqSection() {
       </div>
 
       <div className="space-y-4 w-full">
-        {faqs.map((faq, index) => (
-          <FaqItem key={index} question={faq.question} answer={faq.answer} />
+        {faqs.map((faq) => (
+          <FaqItem
+            key={faq.question}
+            question={faq.question}
+            answer={faq.answer}
+          />
         ))}
       </div>
     </section>
