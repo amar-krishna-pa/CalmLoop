@@ -14,10 +14,19 @@ export default function SignUpPage() {
   async function handleGoogleSignup() {
     setLoading("google");
 
-    const data = await authClient.signIn.social({
-      provider: "google",
-    });
-    setLoading(null);
+    try {
+      const { data, error } = await authClient.signIn.social({
+        provider: "google",
+      });
+
+      if (error) {
+        console.error(error);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(null);
+    }
   }
 
   async function handlePasskey() {
@@ -61,11 +70,11 @@ export default function SignUpPage() {
 
           <p className="text-xs text-muted text-center mt-6">
             Already have an account?
-            <Link
-              href="/login"
-              className="text-accent hover:underline font-medium"
-            >
-              &nbsp;Sign in
+            <Link href="/login">
+              &nbsp;
+              <span className="text-accent hover:underline font-medium">
+                Sign in
+              </span>
             </Link>
           </p>
 
