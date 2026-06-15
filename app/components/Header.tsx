@@ -4,18 +4,10 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { GoSun, GoMoon } from "react-icons/go";
+import ProfileDropdown from "./ProfileDropdown";
 
 interface HeaderProps {
   userName?: string | null;
-}
-
-function getInitials(name: string) {
-  return name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
 }
 
 export default function Header({ userName }: HeaderProps) {
@@ -45,11 +37,7 @@ export default function Header({ userName }: HeaderProps) {
         )}
 
         {userName ? (
-          <div className="flex items-center gap-2 text-muted">
-            <div className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-medium bg-primary border border-subtle text-primary cursor-pointer">
-              {getInitials(userName)}
-            </div>
-          </div>
+          <ProfileDropdown userName={userName} />
         ) : (
           <Link href="/login" className="btn-accent">
             Sign in
