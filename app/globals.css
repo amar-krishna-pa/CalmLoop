@@ -16,6 +16,11 @@
   --accent: #4a7c59; /* Primary brand green — buttons, focus rings             */
   --accent-hover: #3a6347; /* Darker green — hover state of accent elements          */
   --border-subtle: #d8e0d8; /* Barely-visible greenish border                         */
+
+  /* Warning / critical info colors (soft reddish rose) */
+  --warning-text: #963e3e; /* Elegant dark rose / terracotta for warning text */
+  --warning-bg: #fdf2f2; /* Soft light rose for warning background */
+  --warning-border: #f9dcdc; /* Soft rose border */
 }
 
 /* ─── DARK MODE OVERRIDES ────────────────────────────────────────────────────
@@ -34,6 +39,11 @@
   --accent: #5e9e72; /* Lighter brand green — stays visible on dark surfaces   */
   --accent-hover: #4e8a61; /* Slightly darker on hover                               */
   --border-subtle: #2a3830; /* Subtle dark border — barely visible divider            */
+
+  /* Dark mode warning / critical info colors */
+  --warning-text: #e89b9b; /* Soft rose-pink for warning text in dark mode */
+  --warning-bg: #2b1a1a; /* Dark warm reddish-brown background */
+  --warning-border: #4a2d2d; /* Dark muted rose-brown border */
 }
 
 /* ─── TAILWIND V4 THEME BRIDGE ───────────────────────────────────────────────
@@ -48,6 +58,10 @@
      text-accent, border-accent, and opacity-modifier variants automatically */
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
+
+  --color-warning-text: var(--warning-text);
+  --color-warning-bg: var(--warning-bg);
+  --color-warning-border: var(--warning-border);
 }
 
 /* ─── GLOBAL BODY DEFAULTS ───────────────────────────────────────────────────
