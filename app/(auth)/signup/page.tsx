@@ -8,6 +8,7 @@ import AuthButton from "@/app/components/auth/AuthButton";
 import AuthHeroPanel from "@/app/components/auth/AuthHeroPanel";
 import { authClient } from "@/app/lib/auth-client";
 import PasskeyModal from "@/app/components/auth/PasskeyModal";
+import { toast } from "sonner";
 
 export default function SignUpPage() {
   const [loading, setLoading] = useState<"google" | "passkey" | null>(null);
@@ -22,10 +23,10 @@ export default function SignUpPage() {
         provider: "google",
       });
       if (error) {
-        console.error(error);
+        toast.error("Failed to sign up with Google");
       }
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      toast.error("Failed to sign up with Google");
     } finally {
       setLoading(null);
     }
@@ -48,21 +49,28 @@ export default function SignUpPage() {
       });
 
       if (error) {
-        throw new Error("Passkey setup was cancelled.");
+        toast.error("Failed to sign up with Passkey");
+        return;
       }
 
       const session = await authClient.getSession();
       if (!session.data) {
         await authClient.signIn.passkey({
           fetchOptions: {
-            onError: (ctx) =>
-              console.error("Auto sign-in failed:", ctx.error.message),
+            onError: (ctx) => {
+              toast.error(
+                "Auto sign-in failed. Please try signing in manually.",
+              );
+              router.push("/login");
+            },
+            onSuccess: () => {
+              router.push("/dashboard");
+            },
           },
         });
+      } else {
+        router.push("/dashboard");
       }
-
-      setPasskeyModalOpen(false);
-      router.push("/dashboard");
     } finally {
       setLoading(null);
     }

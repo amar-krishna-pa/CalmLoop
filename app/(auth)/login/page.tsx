@@ -8,6 +8,7 @@ import { FaGoogle } from "react-icons/fa";
 import AuthButton from "@/app/components/auth/AuthButton";
 import AuthHeroPanel from "@/app/components/auth/AuthHeroPanel";
 import { authClient } from "@/app/lib/auth-client";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState<"google" | "passkey" | null>(null);
@@ -19,9 +20,9 @@ export default function LoginPage() {
 
     try {
       const { error } = await authClient.signIn.social({ provider: "google" });
-      if (error) console.error(error);
+      if (error) toast.error("Failed to sign in with Google");
     } catch (err) {
-      console.error(err);
+      toast.error("Failed to sign in with Google");
     } finally {
       setLoading(null);
     }
@@ -33,13 +34,13 @@ export default function LoginPage() {
     try {
       const { error } = await authClient.signIn.passkey();
       if (error) {
-        console.error(error);
+        toast.error("Failed to sign in with Passkey");
       } else {
         router.push("/dashboard");
         router.refresh();
       }
     } catch (err) {
-      console.error(err);
+      toast.error("Failed to sign in with Passkey");
     } finally {
       setLoading(null);
     }
