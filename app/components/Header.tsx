@@ -46,10 +46,9 @@ export default function Header({ userName }: HeaderProps) {
 
         {userName ? (
           <div className="flex items-center gap-2 text-muted">
-            <div className="w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-medium bg-primary border border-subtle text-primary">
+            <div className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-medium bg-primary border border-subtle text-primary cursor-pointer">
               {getInitials(userName)}
             </div>
-            <span className="text-[13px] hidden sm:block">{userName}</span>
           </div>
         ) : (
           <Link href="/login" className="btn-accent">
