@@ -6,6 +6,23 @@
    watch for the .dark class on <html> instead, matching Tailwind v3 behavior. */
 @variant dark (&:where(.dark, .dark *));
 
+@keyframes shimmer {
+  from { background-position: 200% center; }
+  to   { background-position: -100% center; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #d1d5db 40%, #e5e7eb 55%, #d1d5db 70%);
+  background-size: 300% 100%;
+  animation: shimmer 2.5s infinite linear;
+}
+
+.dark .skeleton {
+  background: linear-gradient(90deg, #2e3d35 40%, #3a4d42 55%, #2e3d35 70%);
+  background-size: 300% 100%;
+  animation: shimmer 2.5s infinite linear;
+}
+
 /* ─── LIGHT MODE DESIGN TOKENS ──────────────────────────────────────────────
    CSS custom properties (variables) defined on :root apply globally.
    Every color in the app reads from these — change one value here and
@@ -63,6 +80,7 @@
      text-accent, border-accent, and opacity-modifier variants automatically */
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
+  --color-subtle: var(--border-subtle);
 
   --color-warning-text: var(--warning-text);
   --color-warning-bg: var(--warning-bg);
