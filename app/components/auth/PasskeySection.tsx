@@ -5,6 +5,7 @@ import { LuTrash2 } from "react-icons/lu";
 import { authClient } from "@/app/lib/auth-client";
 import { toast } from "sonner";
 import LoadingSpinner from "../common/LoadingSpinner";
+import PasskeyTableSkeleton from "../loaders/PasskeyTableSkeleton";
 
 type Passkey = {
   id: string;
@@ -150,10 +151,7 @@ export default function PasskeySection() {
 
       <div className="rounded-xl border border-subtle divide-y divide-subtle">
         {loadingPasskeys ? (
-          <div className="flex items-center justify-center py-10 gap-2 text-sm text-muted">
-            <LoadingSpinner />
-            Loading…
-          </div>
+          <PasskeyTableSkeleton />
         ) : passkeys.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-10 gap-2 text-muted">
             <GoPasskeyFill size={28} className="opacity-30" />
