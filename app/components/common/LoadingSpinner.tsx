@@ -1,10 +1,10 @@
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-
-export default function LoadingSpinner({ size = 20 }: { size?: number }) {
+export default function LoadingSpinner({ size = 16 }: { size?: number }) {
   return (
-    <AiOutlineLoading3Quarters
-      className="animate-spin text-muted opacity-80"
-      size={size}
+    <span
+      className="block animate-spin rounded-full border-2 border-current border-t-transparent"
+      style={{ width: size, height: size }}
+      aria-label="Loading"
+      role="status"
     />
   );
 }

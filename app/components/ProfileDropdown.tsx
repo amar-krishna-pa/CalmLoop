@@ -64,6 +64,7 @@ export default function ProfileDropdown({ userName }: ProfileDropdownProps) {
               {userName}
             </p>
           </div>
+
           <Link
             href="/dashboard"
             onClick={() => setOpen(false)}
@@ -71,6 +72,7 @@ export default function ProfileDropdown({ userName }: ProfileDropdownProps) {
           >
             Dashboard
           </Link>
+
           <Link
             href="/profile"
             onClick={() => setOpen(false)}
@@ -78,13 +80,7 @@ export default function ProfileDropdown({ userName }: ProfileDropdownProps) {
           >
             Profile
           </Link>
-          <Link
-            href="/settings"
-            onClick={() => setOpen(false)}
-            className="block cursor-pointer w-full text-left px-3 py-2 text-[13px] text-muted hover:text-primary hover:bg-surface/60 transition-colors"
-          >
-            Settings
-          </Link>
+
           <div className="border-t border-subtle mt-1 pt-1">
             <button
               onClick={handleLogout}

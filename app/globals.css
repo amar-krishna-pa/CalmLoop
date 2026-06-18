@@ -76,8 +76,7 @@
 body {
   background-color: var(--bg-primary); /* Page background                    */
   color: var(--text-primary); /* Default text colour                */
-  font-family:
-    var(--font-sans), Arial, Helvetica, sans-serif; /* Geist → Arial → Helvetica fallback */
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif; /* Geist → Arial → Helvetica fallback */
 }
 
 /* ─── REUSABLE COMPONENT CLASSES ─────────────────────────────────────────────

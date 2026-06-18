@@ -10,6 +10,16 @@ export const auth = betterAuth({
     provider: "pg",
     schema: schema,
   }),
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        defaultValue: "patient",
+        required: false,
+        input: false,
+      },
+    },
+  },
   socialProviders: {
     google: {
       accessType: "offline",
