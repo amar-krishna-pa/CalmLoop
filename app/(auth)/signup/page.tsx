@@ -1,76 +1,26 @@
 "use client";
-import { GoPasskeyFill } from "react-icons/go";
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { FaGoogle } from "react-icons/fa";
 import AuthButton from "@/app/components/auth/AuthButton";
 import AuthHeroPanel from "@/app/components/auth/AuthHeroPanel";
 import { authClient } from "@/app/lib/auth-client";
-import PasskeyModal from "@/app/components/auth/PasskeyModal";
 import { toast } from "sonner";
 
 export default function SignUpPage() {
-  const [loading, setLoading] = useState<"google" | "passkey" | null>(null);
-  const [passkeyModalOpen, setPasskeyModalOpen] = useState(false);
-
-  const router = useRouter();
+  const [loading, setLoading] = useState<"google" | null>(null);
 
   async function handleGoogleSignup() {
     setLoading("google");
+
     try {
-      const { data, error } = await authClient.signIn.social({
-        provider: "google",
-      });
+      const { error } = await authClient.signIn.social({ provider: "google" });
       if (error) {
         toast.error("Failed to sign up with Google");
       }
-    } catch (err: any) {
+    } catch (err) {
+      console.error(err);
       toast.error("Failed to sign up with Google");
-    } finally {
-      setLoading(null);
-    }
-  }
-
-  async function handlePasskeySubmit({
-    name,
-    email,
-  }: {
-    name: string;
-    email: string;
-  }) {
-    setLoading("passkey");
-
-    try {
-      const { error } = await authClient.passkey.addPasskey({
-        name: `${name}'s passkey`,
-        authenticatorAttachment: "platform",
-        context: JSON.stringify({ name, email }),
-      });
-
-      if (error) {
-        toast.error("Failed to sign up with Passkey");
-        return;
-      }
-
-      const session = await authClient.getSession();
-      if (!session.data) {
-        await authClient.signIn.passkey({
-          fetchOptions: {
-            onError: (ctx) => {
-              toast.error(
-                "Auto sign-in failed. Please try signing in manually.",
-              );
-              router.push("/login");
-            },
-            onSuccess: () => {
-              router.push("/dashboard");
-            },
-          },
-        });
-      } else {
-        router.push("/dashboard");
-      }
     } finally {
       setLoading(null);
     }
@@ -98,13 +48,6 @@ export default function SignUpPage() {
               icon={<FaGoogle />}
               text="Continue with Google"
             />
-            <AuthButton
-              handleClick={() => setPasskeyModalOpen(true)}
-              loading={loading}
-              method="passkey"
-              icon={<GoPasskeyFill />}
-              text="Continue with Passkey"
-            />
           </div>
 
           <p className="text-xs text-muted text-center mt-6">
@@ -130,15 +73,6 @@ export default function SignUpPage() {
           </p>
         </div>
       </div>
-
-      <PasskeyModal
-        isOpen={passkeyModalOpen}
-        onClose={() => {
-          if (!loading) setPasskeyModalOpen(false);
-        }}
-        onSubmit={handlePasskeySubmit}
-        loading={loading === "passkey"}
-      />
     </div>
   );
 }

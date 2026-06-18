@@ -22,6 +22,7 @@ export default function LoginPage() {
       const { error } = await authClient.signIn.social({ provider: "google" });
       if (error) toast.error("Failed to sign in with Google");
     } catch (err) {
+      console.error(err);
       toast.error("Failed to sign in with Google");
     } finally {
       setLoading(null);
@@ -40,6 +41,8 @@ export default function LoginPage() {
         router.refresh();
       }
     } catch (err) {
+      if (err instanceof Error && err.name === "NotAllowedError") return;
+      console.error(err);
       toast.error("Failed to sign in with Passkey");
     } finally {
       setLoading(null);
