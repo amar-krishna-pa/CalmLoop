@@ -27,7 +27,7 @@ export default function ChatDemoSection() {
                 <span className="text-xs font-semibold text-muted">
                   Intrusive Thought & Compulsion
                 </span>
-                <span className="text-[10px] bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 px-2 py-0.5 rounded-full font-medium">
+                <span className="text-[10px] bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 px-2 py-0.5 rounded-full font-medium">
                   Spike
                 </span>
               </div>

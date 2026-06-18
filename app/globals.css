@@ -1,6 +1,11 @@
 /* ─── Pull in the full Tailwind utility library ─────────────────────────── */
 @import "tailwindcss";
 
+/* ─── DARK MODE: use .dark class (via next-themes) not OS media query ──────
+   Tailwind v4 defaults dark: to prefers-color-scheme. This overrides it to
+   watch for the .dark class on <html> instead, matching Tailwind v3 behavior. */
+@variant dark (&:where(.dark, .dark *));
+
 /* ─── LIGHT MODE DESIGN TOKENS ──────────────────────────────────────────────
    CSS custom properties (variables) defined on :root apply globally.
    Every color in the app reads from these — change one value here and
