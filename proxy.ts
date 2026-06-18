@@ -6,7 +6,8 @@ export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   // Define route rules
-  const isProtectedRoute = path.startsWith("/dashboard");
+  const isProtectedRoute =
+    path.startsWith("/dashboard") || path.startsWith("/profile");
   const isAuthRoute = path === "/login" || path === "/signup";
   const isRootRoute = path === "/";
 
