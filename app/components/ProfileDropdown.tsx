@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/app/lib/auth-client";
@@ -63,18 +64,27 @@ export default function ProfileDropdown({ userName }: ProfileDropdownProps) {
               {userName}
             </p>
           </div>
-          <button
+          <Link
+            href="/dashboard"
             onClick={() => setOpen(false)}
-            className="cursor-pointer w-full text-left px-3 py-2 text-[13px] text-muted hover:text-primary hover:bg-surface/60 transition-colors"
+            className="block w-full text-left px-3 py-2 text-[13px] text-muted hover:text-primary hover:bg-surface/60 transition-colors"
+          >
+            Dashboard
+          </Link>
+          <Link
+            href="/profile"
+            onClick={() => setOpen(false)}
+            className="block cursor-pointer w-full text-left px-3 py-2 text-[13px] text-muted hover:text-primary hover:bg-surface/60 transition-colors"
           >
             Profile
-          </button>
-          <button
+          </Link>
+          <Link
+            href="/settings"
             onClick={() => setOpen(false)}
-            className="cursor-pointer w-full text-left px-3 py-2 text-[13px] text-muted hover:text-primary hover:bg-surface/60 transition-colors"
+            className="block cursor-pointer w-full text-left px-3 py-2 text-[13px] text-muted hover:text-primary hover:bg-surface/60 transition-colors"
           >
             Settings
-          </button>
+          </Link>
           <div className="border-t border-subtle mt-1 pt-1">
             <button
               onClick={handleLogout}
