@@ -1,4 +1,4 @@
-import LoadingSpinner from "../common/LoadingSpinner";
+import LoadingSpinner from "../loaders/LoadingSpinner";
 
 type AuthButtonProps = {
   handleClick: () => void | Promise<void>;

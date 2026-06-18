@@ -1,4 +1,4 @@
-import { Skeleton } from "../common/LoadingSkeleton";
+import { Skeleton } from "./LoadingSkeleton";
 
 const widths = [
   { name: "w-28", date: "w-20" },

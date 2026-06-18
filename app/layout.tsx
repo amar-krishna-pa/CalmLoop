@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
-import Header from "./components/Header";
+import Header from "./components/common/Header";
 import { headers } from "next/headers";
 import { auth } from "@/app/lib/auth";
 
