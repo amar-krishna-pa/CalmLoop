@@ -41,8 +41,14 @@
 
   /* Warning / critical info colors (soft reddish rose) */
   --warning-text: #963e3e; /* Elegant dark rose / terracotta for warning text */
-  --warning-bg: #fdf2f2; /* Soft light rose for warning background */
+  --warning-bg: #fde8e8; /* Soft light rose for warning background */
   --warning-border: #f9dcdc; /* Soft rose border */
+
+  /* Danger — bright red for destructive actions and validation errors */
+  --danger: #dc2626;
+
+  /* Success — green for save / confirm interactive states */
+  --success: #16a34a;
 }
 
 /* ─── DARK MODE OVERRIDES ────────────────────────────────────────────────────
@@ -64,8 +70,12 @@
 
   /* Dark mode warning / critical info colors */
   --warning-text: #e89b9b; /* Soft rose-pink for warning text in dark mode */
-  --warning-bg: #2b1a1a; /* Dark warm reddish-brown background */
+  --warning-bg: #4a2020; /* Dark warm reddish-brown background */
   --warning-border: #4a2d2d; /* Dark muted rose-brown border */
+
+  /* Danger / success dark overrides */
+  --danger: #f87171;
+  --success: #4ade80;
 }
 
 /* ─── TAILWIND V4 THEME BRIDGE ───────────────────────────────────────────────
@@ -85,6 +95,9 @@
   --color-warning-text: var(--warning-text);
   --color-warning-bg: var(--warning-bg);
   --color-warning-border: var(--warning-border);
+
+  --color-danger: var(--danger);
+  --color-success: var(--success);
 }
 
 /* ─── GLOBAL BODY DEFAULTS ───────────────────────────────────────────────────

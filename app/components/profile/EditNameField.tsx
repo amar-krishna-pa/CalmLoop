@@ -70,7 +70,7 @@ export default function EditNameField({ initialName }: Props) {
           <button
             onClick={save}
             disabled={saving || !draft.trim()}
-            className="cursor-pointer p-1.5 rounded-lg text-muted hover:text-green-500 hover:bg-green-500/10 transition-colors disabled:opacity-40"
+            className="cursor-pointer p-1.5 rounded-lg text-muted hover:text-success hover:bg-success/10 transition-colors disabled:opacity-40"
             aria-label="Save name"
           >
             {saving ? <LoadingSpinner /> : <LuCheck size={15} />}
@@ -78,7 +78,7 @@ export default function EditNameField({ initialName }: Props) {
           <button
             onClick={cancelEdit}
             disabled={saving}
-            className="cursor-pointer p-1.5 rounded-lg text-muted hover:text-red-500 hover:bg-red-500/10 transition-colors disabled:opacity-40"
+            className="cursor-pointer p-1.5 rounded-lg text-muted hover:text-danger hover:bg-danger/10 transition-colors disabled:opacity-40"
             aria-label="Cancel"
           >
             <LuX size={15} />

@@ -119,7 +119,7 @@ export default function PasskeySection() {
             placeholder="e.g. My iPhone"
             disabled={addingPasskey}
             className={`flex-1 px-3 py-2 rounded-lg text-sm border bg-transparent text-primary placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-accent disabled:opacity-60 ${
-              nameError ? "border-red-500 focus:ring-red-500" : "border-subtle"
+              nameError ? "border-danger focus:ring-danger" : "border-subtle"
             }`}
           />
           <button
@@ -141,7 +141,7 @@ export default function PasskeySection() {
           </button>
         </div>
         <p
-          className={`text-xs text-red-500 mt-1 mb-2 ${
+          className={`text-xs text-danger mt-1 mb-2 ${
             nameError ? "visible" : "invisible"
           }`}
         >
@@ -182,7 +182,7 @@ export default function PasskeySection() {
               <button
                 onClick={() => handleDeletePasskey(pk.id)}
                 disabled={deletingId === pk.id}
-                className="cursor-pointer p-1.5 rounded-lg text-muted hover:text-red-500 hover:bg-red-500/10 transition-colors disabled:opacity-40"
+                className="cursor-pointer p-1.5 rounded-lg text-muted hover:text-danger hover:bg-danger/10 transition-colors disabled:opacity-40"
                 aria-label="Delete passkey"
               >
                 {deletingId === pk.id ? <LoadingSpinner /> : <LuTrash2 />}

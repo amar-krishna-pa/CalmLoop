@@ -20,7 +20,7 @@ export default function PhilosophySection() {
 
           <div className="space-y-4">
             <div className="border border-subtle rounded-xl bg-card p-4 flex gap-4 items-start">
-              <div className="w-6 h-6 rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 flex items-center justify-center flex-shrink-0 text-xs font-bold">
+              <div className="w-6 h-6 rounded-full bg-warning-bg text-warning-text flex items-center justify-center flex-shrink-0 text-xs font-bold">
                 ✕
               </div>
               <div>
