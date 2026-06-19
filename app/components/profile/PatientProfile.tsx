@@ -1,4 +1,5 @@
 import PasskeySection from "@/app/components/auth/PasskeySection";
+import EditNameField from "@/app/components/profile/EditNameField";
 
 type Props = {
   user: {
@@ -21,11 +22,8 @@ export default function PatientProfile({ user }: Props) {
           Personal Info
         </h2>
         <div className="rounded-xl border border-subtle">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-subtle">
-            <span className="text-sm text-muted">Name</span>
-            <span className="text-sm font-medium text-primary">
-              {user.name}
-            </span>
+          <div className="border-b border-subtle">
+            <EditNameField initialName={user.name} />
           </div>
 
           <div className="flex items-center justify-between px-4 py-3">
