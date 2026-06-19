@@ -6,6 +6,8 @@ import {
   boolean,
   index,
   integer,
+  uuid,
+  jsonb,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -38,7 +40,7 @@ export const session = pgTable(
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
   },
-  (table) => [index("session_userId_idx").on(table.userId)],
+  (table) => [index("session_userId_idx").on(table.userId)]
 );
 
 export const account = pgTable(
@@ -62,7 +64,7 @@ export const account = pgTable(
       .$onUpdate(() => /* @__PURE__ */ new Date())
       .notNull(),
   },
-  (table) => [index("account_userId_idx").on(table.userId)],
+  (table) => [index("account_userId_idx").on(table.userId)]
 );
 
 export const verification = pgTable(
@@ -78,7 +80,7 @@ export const verification = pgTable(
       .$onUpdate(() => /* @__PURE__ */ new Date())
       .notNull(),
   },
-  (table) => [index("verification_identifier_idx").on(table.identifier)],
+  (table) => [index("verification_identifier_idx").on(table.identifier)]
 );
 
 export const passkey = pgTable(
@@ -101,13 +103,34 @@ export const passkey = pgTable(
   (table) => [
     index("passkey_credentialId_idx").on(table.credentialID),
     index("passkey_userId_idx").on(table.userId),
-  ],
+  ]
 );
+
+export const journalSessions = pgTable("journal_sessions", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const messages = pgTable("messages", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  sessionId: uuid("session_id")
+    .notNull()
+    .references(() => journalSessions.id, { onDelete: "cascade" }),
+  role: text("role").notNull(),
+  content: text("content").notNull(),
+  sourceEntryIds: jsonb("source_entry_ids"),
+  grounded: boolean("grounded"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
 
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
   passkeys: many(passkey),
+  journalSessions: many(journalSessions),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -128,5 +151,23 @@ export const passkeyRelations = relations(passkey, ({ one }) => ({
   user: one(user, {
     fields: [passkey.userId],
     references: [user.id],
+  }),
+}));
+
+export const journalSessionRelations = relations(
+  journalSessions,
+  ({ one, many }) => ({
+    user: one(user, {
+      fields: [journalSessions.userId],
+      references: [user.id],
+    }),
+    messages: many(messages),
+  })
+);
+
+export const messageRelations = relations(messages, ({ one }) => ({
+  session: one(journalSessions, {
+    fields: [messages.sessionId],
+    references: [journalSessions.id],
   }),
 }));
