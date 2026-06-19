@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { FaGoogle } from "react-icons/fa";
 import AuthButton from "@/app/components/auth/AuthButton";
 import AuthHeroPanel from "@/app/components/auth/AuthHeroPanel";
-import { authClient } from "@/app/lib/auth-client";
+import { authClient } from "@/app/lib/auth/auth-client";
 import { toast } from "sonner";
 
 export default function LoginPage() {

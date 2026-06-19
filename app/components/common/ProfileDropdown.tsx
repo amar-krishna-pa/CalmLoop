@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { authClient } from "@/app/lib/auth-client";
+import { authClient } from "@/app/lib/auth/auth-client";
 
 type ProfileDropdownProps = {
   userName: string;

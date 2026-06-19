@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { LuPencil, LuCheck, LuX } from "react-icons/lu";
-import { authClient } from "@/app/lib/auth-client";
+import { authClient } from "@/app/lib/auth/auth-client";
 import { toast } from "sonner";
 import LoadingSpinner from "../loaders/LoadingSpinner";
 
