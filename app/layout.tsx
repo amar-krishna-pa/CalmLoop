@@ -38,7 +38,7 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header userName={session?.user?.name ?? null} />
-          <main>{children}</main>
+          <main className="h-[calc(100dvh-3.5rem)]">{children}</main>
           <Toaster richColors position="top-center" />
         </ThemeProvider>
       </body>
