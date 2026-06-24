@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import type { UIMessage } from "ai";
 import ChatComponent from "@/app/components/chat/ChatComponent";
+import ChatPageLoader from "@/app/components/loaders/ChatPageLoader";
 
 export default function ChatPage() {
   const { chatSessionId } = useParams<{ chatSessionId: string }>();
@@ -20,11 +21,7 @@ export default function ChatPage() {
   }, [chatSessionId]);
 
   if (initialMessages === null) {
-    return (
-      <div className="flex flex-col h-full bg-primary items-center justify-center">
-        <span className="text-muted text-sm">Loading…</span>
-      </div>
-    );
+    return <ChatPageLoader />;
   }
 
   return (

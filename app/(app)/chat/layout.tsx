@@ -15,12 +15,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [sessions, setSessions] = useState<SessionItem[]>([]);
 
   useEffect(() => {
-    if (window.matchMedia("(min-width: 768px)").matches) {
-      setIsOpen(true);
-    }
-  }, []);
-
-  useEffect(() => {
     async function fetchSessions() {
       try {
         const res = await fetch("/api/chat/chat-sessions");
