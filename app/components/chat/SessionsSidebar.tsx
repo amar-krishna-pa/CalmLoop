@@ -2,6 +2,7 @@
 
 import formatRelativeTime from "@/app/utils/formatRelativeTime";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { LuPencil } from "react-icons/lu";
 
 export interface SessionItem {
@@ -16,16 +17,18 @@ interface Props {
 }
 
 export default function SessionsSidebar({ sessions, currentSessionId }: Props) {
+  const router = useRouter();
+
   return (
     <div className="flex flex-col h-full">
       <div className="p-3 shrink-0">
-        <Link
-          href="/chat"
+        <button
+          onClick={() => router.push(`/chat/${crypto.randomUUID()}`)}
           className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm font-medium text-primary bg-primary border border-subtle hover:bg-surface transition-colors duration-150"
         >
           <LuPencil size={13} />
           New session
-        </Link>
+        </button>
       </div>
 
       <div className="flex-1 overflow-y-auto px-2 pb-3">
