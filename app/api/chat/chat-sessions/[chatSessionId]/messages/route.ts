@@ -3,18 +3,17 @@ import { db } from "@/app/lib/db";
 import { chatSessions, messages } from "@/app/lib/db/schema";
 import { and, asc, eq } from "drizzle-orm";
 
-export async function GET(request: Request) {
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ chatSessionId: string }> }
+) {
   const session = await checkSession();
   if (!session) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
   const userId = session.user.id;
 
-  const { searchParams } = new URL(request.url);
-  const chatSessionId = searchParams.get("chatSessionId");
-  if (!chatSessionId) {
-    return Response.json({ error: "Missing chatSessionId" }, { status: 400 });
-  }
+  const { chatSessionId } = await params;
 
   const [chatSession] = await db
     .select({ id: chatSessions.id })

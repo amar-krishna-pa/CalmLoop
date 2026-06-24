@@ -13,7 +13,7 @@ export default function ChatPage() {
   );
 
   useEffect(() => {
-    fetch(`/api/chat/messages?chatSessionId=${chatSessionId}`)
+    fetch(`/api/chat/chat-sessions/${chatSessionId}/messages`)
       .then((r) => r.json())
       .then((data) => setInitialMessages(data.messages ?? []))
       .catch(() => setInitialMessages([]));
