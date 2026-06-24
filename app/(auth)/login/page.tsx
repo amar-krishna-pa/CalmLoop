@@ -60,7 +60,7 @@ export default function LoginPage() {
           </h1>
 
           <p className="text-sm text-muted mb-8 text-center">
-            Sign in to continue your journaling practice.
+            Sign in to continue your practice.
           </p>
 
           <div className="flex flex-col gap-3 mb-6 items-center justify-center">

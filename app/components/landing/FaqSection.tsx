@@ -50,7 +50,7 @@ export default function FaqSection() {
     {
       question: "Is CalmLoop a replacement for professional therapy?",
       answer:
-        "No. CalmLoop is a self-reflection tool meant to support personal journaling and cognitive awareness. It is built on therapeutic models like ERP and ACT but does not provide clinical diagnosis, medical advice, or replacement for real human therapists.",
+        "No. CalmLoop is a self-reflection tool meant to support guided self-reflection and cognitive awareness. It is built on therapeutic models like ERP and ACT but does not provide clinical diagnosis, medical advice, or replacement for real human therapists.",
     },
     {
       question: "What are ERP and ACT?",
@@ -58,7 +58,7 @@ export default function FaqSection() {
         "ERP (Exposure and Response Prevention) is the gold standard for OCD, focusing on facing anxiety triggers without performing safety behaviors (compulsions). ACT (Acceptance and Commitment Therapy) helps you accept uncomfortable feelings while taking action aligned with what you value most.",
     },
     {
-      question: "How is my journal data protected?",
+      question: "How is my conversation data protected?",
       answer:
         "We take data security very seriously. All entries are encrypted locally on your device, and we implement industry-standard database security protocols. Your mental health thoughts are private, personal, and strictly yours.",
     },

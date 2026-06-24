@@ -37,7 +37,7 @@ export default function SignUpPage() {
           </h1>
 
           <p className="text-sm text-muted mb-8 text-center">
-            Start journaling for free. No credit card required.
+            Start your practice for free. No credit card required.
           </p>
 
           <div className="flex flex-col gap-3 mb-6 items-center justify-center">

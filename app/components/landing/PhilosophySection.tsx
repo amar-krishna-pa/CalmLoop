@@ -11,7 +11,7 @@ export default function PhilosophySection() {
               Understanding the Loop
             </h2>
             <p className="mt-4 text-muted text-sm leading-relaxed">
-              Traditional journaling often encourages venting, which can lead to
+              Traditional venting-style approaches often encourage reassurance-seeking, which can lead to
               reassurance-seeking or over-analyzing intrusive thoughts. CalmLoop
               teaches your brain to treat thoughts as just thoughts, allowing you
               to focus your energy back on your life values.

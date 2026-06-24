@@ -10,7 +10,7 @@ export default function ChatDemoSection() {
             <span className="w-3 h-3 rounded-full bg-[#28c840]" />
           </div>
           <div className="text-xs text-muted font-medium">
-            CalmLoop Journaling Assistant
+            CalmLoop Reflection Assistant
           </div>
           <div className="w-10" /> {/* Spacer */}
         </div>

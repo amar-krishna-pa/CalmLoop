@@ -1,6 +1,5 @@
-import { IoIosJournal } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
-import { LuShieldCheck } from "react-icons/lu";
+import { LuShieldCheck, LuPenLine } from "react-icons/lu";
 
 export default function FeaturesSection() {
   return (
@@ -22,9 +21,9 @@ export default function FeaturesSection() {
         {/* Card 1 */}
         <div className="rounded-2xl border border-subtle bg-card p-8 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
           <div className="w-12 h-12 rounded-xl bg-surface border border-subtle flex items-center justify-center text-accent mb-6">
-            <IoIosJournal size={24} />
+            <LuPenLine size={24} />
           </div>
-          <h3 className="text-xl font-bold mb-3">Trigger Journaling</h3>
+          <h3 className="text-xl font-bold mb-3">Log Your Triggers</h3>
           <p className="text-muted text-sm leading-relaxed grow">
             Write down intrusive thoughts, physical sensations, or worries.
             Documenting triggers in a neutral workspace takes the intensity out
