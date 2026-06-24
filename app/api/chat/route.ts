@@ -1,7 +1,7 @@
 import { createGroq } from "@ai-sdk/groq";
 import { streamText, UIMessage, convertToModelMessages } from "ai";
 
-import { eq, and } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { SYSTEM_PROMPT } from "@/app/utils/prompts";
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
@@ -32,31 +32,21 @@ export async function POST(request: Request) {
     );
   }
   const chatMessages = parsed.data.messages as unknown as UIMessage[];
-  const incomingSessionId = parsed.data.sessionId;
+  const { journalSessionId } = parsed.data;
 
-  let sessionId = incomingSessionId;
   try {
-    if (sessionId) {
-      const [existing] = await db
-        .select({ id: journalSessions.id })
-        .from(journalSessions)
-        .where(
-          and(
-            eq(journalSessions.id, sessionId),
-            eq(journalSessions.userId, userId)
-          )
-        )
-        .limit(1);
+    const [existing] = await db
+      .select({ id: journalSessions.id, userId: journalSessions.userId })
+      .from(journalSessions)
+      .where(eq(journalSessions.id, journalSessionId))
+      .limit(1);
 
-      if (!existing) {
-        return Response.json({ error: "Session not found" }, { status: 404 });
+    if (existing) {
+      if (existing.userId !== userId) {
+        return Response.json({ error: "Forbidden" }, { status: 403 });
       }
     } else {
-      const [created] = await db
-        .insert(journalSessions)
-        .values({ userId })
-        .returning({ id: journalSessions.id });
-      sessionId = created.id;
+      await db.insert(journalSessions).values({ id: journalSessionId, userId });
     }
   } catch (err) {
     console.error("Failed to resolve journal session:", err);
@@ -70,7 +60,7 @@ export async function POST(request: Request) {
     .join("");
   try {
     await db.insert(messages).values({
-      sessionId,
+      sessionId: journalSessionId,
       role: latestUserMessage.role,
       content: latestUserMessageContent,
     });
@@ -81,23 +71,23 @@ export async function POST(request: Request) {
 
   try {
     const result = streamText({
-      model: groq("llama-3.3-70b-versatile"),
+      model: groq("openai/gpt-oss-120b"),
       system: SYSTEM_PROMPT,
       messages: await convertToModelMessages(chatMessages),
       onFinish: async ({ text }) => {
         try {
-          await db
-            .insert(messages)
-            .values({ sessionId, role: "assistant", content: text });
+          await db.insert(messages).values({
+            sessionId: journalSessionId,
+            role: "assistant",
+            content: text,
+          });
         } catch (err) {
           console.error("Failed to save assistant message:", err);
         }
       },
     });
 
-    return result.toUIMessageStreamResponse({
-      headers: { "X-Session-Id": sessionId },
-    });
+    return result.toUIMessageStreamResponse();
   } catch (err) {
     console.error("Groq streaming failed:", err);
     return Response.json(
