@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { LuMenu } from "react-icons/lu";
-import SessionsSidebar, { type SessionItem } from "@/app/components/chat/SessionsSidebar";
+import ChatSessionSidebar, { type SessionItem } from "@/app/components/chat/ChatSessionSidebar";
 import { cn } from "@/app/lib/cn/cn";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -49,7 +49,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <span className="text-sm font-semibold text-primary">Sessions</span>
         </div>
 
-        <SessionsSidebar
+        <ChatSessionSidebar
           sessions={sessions}
           currentSessionId={chatSessionId ?? ""}
         />
