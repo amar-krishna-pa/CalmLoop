@@ -1,7 +1,7 @@
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
-import { journalSessions } from "@/app/lib/db/schema";
-import { desc, eq, sql } from "drizzle-orm";
+import { chatSessions } from "@/app/lib/db/schema";
+import { desc, eq } from "drizzle-orm";
 
 export async function GET() {
   const session = await checkSession();
@@ -11,12 +11,12 @@ export async function GET() {
 
   const rows = await db
     .select({
-      id: journalSessions.id,
-      createdAt: journalSessions.createdAt,
+      id: chatSessions.id,
+      createdAt: chatSessions.createdAt,
     })
-    .from(journalSessions)
-    .where(eq(journalSessions.userId, session.user.id))
-    .orderBy(desc(journalSessions.createdAt))
+    .from(chatSessions)
+    .where(eq(chatSessions.userId, session.user.id))
+    .orderBy(desc(chatSessions.createdAt))
     .limit(50);
 
   return Response.json({ sessions: rows });

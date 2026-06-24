@@ -5,7 +5,7 @@ import { eq } from "drizzle-orm";
 import { SYSTEM_PROMPT } from "@/app/utils/prompts";
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
-import { journalSessions, messages } from "@/app/lib/db/schema";
+import { chatSessions, messages } from "@/app/lib/db/schema";
 import { ChatRequestSchema } from "@/app/lib/zod/chat";
 
 const groq = createGroq({ apiKey: process.env.GROQ_API_KEY });
@@ -32,13 +32,13 @@ export async function POST(request: Request) {
     );
   }
   const chatMessages = parsed.data.messages as unknown as UIMessage[];
-  const { journalSessionId } = parsed.data;
+  const { chatSessionId } = parsed.data;
 
   try {
     const [existing] = await db
-      .select({ id: journalSessions.id, userId: journalSessions.userId })
-      .from(journalSessions)
-      .where(eq(journalSessions.id, journalSessionId))
+      .select({ id: chatSessions.id, userId: chatSessions.userId })
+      .from(chatSessions)
+      .where(eq(chatSessions.id, chatSessionId))
       .limit(1);
 
     if (existing) {
@@ -46,10 +46,10 @@ export async function POST(request: Request) {
         return Response.json({ error: "Forbidden" }, { status: 403 });
       }
     } else {
-      await db.insert(journalSessions).values({ id: journalSessionId, userId });
+      await db.insert(chatSessions).values({ id: chatSessionId, userId });
     }
   } catch (err) {
-    console.error("Failed to resolve journal session:", err);
+    console.error("Failed to resolve chat session:", err);
     return Response.json({ error: "Internal server error" }, { status: 500 });
   }
 
@@ -60,7 +60,7 @@ export async function POST(request: Request) {
     .join("");
   try {
     await db.insert(messages).values({
-      sessionId: journalSessionId,
+      sessionId: chatSessionId,
       role: latestUserMessage.role,
       content: latestUserMessageContent,
     });
@@ -77,7 +77,7 @@ export async function POST(request: Request) {
       onFinish: async ({ text }) => {
         try {
           await db.insert(messages).values({
-            sessionId: journalSessionId,
+            sessionId: chatSessionId,
             role: "assistant",
             content: text,
           });

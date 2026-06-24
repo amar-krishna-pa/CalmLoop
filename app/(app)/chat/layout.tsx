@@ -7,7 +7,7 @@ import SessionsSidebar, { type SessionItem } from "@/app/components/chat/Session
 import { cn } from "@/app/lib/cn/cn";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { journalSessionId } = useParams<{ journalSessionId: string }>();
+  const { chatSessionId } = useParams<{ chatSessionId: string }>();
 
   const [isOpen, setIsOpen] = useState(false);
   const [sessions, setSessions] = useState<SessionItem[]>([]);
@@ -21,7 +21,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     async function fetchSessions() {
       try {
-        const res = await fetch("/api/chat/journal-sessions");
+        const res = await fetch("/api/chat/chat-sessions");
         if (!res.ok) return;
         const data = await res.json();
         setSessions(data.sessions ?? []);
@@ -31,7 +31,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }
 
     fetchSessions();
-  }, [journalSessionId]);
+  }, [chatSessionId]);
 
   return (
     <div className="flex h-full">
@@ -51,7 +51,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         <SessionsSidebar
           sessions={sessions}
-          currentSessionId={journalSessionId ?? ""}
+          currentSessionId={chatSessionId ?? ""}
         />
       </aside>
 

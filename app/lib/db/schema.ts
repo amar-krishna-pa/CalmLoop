@@ -106,7 +106,7 @@ export const passkey = pgTable(
   ]
 );
 
-export const journalSessions = pgTable("journal_sessions", {
+export const chatSessions = pgTable("chat_sessions", {
   id: uuid("id").primaryKey().defaultRandom(),
   userId: text("user_id")
     .notNull()
@@ -118,7 +118,7 @@ export const messages = pgTable("messages", {
   id: uuid("id").primaryKey().defaultRandom(),
   sessionId: uuid("session_id")
     .notNull()
-    .references(() => journalSessions.id, { onDelete: "cascade" }),
+    .references(() => chatSessions.id, { onDelete: "cascade" }),
   role: text("role").notNull(),
   content: text("content").notNull(),
   sourceEntryIds: jsonb("source_entry_ids"),
@@ -130,7 +130,7 @@ export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
   passkeys: many(passkey),
-  journalSessions: many(journalSessions),
+  chatSessions: many(chatSessions),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -154,11 +154,11 @@ export const passkeyRelations = relations(passkey, ({ one }) => ({
   }),
 }));
 
-export const journalSessionRelations = relations(
-  journalSessions,
+export const chatSessionRelations = relations(
+  chatSessions,
   ({ one, many }) => ({
     user: one(user, {
-      fields: [journalSessions.userId],
+      fields: [chatSessions.userId],
       references: [user.id],
     }),
     messages: many(messages),
@@ -166,8 +166,8 @@ export const journalSessionRelations = relations(
 );
 
 export const messageRelations = relations(messages, ({ one }) => ({
-  session: one(journalSessions, {
+  session: one(chatSessions, {
     fields: [messages.sessionId],
-    references: [journalSessions.id],
+    references: [chatSessions.id],
   }),
 }));

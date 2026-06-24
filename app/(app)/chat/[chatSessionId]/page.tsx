@@ -6,18 +6,18 @@ import type { UIMessage } from "ai";
 import ChatComponent from "@/app/components/chat/ChatComponent";
 
 export default function ChatPage() {
-  const { journalSessionId } = useParams<{ journalSessionId: string }>();
+  const { chatSessionId } = useParams<{ chatSessionId: string }>();
 
   const [initialMessages, setInitialMessages] = useState<UIMessage[] | null>(
     null
   );
 
   useEffect(() => {
-    fetch(`/api/chat/history?journalSessionId=${journalSessionId}`)
+    fetch(`/api/chat/history?chatSessionId=${chatSessionId}`)
       .then((r) => r.json())
       .then((data) => setInitialMessages(data.messages ?? []))
       .catch(() => setInitialMessages([]));
-  }, [journalSessionId]);
+  }, [chatSessionId]);
 
   if (initialMessages === null) {
     return (
@@ -29,7 +29,7 @@ export default function ChatPage() {
 
   return (
     <ChatComponent
-      journalSessionId={journalSessionId}
+      chatSessionId={chatSessionId}
       initialMessages={initialMessages}
     />
   );

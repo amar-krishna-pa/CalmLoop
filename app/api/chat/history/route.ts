@@ -1,6 +1,6 @@
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
-import { journalSessions, messages } from "@/app/lib/db/schema";
+import { chatSessions, messages } from "@/app/lib/db/schema";
 import { and, asc, eq } from "drizzle-orm";
 
 export async function GET(request: Request) {
@@ -11,30 +11,30 @@ export async function GET(request: Request) {
   const userId = session.user.id;
 
   const { searchParams } = new URL(request.url);
-  const journalSessionId = searchParams.get("journalSessionId");
-  if (!journalSessionId) {
-    return Response.json({ error: "Missing journalSessionId" }, { status: 400 });
+  const chatSessionId = searchParams.get("chatSessionId");
+  if (!chatSessionId) {
+    return Response.json({ error: "Missing chatSessionId" }, { status: 400 });
   }
 
-  const [journalSession] = await db
-    .select({ id: journalSessions.id })
-    .from(journalSessions)
+  const [chatSession] = await db
+    .select({ id: chatSessions.id })
+    .from(chatSessions)
     .where(
       and(
-        eq(journalSessions.id, journalSessionId),
-        eq(journalSessions.userId, userId)
+        eq(chatSessions.id, chatSessionId),
+        eq(chatSessions.userId, userId)
       )
     )
     .limit(1);
 
-  if (!journalSession) {
+  if (!chatSession) {
     return Response.json({ messages: [] });
   }
 
   const rows = await db
     .select()
     .from(messages)
-    .where(eq(messages.sessionId, journalSessionId))
+    .where(eq(messages.sessionId, chatSessionId))
     .orderBy(asc(messages.createdAt));
 
   const uiMessages = rows.map((m) => ({

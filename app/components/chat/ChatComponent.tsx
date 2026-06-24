@@ -5,10 +5,10 @@ import { useEffect, useRef, useState } from "react";
 import type { UIMessage } from "ai";
 
 export default function ChatComponent({
-  journalSessionId,
+  chatSessionId,
   initialMessages,
 }: {
-  journalSessionId: string;
+  chatSessionId: string;
   initialMessages: UIMessage[];
 }) {
   const [input, setInput] = useState("");
@@ -30,7 +30,7 @@ export default function ChatComponent({
     if (!text || isBusy) return;
 
     setInput("");
-    sendMessage({ text }, { body: { journalSessionId } });
+    sendMessage({ text }, { body: { chatSessionId } });
   }
 
   return (

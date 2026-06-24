@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const ChatRequestSchema = z.object({
-  journalSessionId: z.string(),
+  chatSessionId: z.string(),
   messages: z
     .array(
       z
