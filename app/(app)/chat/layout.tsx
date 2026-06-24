@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { LuMenu } from "react-icons/lu";
-import ChatSessionSidebar, { type SessionItem } from "@/app/components/chat/ChatSessionSidebar";
+import ChatSessionSidebar, {
+  type SessionItem,
+} from "@/app/components/chat/ChatSessionSidebar";
 import { cn } from "@/app/lib/cn/cn";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -65,7 +67,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="flex-1 min-w-0 relative">
         <button
           onClick={() => setIsOpen((prev) => !prev)}
-          className="absolute top-3 left-3 z-10 icon-btn"
+          className="absolute top-3 left-3 z-10 icon-btn cursor-pointer"
           aria-label={isOpen ? "Close sidebar" : "Open sidebar"}
         >
           <LuMenu size={14} />

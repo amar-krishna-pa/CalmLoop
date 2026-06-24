@@ -81,6 +81,16 @@ export default function ProfileDropdown({ userName }: ProfileDropdownProps) {
             Profile
           </Link>
 
+          <button
+            onClick={() => {
+              setOpen(false);
+              router.push(`/chat/${crypto.randomUUID()}`);
+            }}
+            className="cursor-pointer w-full text-left px-3 py-2 text-[13px] text-muted hover:text-primary hover:bg-surface/60 transition-colors"
+          >
+            Chat
+          </button>
+
           <div className="border-t border-subtle mt-1 pt-1">
             <button
               onClick={handleLogout}

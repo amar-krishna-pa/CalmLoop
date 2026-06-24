@@ -24,7 +24,7 @@ export default function SessionsSidebar({ sessions, currentSessionId }: Props) {
       <div className="p-3 shrink-0">
         <button
           onClick={() => router.push(`/chat/${crypto.randomUUID()}`)}
-          className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm font-medium text-primary bg-primary border border-subtle hover:bg-surface transition-colors duration-150"
+          className="flex items-center gap-2 w-full px-3 py-2 rounded-lg cursor-pointer text-sm font-medium text-primary bg-primary border border-subtle hover:bg-surface transition-colors duration-150"
         >
           <LuPencil size={13} />
           New session
