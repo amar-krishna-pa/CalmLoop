@@ -92,6 +92,30 @@ import { cn } from "@/app/lib/cn/cn";
 
 Dark mode is driven by the `.dark` class on `<html>` (toggled by next-themes). The `@variant dark` override in `globals.css` makes `dark:` Tailwind variants respond to this class instead of `prefers-color-scheme`. All design token variables automatically swap — no need for `dark:` variants on token-based classes.
 
+## TypeScript conventions
+
+### Use named parameters for functions with more than one parameter
+
+Any function or callback with two or more parameters must use a single destructured object argument, not positional parameters.
+
+```ts
+// wrong
+function doSomething(id: string, title: string) {}
+
+// correct
+function doSomething({ id, title }: { id: string; title: string }) {}
+```
+
+This applies to callbacks passed as props too:
+
+```tsx
+// wrong
+onTitleSaved={(id, title) => ...}
+
+// correct
+onTitleSaved={({ chatSessionId, title }) => ...}
+```
+
 ## Environment variables
 
 See `.env.example`. Required:
