@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { chatSessionId } = useParams<{ chatSessionId: string }>();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [sessions, setSessions] = useState<SessionItem[]>([]);
+  const [chatSessions, setChatSessions] = useState<SessionItem[]>([]);
 
   useEffect(() => {
     async function fetchSessions() {
@@ -20,7 +20,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         const res = await fetch("/api/chat/chat-sessions");
         if (!res.ok) return;
         const data = await res.json();
-        setSessions(data.sessions ?? []);
+        setChatSessions(data.sessions ?? []);
       } catch {
         // silent — sidebar just shows empty
       }
@@ -46,7 +46,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
 
         <ChatSessionsSidebar
-          sessions={sessions}
+          chatSessions={chatSessions}
+          setChatSessions={setChatSessions}
           currentSessionId={chatSessionId ?? ""}
         />
       </aside>
