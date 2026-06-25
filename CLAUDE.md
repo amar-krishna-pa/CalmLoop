@@ -92,6 +92,15 @@ import { cn } from "@/app/lib/cn/cn";
 
 Dark mode is driven by the `.dark` class on `<html>` (toggled by next-themes). The `@variant dark` override in `globals.css` makes `dark:` Tailwind variants respond to this class instead of `prefers-color-scheme`. All design token variables automatically swap — no need for `dark:` variants on token-based classes.
 
+## Loading states
+
+Always show a loading indicator when UI depends on an async operation or API call:
+
+- **Buttons/inline actions** — swap the button's icon or label for `<LoadingSpinner />` and `disabled` the button while the request is in flight. Do not add a separate spinner next to the button.
+- **Page sections / lists / panels** — create a dedicated skeleton loader component in `app/components/loaders/` (e.g. `ChatSessionsSidebarLoader.tsx`) using the `<Skeleton />` primitive from `LoadingSkeleton.tsx`, then render it in place of the real UI until data arrives.
+
+Use `null` (not `[]` or `""`) as the initial state sentinel to distinguish "still loading" from "loaded but empty".
+
 ## TypeScript conventions
 
 ### Use named parameters for functions with more than one parameter
