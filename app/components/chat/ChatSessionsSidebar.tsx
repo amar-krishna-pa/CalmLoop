@@ -32,6 +32,10 @@ export default function ChatSessionsSidebar({
 
   return (
     <div className="flex flex-col h-full">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-subtle shrink-0 h-14">
+        <span className="text-sm font-semibold text-primary">Chat History</span>
+      </div>
+
       <div className="p-3 shrink-0">
         <button
           onClick={() => router.push(`/chat/${crypto.randomUUID()}`)}
@@ -42,7 +46,7 @@ export default function ChatSessionsSidebar({
           )}
         >
           <LuPencil size={13} />
-          New session
+          New chat
         </button>
       </div>
 

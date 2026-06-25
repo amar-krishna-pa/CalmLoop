@@ -9,10 +9,10 @@ import ChatSessionsSidebar, {
 import { cn } from "@/app/lib/cn/cn";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { chatSessionId } = useParams<{ chatSessionId: string }>();
-
   const [isOpen, setIsOpen] = useState(false);
   const [chatSessions, setChatSessions] = useState<SessionItem[] | null>(null);
+
+  const { chatSessionId } = useParams<{ chatSessionId: string }>();
 
   useEffect(() => {
     async function fetchSessions() {
@@ -41,18 +41,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             : "-translate-x-full md:w-0 md:overflow-hidden"
         )}
       >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-subtle shrink-0 h-14">
-          <span className="text-sm font-semibold text-primary">Sessions</span>
-        </div>
-
         <ChatSessionsSidebar
           chatSessions={chatSessions}
           onTitleSaved={({ chatSessionId, title }) =>
-            setChatSessions((prev) =>
-              prev?.map((s) => (s.id === chatSessionId ? { ...s, title } : s)) ?? prev
+            setChatSessions(
+              (prev) =>
+                prev?.map((s) =>
+                  s.id === chatSessionId ? { ...s, title } : s
+                ) ?? prev
             )
           }
-          currentSessionId={chatSessionId ?? ""}
+          currentSessionId={chatSessionId}
         />
       </aside>
 
@@ -71,6 +70,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         >
           <LuMenu size={14} />
         </button>
+
         {children}
       </div>
     </div>
