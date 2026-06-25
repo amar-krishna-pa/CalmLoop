@@ -1,11 +1,10 @@
 "use client";
 
 import { cn } from "@/app/lib/cn/cn";
+import ChatSessionsSidebarLoader from "@/app/components/loaders/ChatSessionsSidebarLoader";
 import { useRouter } from "next/navigation";
 import { LuPencil } from "react-icons/lu";
 import ChatSessionItem from "./ChatSessionItem";
-import { Dispatch, SetStateAction } from "react";
-
 export interface SessionItem {
   id: string;
   createdAt: string;
@@ -13,29 +12,23 @@ export interface SessionItem {
 }
 
 interface Props {
-  chatSessions: SessionItem[];
-  setChatSessions: Dispatch<SetStateAction<SessionItem[]>>;
-  currentSessionId: string;
-}
-
-export default function ChatSessionsSidebar({
-  chatSessions,
-  setChatSessions,
-  currentSessionId,
-}: Props) {
-  const router = useRouter();
-
-  function handleTitleSaved({
+  chatSessions: SessionItem[] | null;
+  onTitleSaved: ({
     chatSessionId,
     title,
   }: {
     chatSessionId: string;
     title: string;
-  }) {
-    setChatSessions((prev) =>
-      prev.map((s) => (s.id === chatSessionId ? { ...s, title } : s))
-    );
-  }
+  }) => void;
+  currentSessionId: string;
+}
+
+export default function ChatSessionsSidebar({
+  chatSessions,
+  onTitleSaved,
+  currentSessionId,
+}: Props) {
+  const router = useRouter();
 
   return (
     <div className="flex flex-col h-full">
@@ -54,23 +47,25 @@ export default function ChatSessionsSidebar({
       </div>
 
       <div className="flex-1 overflow-y-auto px-2 pb-3">
-        {chatSessions.length === 0 && (
+        {chatSessions == null ? (
+          <ChatSessionsSidebarLoader />
+        ) : chatSessions.length === 0 ? (
           <p className="text-xs text-muted text-center mt-8 px-3">
             No past sessions yet.
           </p>
+        ) : (
+          <ul className="space-y-0.5">
+            {chatSessions.map((s) => (
+              <li key={s.id}>
+                <ChatSessionItem
+                  chatSession={s}
+                  isActive={s.id === currentSessionId}
+                  onTitleSaved={onTitleSaved}
+                />
+              </li>
+            ))}
+          </ul>
         )}
-
-        <ul className="space-y-0.5">
-          {chatSessions.map((s) => (
-            <li key={s.id}>
-              <ChatSessionItem
-                session={s}
-                isActive={s.id === currentSessionId}
-                onTitleSaved={handleTitleSaved}
-              />
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { chatSessionId } = useParams<{ chatSessionId: string }>();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [chatSessions, setChatSessions] = useState<SessionItem[]>([]);
+  const [chatSessions, setChatSessions] = useState<SessionItem[] | null>(null);
 
   useEffect(() => {
     async function fetchSessions() {
@@ -47,7 +47,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         <ChatSessionsSidebar
           chatSessions={chatSessions}
-          setChatSessions={setChatSessions}
+          onTitleSaved={({ chatSessionId, title }) =>
+            setChatSessions((prev) =>
+              prev?.map((s) => (s.id === chatSessionId ? { ...s, title } : s)) ?? prev
+            )
+          }
           currentSessionId={chatSessionId ?? ""}
         />
       </aside>
