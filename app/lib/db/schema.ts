@@ -111,6 +111,7 @@ export const chatSessions = pgTable("chat_sessions", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
+  title: text("title"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

@@ -8,7 +8,7 @@ import { LuPencil } from "react-icons/lu";
 export interface SessionItem {
   id: string;
   createdAt: string;
-  preview: string | null;
+  title: string | null;
 }
 
 interface Props {
@@ -61,7 +61,7 @@ export default function SessionsSidebar({ sessions, currentSessionId }: Props) {
                       isActive ? "text-accent font-medium" : "text-primary"
                     }`}
                   >
-                    {s.id ?? "Empty session"}
+                    {s.title ?? "Unamed session"}
                   </p>
                 </Link>
               </li>

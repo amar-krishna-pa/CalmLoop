@@ -12,6 +12,7 @@ export async function GET() {
   const rows = await db
     .select({
       id: chatSessions.id,
+      title: chatSessions.title,
       createdAt: chatSessions.createdAt,
     })
     .from(chatSessions)

@@ -1,6 +1,10 @@
 import { createGroq } from "@ai-sdk/groq";
-import { streamText, UIMessage, convertToModelMessages } from "ai";
-
+import {
+  streamText,
+  generateText,
+  UIMessage,
+  convertToModelMessages,
+} from "ai";
 import { eq } from "drizzle-orm";
 import { SYSTEM_PROMPT } from "@/app/utils/prompts";
 import { checkSession } from "@/app/lib/auth/check-session";
@@ -10,11 +14,21 @@ import { ChatRequestSchema } from "@/app/lib/zod/chat";
 
 const groq = createGroq({ apiKey: process.env.GROQ_API_KEY });
 
+async function generateSessionTitle(firstMessage: string): Promise<string> {
+  const { text } = await generateText({
+    model: groq("llama-3.1-8b-instant"),
+    prompt: `Generate a short title (3-5 words) for a therapy chat session based on this opening message. Return only the title text, nothing else.\n\nMessage: ${firstMessage}`,
+    maxOutputTokens: 20,
+  });
+  return text.trim();
+}
+
 export async function POST(request: Request) {
   const session = await checkSession();
   if (!session) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
+
   const userId = session.user.id;
 
   let body: unknown;
@@ -31,8 +45,15 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
+
   const chatMessages = parsed.data.messages as unknown as UIMessage[];
   const { chatSessionId } = parsed.data;
+
+  const latestUserMessage = chatMessages[chatMessages.length - 1];
+  const latestUserMessageContent = latestUserMessage.parts
+    .filter((p): p is { type: "text"; text: string } => p.type === "text")
+    .map((p) => p.text)
+    .join("");
 
   try {
     const [existing] = await db
@@ -46,18 +67,21 @@ export async function POST(request: Request) {
         return Response.json({ error: "Forbidden" }, { status: 403 });
       }
     } else {
-      await db.insert(chatSessions).values({ id: chatSessionId, userId });
+      const title = await generateSessionTitle(latestUserMessageContent).catch(
+        (err) => {
+          console.error("Failed to generate session title:", err);
+          return undefined;
+        }
+      );
+      await db
+        .insert(chatSessions)
+        .values({ id: chatSessionId, userId, title });
     }
   } catch (err) {
     console.error("Failed to resolve chat session:", err);
     return Response.json({ error: "Internal server error" }, { status: 500 });
   }
 
-  const latestUserMessage = chatMessages[chatMessages.length - 1];
-  const latestUserMessageContent = latestUserMessage.parts
-    .filter((p): p is { type: "text"; text: string } => p.type === "text")
-    .map((p) => p.text)
-    .join("");
   try {
     await db.insert(messages).values({
       sessionId: chatSessionId,
@@ -86,7 +110,6 @@ export async function POST(request: Request) {
         }
       },
     });
-
     return result.toUIMessageStreamResponse();
   } catch (err) {
     console.error("Groq streaming failed:", err);
