@@ -127,7 +127,7 @@ export default function ChatSessionItem({
             e.preventDefault();
             startEdit();
           }}
-          className="shrink-0 text-muted opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
+          className="shrink-0 text-muted opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all cursor-pointer"
         >
           <LuPencil size={12} />
         </button>
