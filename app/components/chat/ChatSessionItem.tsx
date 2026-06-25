@@ -63,7 +63,7 @@ export default function ChatSessionItem({
     return (
       <div
         className={cn(
-          "flex items-center gap-1 px-3 py-2 rounded-lg",
+          "flex items-center gap-4 px-3 py-2 rounded-lg",
           isActive ? "bg-accent/10 border border-accent/20" : "bg-surface"
         )}
       >
@@ -80,13 +80,13 @@ export default function ChatSessionItem({
         />
         <button
           onClick={commitEdit}
-          className="shrink-0 text-muted hover:text-accent transition-colors"
+          className="shrink-0 text-muted hover:text-accent transition-colors cursor-pointer"
         >
           <LuCheck size={14} />
         </button>
         <button
           onClick={cancelEdit}
-          className="shrink-0 text-muted hover:text-primary transition-colors"
+          className="shrink-0 text-muted hover:text-primary transition-colors cursor-pointer"
         >
           <LuX size={14} />
         </button>
@@ -121,7 +121,7 @@ export default function ChatSessionItem({
             e.preventDefault();
             startEdit();
           }}
-          className="shrink-0 text-muted opacity-0 group-hover:opacity-100 hover:text-primary transition-all"
+          className="shrink-0 text-muted opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
         >
           <LuPencil size={12} />
         </button>
