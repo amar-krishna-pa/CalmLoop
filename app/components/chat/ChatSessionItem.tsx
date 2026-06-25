@@ -5,6 +5,7 @@ import formatRelativeTime from "@/app/utils/formatRelativeTime";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { LuCheck, LuPencil, LuX } from "react-icons/lu";
+import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import type { SessionItem } from "./ChatSessionsSidebar";
 
 interface Props {
@@ -26,6 +27,7 @@ export default function ChatSessionItem({
 }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -47,11 +49,13 @@ export default function ChatSessionItem({
       return;
     }
 
+    setIsSaving(true);
     const response = await fetch(`/api/chat/chat-sessions/${chatSession.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title: trimmed }),
     });
+    setIsSaving(false);
 
     if (response.ok) {
       setIsEditing(false);
@@ -80,13 +84,15 @@ export default function ChatSessionItem({
         />
         <button
           onClick={commitEdit}
-          className="shrink-0 text-muted hover:text-accent transition-colors cursor-pointer"
+          disabled={isSaving}
+          className="shrink-0 text-muted hover:text-accent transition-colors cursor-pointer disabled:cursor-default"
         >
-          <LuCheck size={14} />
+          {isSaving ? <LoadingSpinner size={14} /> : <LuCheck size={14} />}
         </button>
         <button
           onClick={cancelEdit}
-          className="shrink-0 text-muted hover:text-primary transition-colors cursor-pointer"
+          disabled={isSaving}
+          className="shrink-0 text-muted hover:text-primary transition-colors cursor-pointer disabled:cursor-default"
         >
           <LuX size={14} />
         </button>
