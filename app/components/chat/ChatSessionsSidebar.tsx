@@ -142,7 +142,7 @@ export default function ChatSessionsSidebar({
       </div>
 
       {isDeleteMode && (
-        <div className="p-3 border-t border-subtle shrink-0">
+        <div className="p-3 shrink-0">
           <button
             onClick={deleteSelected}
             disabled={selectedIds.size === 0 || isDeleting}

@@ -39,11 +39,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex h-full">
+    <div className="flex h-full relative">
       <aside
         className={cn(
           "flex flex-col bg-surface border-r border-subtle z-40",
-          "fixed md:relative inset-y-0 left-0 w-64",
+          "absolute md:relative inset-y-0 left-0 w-64",
           "transition-transform md:transition-[width] duration-200",
           isOpen
             ? "translate-x-0 md:w-64"
