@@ -101,6 +101,12 @@ Always show a loading indicator when UI depends on an async operation or API cal
 
 Use `null` (not `[]` or `""`) as the initial state sentinel to distinguish "still loading" from "loaded but empty".
 
+## Component conventions
+
+### Never define components inside other component files
+
+Every component must live in its own file. Defining a component function inside another component's file is an anti-pattern — extract it to its own file and import it.
+
 ## TypeScript conventions
 
 ### Use named parameters for functions with more than one parameter
