@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/app/lib/cn/cn";
 import ChatSessionsSidebarLoader from "@/app/components/loaders/ChatSessionsSidebarLoader";
 import { useRouter } from "next/navigation";
-import { LuPencil, LuTrash2, LuX } from "react-icons/lu";
+import { LuPencil } from "react-icons/lu";
 import ChatSessionItem from "./ChatSessionItem";
-import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
+import SidebarDeleteControls from "./SidebarDeleteControls";
+import { cn } from "@/app/lib/cn/cn";
 
 export interface SessionItem {
   id: string;
@@ -78,10 +78,6 @@ export default function ChatSessionsSidebar({
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-subtle shrink-0 h-14">
-        <span className="text-sm font-semibold text-primary">Chat History</span>
-      </div>
-
       <div className="p-3 space-y-1.5 shrink-0">
         <button
           onClick={() => router.push(`/chat/${crypto.randomUUID()}`)}
@@ -99,49 +95,14 @@ export default function ChatSessionsSidebar({
           New chat
         </button>
 
-        {isDeleteMode ? (
-          <div className="flex gap-2">
-            <button
-              onClick={cancelDeleteMode}
-              disabled={isDeleting}
-              className="flex items-center justify-center gap-2 flex-1 px-3 py-2 rounded-lg cursor-pointer text-sm font-medium border border-subtle text-muted transition-colors duration-150 hover:bg-surface disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <LuX size={13} />
-              Cancel
-            </button>
-
-            <button
-              onClick={deleteSelected}
-              disabled={selectedIds.size === 0 || isDeleting}
-              className={cn(
-                "flex items-center justify-center gap-2 flex-1 px-3 py-2 rounded-lg",
-                "text-sm font-medium transition-colors duration-150",
-                selectedIds.size === 0 || isDeleting
-                  ? "bg-danger/20 text-danger/50 cursor-not-allowed"
-                  : "bg-danger text-white cursor-pointer hover:opacity-90"
-              )}
-            >
-              {isDeleting ? (
-                <LoadingSpinner size={14} />
-              ) : (
-                <LuTrash2 size={13} />
-              )}
-              {isDeleting
-                ? "Deleting…"
-                : selectedIds.size === 0
-                ? "Delete"
-                : `Delete (${selectedIds.size})`}
-            </button>
-          </div>
-        ) : (
-          <button
-            onClick={() => setIsDeleteMode(true)}
-            className="flex items-center gap-2 w-full px-3 py-2 rounded-lg cursor-pointer text-sm font-medium border border-subtle text-danger transition-colors duration-150 hover:bg-danger/10"
-          >
-            <LuTrash2 size={13} />
-            Delete sessions
-          </button>
-        )}
+        <SidebarDeleteControls
+          isDeleteMode={isDeleteMode}
+          selectedCount={selectedIds.size}
+          isDeleting={isDeleting}
+          onEnterDeleteMode={() => setIsDeleteMode(true)}
+          onCancel={cancelDeleteMode}
+          onDelete={deleteSelected}
+        />
       </div>
 
       <div className="flex-1 overflow-y-auto px-2 pb-3">
