@@ -75,7 +75,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="flex-1 min-w-0 relative">
         <button
           onClick={() => setIsOpen((prev) => !prev)}
-          className="absolute top-3 left-3 z-10 icon-btn cursor-pointer"
+          className="absolute top-3 left-4 z-10 icon-btn cursor-pointer"
           aria-label={isOpen ? "Close sidebar" : "Open sidebar"}
         >
           <LuMenu size={14} />
