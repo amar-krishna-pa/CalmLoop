@@ -18,12 +18,18 @@ interface Props {
     chatSessionId: string;
     title: string;
   }) => void;
+  isDeleteMode: boolean;
+  isSelected: boolean;
+  onToggleSelect: () => void;
 }
 
 export default function ChatSessionItem({
   chatSession,
   isActive,
   onTitleSaved,
+  isDeleteMode,
+  isSelected,
+  onToggleSelect,
 }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
@@ -96,6 +102,42 @@ export default function ChatSessionItem({
         >
           <LuX size={14} />
         </button>
+      </div>
+    );
+  }
+
+  if (isDeleteMode) {
+    return (
+      <div
+        role="button"
+        onClick={onToggleSelect}
+        className={cn(
+          "flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer transition-colors duration-150",
+          isSelected ? "bg-danger/10 border border-danger/20" : "hover:bg-surface"
+        )}
+      >
+        <span
+          className={cn(
+            "shrink-0 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors",
+            isSelected ? "border-danger bg-danger" : "border-muted"
+          )}
+        >
+          {isSelected && <LuCheck size={8} className="text-white" />}
+        </span>
+
+        <div className="flex-1 min-w-0">
+          <p className="text-xs text-muted mb-0.5">
+            {formatRelativeTime(chatSession.createdAt)}
+          </p>
+          <p
+            className={cn(
+              "text-sm truncate",
+              isSelected ? "text-danger font-medium" : "text-primary"
+            )}
+          >
+            {chatSession.title ?? "Unnamed session"}
+          </p>
+        </div>
       </div>
     );
   }

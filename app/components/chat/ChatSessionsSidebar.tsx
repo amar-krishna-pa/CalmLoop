@@ -1,10 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { cn } from "@/app/lib/cn/cn";
 import ChatSessionsSidebarLoader from "@/app/components/loaders/ChatSessionsSidebarLoader";
 import { useRouter } from "next/navigation";
-import { LuPencil } from "react-icons/lu";
+import { LuPencil, LuTrash2, LuX } from "react-icons/lu";
 import ChatSessionItem from "./ChatSessionItem";
+import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
+
 export interface SessionItem {
   id: string;
   createdAt: string;
@@ -20,15 +23,58 @@ interface Props {
     chatSessionId: string;
     title: string;
   }) => void;
+  onSessionsDeleted: (ids: string[]) => void;
   currentSessionId: string;
 }
 
 export default function ChatSessionsSidebar({
   chatSessions,
   onTitleSaved,
+  onSessionsDeleted,
   currentSessionId,
 }: Props) {
   const router = useRouter();
+  const [isDeleteMode, setIsDeleteMode] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  function toggleSelect(id: string) {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+
+      return next;
+    });
+  }
+
+  function cancelDeleteMode() {
+    setIsDeleteMode(false);
+    setSelectedIds(new Set());
+  }
+
+  async function deleteSelected() {
+    const ids = Array.from(selectedIds);
+    if (ids.length === 0) return;
+
+    setIsDeleting(true);
+    try {
+      const res = await fetch("/api/chat/chat-sessions", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids }),
+      });
+      if (res.ok) {
+        onSessionsDeleted(ids);
+        cancelDeleteMode();
+      }
+    } finally {
+      setIsDeleting(false);
+    }
+  }
 
   return (
     <div className="flex flex-col h-full">
@@ -36,17 +82,37 @@ export default function ChatSessionsSidebar({
         <span className="text-sm font-semibold text-primary">Chat History</span>
       </div>
 
-      <div className="p-3 shrink-0">
+      <div className="p-3 space-y-1.5 shrink-0">
         <button
           onClick={() => router.push(`/chat/${crypto.randomUUID()}`)}
+          disabled={isDeleteMode}
           className={cn(
-            "flex items-center gap-2 w-full px-3 py-2 rounded-lg cursor-pointer",
+            "flex items-center gap-2 w-full px-3 py-2 rounded-lg",
             "text-sm font-medium text-primary bg-primary border border-subtle",
-            "hover:bg-surface transition-colors duration-150"
+            "transition-colors duration-150",
+            isDeleteMode
+              ? "opacity-50 cursor-not-allowed"
+              : "cursor-pointer hover:bg-surface"
           )}
         >
           <LuPencil size={13} />
           New chat
+        </button>
+
+        <button
+          onClick={
+            isDeleteMode ? cancelDeleteMode : () => setIsDeleteMode(true)
+          }
+          className={cn(
+            "flex items-center gap-2 w-full px-3 py-2 rounded-lg cursor-pointer",
+            "text-sm font-medium border transition-colors duration-150",
+            isDeleteMode
+              ? "text-muted border-subtle hover:bg-surface"
+              : "text-danger border-subtle hover:bg-danger/10"
+          )}
+        >
+          {isDeleteMode ? <LuX size={13} /> : <LuTrash2 size={13} />}
+          {isDeleteMode ? "Cancel delete" : "Delete sessions"}
         </button>
       </div>
 
@@ -65,12 +131,40 @@ export default function ChatSessionsSidebar({
                   chatSession={s}
                   isActive={s.id === currentSessionId}
                   onTitleSaved={onTitleSaved}
+                  isDeleteMode={isDeleteMode}
+                  isSelected={selectedIds.has(s.id)}
+                  onToggleSelect={() => toggleSelect(s.id)}
                 />
               </li>
             ))}
           </ul>
         )}
       </div>
+
+      {isDeleteMode && (
+        <div className="p-3 border-t border-subtle shrink-0">
+          <button
+            onClick={deleteSelected}
+            disabled={selectedIds.size === 0 || isDeleting}
+            className={cn(
+              "flex items-center justify-center gap-2 w-full px-3 py-2 rounded-lg",
+              "text-sm font-medium transition-colors duration-150",
+              selectedIds.size === 0 || isDeleting
+                ? "bg-danger/20 text-danger/50 cursor-not-allowed"
+                : "bg-danger text-white cursor-pointer hover:opacity-90"
+            )}
+          >
+            {isDeleting ? <LoadingSpinner size={14} /> : <LuTrash2 size={13} />}
+            {isDeleting
+              ? "Deleting…"
+              : selectedIds.size === 0
+              ? "Select sessions to delete"
+              : `Delete ${selectedIds.size} session${
+                  selectedIds.size > 1 ? "s" : ""
+                }`}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

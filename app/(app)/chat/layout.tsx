@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { LuMenu } from "react-icons/lu";
 import ChatSessionsSidebar, {
   type SessionItem,
@@ -13,6 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [chatSessions, setChatSessions] = useState<SessionItem[] | null>(null);
 
   const { chatSessionId } = useParams<{ chatSessionId: string }>();
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchSessions() {
@@ -28,6 +29,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     fetchSessions();
   }, [chatSessionId]);
+
+  function handleSessionsDeleted(ids: string[]) {
+    setChatSessions((prev) => prev?.filter((s) => !ids.includes(s.id)) ?? prev);
+
+    if (chatSessionId && ids.includes(chatSessionId)) {
+      router.push(`/chat/${crypto.randomUUID()}`);
+    }
+  }
 
   return (
     <div className="flex h-full">
@@ -51,6 +60,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 ) ?? prev
             )
           }
+          onSessionsDeleted={handleSessionsDeleted}
           currentSessionId={chatSessionId}
         />
       </aside>
