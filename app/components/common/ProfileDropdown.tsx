@@ -2,12 +2,21 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { authClient } from "@/app/lib/auth/auth-client";
+import { cn } from "@/app/lib/cn/cn";
 
 type ProfileDropdownProps = {
   userName: string;
 };
+
+const NAV_ITEMS = [
+  { label: "Today", href: "/today" },
+  { label: "Treatment", href: "/treatment" },
+  { label: "Reflect", href: "/reflect" },
+  { label: "Support", href: "/support" },
+  { label: "Learn", href: "/learn" },
+];
 
 function getInitials(name: string) {
   return name
@@ -20,10 +29,10 @@ function getInitials(name: string) {
 
 export default function ProfileDropdown({ userName }: ProfileDropdownProps) {
   const [open, setOpen] = useState(false);
-
   const ref = useRef<HTMLDivElement>(null);
-
   const router = useRouter();
+
+  const pathname = usePathname();
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -33,17 +42,13 @@ export default function ProfileDropdown({ userName }: ProfileDropdownProps) {
     }
 
     if (open) document.addEventListener("mousedown", handleClickOutside);
-
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
   async function handleLogout() {
     await authClient.signOut();
-
     setOpen(false);
-
     router.push("/login");
-
     router.refresh();
   }
 
@@ -58,38 +63,38 @@ export default function ProfileDropdown({ userName }: ProfileDropdownProps) {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-44 rounded-lg border border-subtle bg-surface shadow-lg py-1 z-50">
+        <div className="absolute right-0 mt-2 w-48 rounded-lg border border-subtle bg-surface shadow-lg py-1 z-50">
           <div className="px-3 py-2 border-b border-subtle">
             <p className="text-[12px] font-medium text-primary truncate">
               {userName}
             </p>
           </div>
 
-          <Link
-            href="/dashboard"
-            onClick={() => setOpen(false)}
-            className="block w-full text-left px-3 py-2 text-[13px] text-muted hover:text-primary hover:bg-surface/60 transition-colors"
-          >
-            Dashboard
-          </Link>
+          <div className="sm:hidden border-b border-subtle py-1">
+            {NAV_ITEMS.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className={cn(
+                  "block px-3 py-2 text-[13px] transition-colors",
+                  pathname === item.href
+                    ? "text-accent font-medium"
+                    : "text-muted hover:text-primary"
+                )}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
 
           <Link
             href="/profile"
             onClick={() => setOpen(false)}
-            className="block cursor-pointer w-full text-left px-3 py-2 text-[13px] text-muted hover:text-primary hover:bg-surface/60 transition-colors"
+            className="block w-full text-left px-3 py-2 text-[13px] text-muted hover:text-primary hover:bg-surface/60 transition-colors"
           >
             Profile
           </Link>
-
-          <button
-            onClick={() => {
-              setOpen(false);
-              router.push(`/chat/${crypto.randomUUID()}`);
-            }}
-            className="cursor-pointer w-full text-left px-3 py-2 text-[13px] text-muted hover:text-primary hover:bg-surface/60 transition-colors"
-          >
-            Chat
-          </button>
 
           <div className="border-t border-subtle mt-1 pt-1">
             <button

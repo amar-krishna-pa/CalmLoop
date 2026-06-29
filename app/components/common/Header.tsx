@@ -3,17 +3,24 @@
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { GoSun, GoMoon } from "react-icons/go";
 import ProfileDropdown from "./ProfileDropdown";
 import NavItem from "./NavItem";
 
-interface HeaderProps {
+type HeaderProps = {
   userName?: string | null;
-}
+};
+
+const NAV_ITEMS = [
+  { label: "Today", href: "/today" },
+  { label: "Treatment", href: "/treatment" },
+  { label: "Reflect", href: "/reflect" },
+  { label: "Support", href: "/support" },
+  { label: "Learn", href: "/learn" },
+];
 
 export default function Header({ userName }: HeaderProps) {
-  const router = useRouter();
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -24,7 +31,7 @@ export default function Header({ userName }: HeaderProps) {
     <header className="sticky top-0 z-50 w-full px-4 sm:px-6 h-14 flex items-center justify-between bg-surface/80 backdrop-blur-md border-b border-subtle">
       <div className="flex items-center h-full">
         <Link
-          href="/"
+          href="/today"
           className="text-[17px] font-semibold tracking-tight text-accent mr-4 px-1"
         >
           CalmLoop
@@ -39,16 +46,14 @@ export default function Header({ userName }: HeaderProps) {
               className="w-0.5 h-4 bg-black/15 dark:bg-white/20 mr-1"
               aria-hidden="true"
             />
-            <NavItem
-              label="Dashboard"
-              href="/dashboard"
-              isActive={pathname === "/dashboard"}
-            />
-            <NavItem
-              label="Chat"
-              onClick={() => router.push(`/chat/${crypto.randomUUID()}`)}
-              isActive={pathname.startsWith("/chat")}
-            />
+            {NAV_ITEMS.map((item) => (
+              <NavItem
+                key={item.href}
+                label={item.label}
+                href={item.href}
+                isActive={pathname === item.href}
+              />
+            ))}
           </nav>
         )}
       </div>

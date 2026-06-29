@@ -7,7 +7,13 @@ export async function proxy(request: NextRequest) {
 
   // Define route rules
   const isProtectedRoute =
-    path.startsWith("/dashboard") || path.startsWith("/profile");
+    path.startsWith("/today") ||
+    path.startsWith("/treatment") ||
+    path.startsWith("/reflect") ||
+    path.startsWith("/support") ||
+    path.startsWith("/learn") ||
+    path.startsWith("/profile") ||
+    path.startsWith("/chat");
   const isAuthRoute = path === "/login" || path === "/signup";
   const isRootRoute = path === "/";
 
@@ -35,8 +41,7 @@ export async function proxy(request: NextRequest) {
   }
 
   if ((isAuthRoute || isRootRoute) && session) {
-    // Redirect authenticated users to dashboard
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    return NextResponse.redirect(new URL("/today", request.url));
   }
 
   return NextResponse.next();

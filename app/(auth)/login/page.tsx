@@ -37,7 +37,7 @@ export default function LoginPage() {
       if (error) {
         toast.error("Failed to sign in with Passkey");
       } else {
-        router.push("/dashboard");
+        router.push("/today");
         router.refresh();
       }
     } catch (err) {
