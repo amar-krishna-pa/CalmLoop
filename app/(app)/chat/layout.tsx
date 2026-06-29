@@ -1,42 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { LuMenu } from "react-icons/lu";
-import ChatSessionsSidebar, {
-  type SessionItem,
-} from "@/app/components/chat/ChatSessionsSidebar";
+import ChatSessionsSidebar from "@/app/components/chat/ChatSessionsSidebar";
 import { cn } from "@/app/lib/cn/cn";
+import { useChatStore } from "@/app/lib/stores/chat";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [chatSessions, setChatSessions] = useState<SessionItem[] | null>(null);
+
+  const fetchSessions = useChatStore((s) => s.fetchSessions);
 
   const { chatSessionId } = useParams<{ chatSessionId: string }>();
-  const router = useRouter();
 
   useEffect(() => {
-    async function fetchSessions() {
-      try {
-        const res = await fetch("/api/chat/chat-sessions");
-        if (!res.ok) return;
-        const data = await res.json();
-        setChatSessions(data.sessions ?? []);
-      } catch {
-        // silent — sidebar just shows empty
-      }
-    }
-
     fetchSessions();
-  }, [chatSessionId]);
-
-  function handleSessionsDeleted(ids: string[]) {
-    setChatSessions((prev) => prev?.filter((s) => !ids.includes(s.id)) ?? prev);
-
-    if (chatSessionId && ids.includes(chatSessionId)) {
-      router.push(`/chat/${crypto.randomUUID()}`);
-    }
-  }
+  }, [chatSessionId, fetchSessions]);
 
   return (
     <div className="flex h-full relative">
@@ -50,19 +30,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             : "-translate-x-full md:w-0 md:overflow-hidden"
         )}
       >
-        <ChatSessionsSidebar
-          chatSessions={chatSessions}
-          onTitleSaved={({ chatSessionId, title }) =>
-            setChatSessions(
-              (prev) =>
-                prev?.map((s) =>
-                  s.id === chatSessionId ? { ...s, title } : s
-                ) ?? prev
-            )
-          }
-          onSessionsDeleted={handleSessionsDeleted}
-          currentSessionId={chatSessionId}
-        />
+        <ChatSessionsSidebar currentSessionId={chatSessionId} />
       </aside>
 
       {isOpen && (
@@ -80,7 +48,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         >
           <LuMenu size={14} />
         </button>
-
         {children}
       </div>
     </div>

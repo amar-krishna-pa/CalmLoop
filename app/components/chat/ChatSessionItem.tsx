@@ -6,18 +6,12 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { LuCheck, LuPencil, LuX } from "react-icons/lu";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
-import type { SessionItem } from "./ChatSessionsSidebar";
+import type { SessionItem } from "@/app/lib/stores/chat";
+import { useChatStore } from "@/app/lib/stores/chat";
 
 interface Props {
   chatSession: SessionItem;
   isActive: boolean;
-  onTitleSaved: ({
-    chatSessionId,
-    title,
-  }: {
-    chatSessionId: string;
-    title: string;
-  }) => void;
   isDeleteMode: boolean;
   isSelected: boolean;
   onToggleSelect: () => void;
@@ -26,7 +20,6 @@ interface Props {
 export default function ChatSessionItem({
   chatSession,
   isActive,
-  onTitleSaved,
   isDeleteMode,
   isSelected,
   onToggleSelect,
@@ -34,8 +27,9 @@ export default function ChatSessionItem({
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
   const [isSaving, setIsSaving] = useState(false);
-
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const updateSessionTitle = useChatStore((s) => s.updateSessionTitle);
 
   function startEdit() {
     setEditValue(chatSession.title ?? "");
@@ -65,7 +59,7 @@ export default function ChatSessionItem({
 
     if (response.ok) {
       setIsEditing(false);
-      onTitleSaved({ chatSessionId: chatSession.id, title: trimmed });
+      updateSessionTitle({ chatSessionId: chatSession.id, title: trimmed });
     }
   }
 
@@ -113,7 +107,9 @@ export default function ChatSessionItem({
         onClick={onToggleSelect}
         className={cn(
           "flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer transition-colors duration-150",
-          isSelected ? "bg-danger/10 border border-danger/20" : "hover:bg-surface"
+          isSelected
+            ? "bg-danger/10 border border-danger/20"
+            : "hover:bg-surface"
         )}
       >
         <span

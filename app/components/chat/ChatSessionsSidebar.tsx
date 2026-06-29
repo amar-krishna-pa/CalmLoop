@@ -7,36 +7,21 @@ import { LuPencil } from "react-icons/lu";
 import ChatSessionItem from "./ChatSessionItem";
 import SidebarDeleteControls from "./SidebarDeleteControls";
 import { cn } from "@/app/lib/cn/cn";
-
-export interface SessionItem {
-  id: string;
-  createdAt: string;
-  title: string;
-}
+import { useChatStore } from "@/app/lib/stores/chat";
 
 interface Props {
-  chatSessions: SessionItem[] | null;
-  onTitleSaved: ({
-    chatSessionId,
-    title,
-  }: {
-    chatSessionId: string;
-    title: string;
-  }) => void;
-  onSessionsDeleted: (ids: string[]) => void;
   currentSessionId: string;
 }
 
-export default function ChatSessionsSidebar({
-  chatSessions,
-  onTitleSaved,
-  onSessionsDeleted,
-  currentSessionId,
-}: Props) {
-  const router = useRouter();
+export default function ChatSessionsSidebar({ currentSessionId }: Props) {
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [isDeleting, setIsDeleting] = useState(false);
+
+  const chatSessions = useChatStore((s) => s.chatSessions);
+  const removeSessions = useChatStore((s) => s.removeSessions);
+
+  const router = useRouter();
 
   function toggleSelect(id: string) {
     setSelectedIds((prev) => {
@@ -68,8 +53,12 @@ export default function ChatSessionsSidebar({
         body: JSON.stringify({ ids }),
       });
       if (res.ok) {
-        onSessionsDeleted(ids);
+        removeSessions(ids);
         cancelDeleteMode();
+
+        if (currentSessionId && ids.includes(currentSessionId)) {
+          router.push(`/chat/${crypto.randomUUID()}`);
+        }
       }
     } finally {
       setIsDeleting(false);
@@ -119,7 +108,6 @@ export default function ChatSessionsSidebar({
                 <ChatSessionItem
                   chatSession={s}
                   isActive={s.id === currentSessionId}
-                  onTitleSaved={onTitleSaved}
                   isDeleteMode={isDeleteMode}
                   isSelected={selectedIds.has(s.id)}
                   onToggleSelect={() => toggleSelect(s.id)}
