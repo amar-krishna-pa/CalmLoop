@@ -9,9 +9,9 @@ import SidebarDeleteControls from "./SidebarDeleteControls";
 import { cn } from "@/app/lib/cn/cn";
 import { useChatStore } from "@/app/lib/stores/chat";
 
-interface Props {
+type Props = {
   currentSessionId: string;
-}
+};
 
 export default function ChatSessionsSidebar({ currentSessionId }: Props) {
   const [isDeleteMode, setIsDeleteMode] = useState(false);
@@ -42,21 +42,20 @@ export default function ChatSessionsSidebar({ currentSessionId }: Props) {
   }
 
   async function deleteSelected() {
-    const ids = Array.from(selectedIds);
-    if (ids.length === 0) return;
+    if (selectedIds.size === 0) return;
 
     setIsDeleting(true);
     try {
       const res = await fetch("/api/chat/chat-sessions", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ids }),
+        body: JSON.stringify({ ids: Array.from(selectedIds) }),
       });
       if (res.ok) {
-        removeSessions(ids);
+        removeSessions(selectedIds);
         cancelDeleteMode();
 
-        if (currentSessionId && ids.includes(currentSessionId)) {
+        if (currentSessionId && selectedIds.has(currentSessionId)) {
           router.push(`/chat/${crypto.randomUUID()}`);
         }
       }

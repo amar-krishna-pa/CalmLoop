@@ -16,7 +16,7 @@ type ChatStore = {
     chatSessionId: string;
     title: string;
   }) => void;
-  removeSessions: (ids: string[]) => void;
+  removeSessions: (ids: Set<string>) => void;
 };
 
 export const useChatStore = create<ChatStore>((set) => ({
@@ -41,7 +41,7 @@ export const useChatStore = create<ChatStore>((set) => ({
   removeSessions: (ids) =>
     set((state) => ({
       chatSessions:
-        state.chatSessions?.filter((s) => !ids.includes(s.id)) ??
+        state.chatSessions?.filter((s) => !ids.has(s.id)) ??
         state.chatSessions,
     })),
 }));
