@@ -109,6 +109,18 @@ Every component must live in its own file. Defining a component function inside 
 
 ## TypeScript conventions
 
+### Always use `type`, never `interface`
+
+Use `type` for all type declarations. Never use `interface`.
+
+```ts
+// wrong
+interface Props { id: string }
+
+// correct
+type Props = { id: string }
+```
+
 ### Use named parameters for functions with more than one parameter
 
 Any function or callback with two or more parameters must use a single destructured object argument, not positional parameters.

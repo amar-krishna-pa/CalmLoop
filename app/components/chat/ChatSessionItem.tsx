@@ -9,13 +9,13 @@ import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import type { SessionItem } from "@/app/lib/stores/chat";
 import { useChatStore } from "@/app/lib/stores/chat";
 
-interface Props {
+type Props = {
   chatSession: SessionItem;
   isActive: boolean;
   isDeleteMode: boolean;
   isSelected: boolean;
   onToggleSelect: () => void;
-}
+};
 
 export default function ChatSessionItem({
   chatSession,
