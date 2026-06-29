@@ -19,7 +19,7 @@ export default function ChatSessionsSidebar({ currentSessionId }: Props) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const chatSessions = useChatStore((s) => s.chatSessions);
-  const removeSessions = useChatStore((s) => s.removeSessions);
+  const removeSessions = useChatStore((s) => s.actions.removeSessions);
 
   const router = useRouter();
 

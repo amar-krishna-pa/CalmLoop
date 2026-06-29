@@ -29,7 +29,7 @@ export default function ChatSessionItem({
   const [isSaving, setIsSaving] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const updateSessionTitle = useChatStore((s) => s.updateSessionTitle);
+  const updateSessionTitle = useChatStore((s) => s.actions.updateSessionTitle);
 
   function startEdit() {
     setEditValue(chatSession.title ?? "");

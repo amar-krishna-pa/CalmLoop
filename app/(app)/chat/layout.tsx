@@ -10,7 +10,7 @@ import { useChatStore } from "@/app/lib/stores/chat";
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const fetchSessions = useChatStore((s) => s.fetchSessions);
+  const fetchSessions = useChatStore((s) => s.actions.fetchSessions);
 
   const { chatSessionId } = useParams<{ chatSessionId: string }>();
 

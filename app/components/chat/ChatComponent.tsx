@@ -16,7 +16,7 @@ export default function ChatComponent({
 
   const hasFiredRef = useRef(false);
 
-  const fetchSessions = useChatStore((s) => s.fetchSessions);
+  const fetchSessions = useChatStore((s) => s.actions.fetchSessions);
 
   const isNewSession = initialMessages.length === 0;
 
