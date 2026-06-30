@@ -3,7 +3,7 @@
 import { useChat } from "@ai-sdk/react";
 import { useEffect, useRef, useState } from "react";
 import type { UIMessage } from "ai";
-import { useChatStore } from "@/app/lib/stores/chat";
+import { fetchSessions } from "@/app/lib/stores/chat";
 
 export default function ChatComponent({
   chatSessionId,
@@ -15,8 +15,6 @@ export default function ChatComponent({
   const [input, setInput] = useState("");
 
   const hasFiredRef = useRef(false);
-
-  const fetchSessions = useChatStore((s) => s.actions.fetchSessions);
 
   const isNewSession = initialMessages.length === 0;
 

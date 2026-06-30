@@ -7,7 +7,7 @@ import { LuPencil } from "react-icons/lu";
 import ChatSessionItem from "./ChatSessionItem";
 import SidebarDeleteControls from "./SidebarDeleteControls";
 import { cn } from "@/app/lib/cn/cn";
-import { useChatStore } from "@/app/lib/stores/chat";
+import { useChatStore, removeSessions } from "@/app/lib/stores/chat";
 
 type Props = {
   currentSessionId: string;
@@ -19,7 +19,6 @@ export default function ChatSessionsSidebar({ currentSessionId }: Props) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const chatSessions = useChatStore((s) => s.chatSessions);
-  const removeSessions = useChatStore((s) => s.actions.removeSessions);
 
   const router = useRouter();
 

@@ -5,18 +5,16 @@ import { useParams } from "next/navigation";
 import { LuMenu } from "react-icons/lu";
 import ChatSessionsSidebar from "@/app/components/chat/ChatSessionsSidebar";
 import { cn } from "@/app/lib/cn/cn";
-import { useChatStore } from "@/app/lib/stores/chat";
+import { fetchSessions } from "@/app/lib/stores/chat";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
-
-  const fetchSessions = useChatStore((s) => s.actions.fetchSessions);
 
   const { chatSessionId } = useParams<{ chatSessionId: string }>();
 
   useEffect(() => {
     fetchSessions();
-  }, [chatSessionId, fetchSessions]);
+  }, [chatSessionId]);
 
   return (
     <div className="flex h-full relative">

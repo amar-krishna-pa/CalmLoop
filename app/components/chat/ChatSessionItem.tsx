@@ -7,7 +7,7 @@ import { useRef, useState } from "react";
 import { LuCheck, LuPencil, LuX } from "react-icons/lu";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import type { SessionItem } from "@/app/lib/stores/chat";
-import { useChatStore } from "@/app/lib/stores/chat";
+import { updateSessionTitle } from "@/app/lib/stores/chat";
 
 type Props = {
   chatSession: SessionItem;
@@ -28,8 +28,6 @@ export default function ChatSessionItem({
   const [editValue, setEditValue] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const updateSessionTitle = useChatStore((s) => s.actions.updateSessionTitle);
 
   function startEdit() {
     setEditValue(chatSession.title ?? "");
