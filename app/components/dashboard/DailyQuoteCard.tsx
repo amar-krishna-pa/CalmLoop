@@ -27,13 +27,24 @@ const QUOTES = [
     text: "The discomfort of ERP is temporary. The freedom it builds is permanent.",
     author: "Edna Foa",
   },
+  {
+    text: "OCD is insatiable.",
+    author: "Jeffrey M. Schwartz",
+  },
+  {
+    text: "Face. Accept. Float. Let time pass.",
+    author: "Claire Weekes",
+  },
+  {
+    text: "When you confront the monster you fear the most, you'll defeat your fears.",
+    author: "David D. Burns",
+  },
 ];
 
 function getDailyQuote() {
-  const dayOfYear = Math.floor(
-    (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000
-  );
-  return QUOTES[dayOfYear % QUOTES.length];
+  const day = new Date().getDate();
+  const group = (day - 1) % 10;
+  return QUOTES[group % QUOTES.length];
 }
 
 export default function DailyQuoteCard() {
