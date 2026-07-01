@@ -1,103 +1,33 @@
-import {
-  LuSunMedium,
-  LuClipboardList,
-  LuBookOpen,
-  LuLifeBuoy,
-  LuNotebookPen,
-  LuMessageSquare,
-} from "react-icons/lu";
+import { LuSunMedium, LuClipboardList, LuMessageSquare } from "react-icons/lu";
 
 type Feature = {
   icon: React.ComponentType<{ size?: number }>;
   label: string;
   title: string;
   description: string;
-  tags: string[];
 };
 
 const features: Feature[] = [
   {
     icon: LuSunMedium,
     label: "Today",
-    title: "Daily Check-in Dashboard",
+    title: "Daily Check-in",
     description:
-      "Anchor your day with a structured wellness snapshot before OCD has a chance to escalate.",
-    tags: [
-      "Mood tracker",
-      "Sleep & stress log",
-      "Medication adherence",
-      "Progress streak",
-      "Daily ERP quote",
-    ],
+      "Track your mood, sleep, stress, and medication each day. A consistent check-in builds the self-awareness that makes ERP work.",
   },
   {
     icon: LuClipboardList,
     label: "Treatment",
-    title: "Full ERP Treatment Toolkit",
+    title: "Structured ERP Tools",
     description:
-      "Structured across three phases — Prepare, Practice, and Plan — so each step builds on the last.",
-    tags: [
-      "Fear hierarchy + SUDS",
-      "ERP tracker",
-      "Thought records",
-      "Behavioural experiments",
-      "Relapse prevention",
-    ],
-  },
-  {
-    icon: LuBookOpen,
-    label: "Learn",
-    title: "OCD Psychoeducation",
-    description:
-      "Understand the mechanics behind your anxiety so you can stop being surprised by it.",
-    tags: [
-      "6-step OCD cycle",
-      "Cognitive distortions",
-      "Thought-action fusion",
-      "Uncertainty intolerance",
-    ],
-  },
-  {
-    icon: LuLifeBuoy,
-    label: "Support",
-    title: "Crisis & Grounding Tools",
-    description:
-      "When a spike hits, reach for a grounding technique or open the AI chat — no reassurance given.",
-    tags: [
-      "5-4-3-2-1 senses",
-      "Box breathing",
-      "Body scan",
-      "Safe place",
-      "Muscle relax",
-    ],
-  },
-  {
-    icon: LuNotebookPen,
-    label: "Reflect",
-    title: "Journal & Subtype Insights",
-    description:
-      "Write freely, then see which OCD themes recur across your entries over the past 30 days.",
-    tags: [
-      "Free-form journal",
-      "Contamination",
-      "Harm OCD",
-      "Pure O",
-      "Checking",
-      "Symmetry",
-    ],
+      "Map your fear hierarchy, log exposures, challenge intrusive thoughts, and plan for setbacks — all grounded in ERP and ACT.",
   },
   {
     icon: LuMessageSquare,
     label: "Chat",
     title: "AI Reflection Assistant",
     description:
-      "A persistent, session-aware AI that responds with ERP and ACT guidance — never reassurance.",
-    tags: [
-      "Session history",
-      "Editable titles",
-      "ERP-grounded responses",
-      "24/7 access",
-    ],
+      "An AI companion that responds with ERP and ACT-grounded guidance whenever anxiety spikes — not reassurance, but honest support.",
   },
 ];
 
@@ -106,19 +36,19 @@ export default function FeaturesSection() {
     <section id="how-it-works" className="mx-auto max-w-7xl px-6 py-24">
       <div className="mb-16 text-center max-w-3xl mx-auto">
         <span className="text-xs font-semibold uppercase tracking-widest text-accent">
-          Everything you need
+          Built for growth
         </span>
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight mt-3">
-          A complete toolkit for breaking the loop
+          Designed for reflection, not reassurance
         </h2>
         <p className="mt-4 text-muted text-base">
-          Six focused areas — each grounded in ERP and ACT — that work together
-          from daily check-in to long-term recovery planning.
+          Compulsions seek certainty, which feeds the loop. CalmLoop helps you
+          lean into uncertainty and build lasting resilience.
         </p>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {features.map(({ icon: Icon, label, title, description, tags }) => (
+      <div className="grid gap-8 md:grid-cols-3">
+        {features.map(({ icon: Icon, label, title, description }) => (
           <div
             key={title}
             className="rounded-2xl border border-subtle bg-card p-8 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 flex flex-col h-full"
@@ -131,20 +61,10 @@ export default function FeaturesSection() {
                 {label}
               </span>
             </div>
-            <h3 className="text-lg font-bold mb-2">{title}</h3>
-            <p className="text-muted text-sm leading-relaxed grow mb-5">
+            <h3 className="text-xl font-bold mb-3">{title}</h3>
+            <p className="text-muted text-sm leading-relaxed grow">
               {description}
             </p>
-            <div className="flex flex-wrap gap-1.5">
-              {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-[11px] bg-surface border border-subtle px-2 py-0.5 rounded-full text-muted"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
           </div>
         ))}
       </div>
