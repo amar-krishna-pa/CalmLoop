@@ -60,7 +60,7 @@ export default function FaqSection() {
     {
       question: "How is my conversation data protected?",
       answer:
-        "We take data security very seriously. All entries are encrypted locally on your device, and we implement industry-standard database security protocols. Your mental health thoughts are private, personal, and strictly yours.",
+        "We take data security very seriously. Your entries are stored securely and are never sold, shared with third parties, or used to train AI models. Your mental health thoughts are private, personal, and strictly yours.",
     },
   ];
 

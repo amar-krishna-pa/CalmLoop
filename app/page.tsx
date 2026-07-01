@@ -2,6 +2,7 @@ import HeroSection from "./components/landing/HeroSection";
 import ChatDemoSection from "./components/landing/ChatDemoSection";
 import StatsSection from "./components/landing/StatsSection";
 import FeaturesSection from "./components/landing/FeaturesSection";
+import TreatmentSection from "./components/landing/TreatmentSection";
 import PhilosophySection from "./components/landing/PhilosophySection";
 import FaqSection from "./components/landing/FaqSection";
 import CtaSection from "./components/landing/CtaSection";
@@ -14,6 +15,7 @@ export default function Home() {
       <ChatDemoSection />
       <StatsSection />
       <FeaturesSection />
+      <TreatmentSection />
       <PhilosophySection />
       <FaqSection />
       <CtaSection />
