@@ -18,6 +18,11 @@ export const auth = betterAuth({
         required: false,
         input: false,
       },
+      lastActivityDate: {
+        type: "string",
+        required: false,
+        input: false,
+      },
     },
   },
   socialProviders: {
