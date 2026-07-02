@@ -152,6 +152,21 @@ See `.env.example`. Required:
 - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` — Google OAuth
 - `PASSKEY_CONTEXT_SECRET` — passkey plugin
 
+## Streak tracking
+
+Call `updateStreak({ userId })` from `@/app/lib/streak/update-streak` in any POST/PATCH/DELETE route handler that represents a deliberate user action (mood log, todo completion, ERP session, etc.). Do not call it in GET handlers, auth routes, or background/system operations. Always call it after the main DB write succeeds, never before.
+
+Before calling `updateStreak`, check `session.user.lastActivityDate` against today's date and skip if they match — this avoids a redundant DB write when the user has already been active today:
+
+```ts
+const today = new Date().toISOString().split("T")[0];
+if (session.user.lastActivityDate !== today) {
+  await updateStreak({ userId: session.user.id });
+}
+```
+
+Note: `lastActivityDate` is only available on `session.user` if it is registered as an `additionalField` in `app/lib/auth/auth.ts`.
+
 ## Next.js version note
 
 This project uses Next.js 16, which has breaking changes from earlier versions. Before writing any Next.js-specific code, check `node_modules/next/dist/docs/` for the authoritative API reference.

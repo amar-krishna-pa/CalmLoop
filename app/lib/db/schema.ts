@@ -8,6 +8,7 @@ import {
   integer,
   uuid,
   jsonb,
+  date,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -17,6 +18,9 @@ export const user = pgTable("user", {
   emailVerified: boolean("email_verified").default(false).notNull(),
   image: text("image"),
   role: text("role").notNull().default("patient"),
+  currentStreak: integer("current_streak").notNull().default(0),
+  longestStreak: integer("longest_streak").notNull().default(0),
+  lastActivityDate: date("last_activity_date"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
