@@ -41,16 +41,14 @@ export default function TreatmentPage() {
         <p className="text-sm text-muted mt-1">Your active clinical tools</p>
       </div>
 
-      <div className="bg-surface border border-subtle rounded-xl p-1 flex gap-1 mb-6">
+      <div className="bg-surface border border-subtle rounded-xl p-1 grid grid-cols-3 gap-1 mb-6">
         {TABS.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={cn(
-              "flex-1 flex flex-col items-center py-2.5 px-3 rounded-lg transition-all duration-200 cursor-pointer",
-              activeTab === tab.id
-                ? "bg-card border border-subtle shadow-sm"
-                : "hover:bg-card/50"
+              "flex flex-col items-center py-2.5 px-3 rounded-lg transition-colors duration-200 cursor-pointer focus:outline-none",
+              activeTab === tab.id ? "bg-accent/10" : "hover:bg-accent/5"
             )}
           >
             <span
@@ -68,9 +66,8 @@ export default function TreatmentPage() {
         ))}
       </div>
 
-
       {activeTab === "prepare" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <FearHierarchyCard />
           <TriggerLogCard />
           <SafetyBehavioursCard />
@@ -78,7 +75,7 @@ export default function TreatmentPage() {
       )}
 
       {activeTab === "practice" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <ErpTrackerCard />
           <ThoughtRecordsCard />
           <BehaviouralExperimentsCard />
@@ -86,7 +83,7 @@ export default function TreatmentPage() {
       )}
 
       {activeTab === "plan" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <HomeworkCard />
           <RelapsePreventionCard />
         </div>

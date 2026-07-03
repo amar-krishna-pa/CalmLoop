@@ -7,8 +7,12 @@
 @variant dark (&:where(.dark, .dark *));
 
 @keyframes shimmer {
-  from { background-position: 200% center; }
-  to   { background-position: -100% center; }
+  from {
+    background-position: 200% center;
+  }
+  to {
+    background-position: -100% center;
+  }
 }
 
 .skeleton {
