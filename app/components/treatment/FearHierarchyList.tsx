@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { LuCheck, LuPencil, LuRefreshCw } from "react-icons/lu";
 import FearHierarchyCardLoader from "@/app/components/loaders/FearHierarchyCardLoader";
+import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import {
   fetchFearHierarchyItems,
   patchCurrentSuds,
@@ -19,21 +20,26 @@ export default function FearHierarchyList() {
   );
 
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [savingId, setSavingId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchFearHierarchyItems();
   }, []);
 
-  function handleDoneEditing({
+  async function handleDoneEditing({
     id,
     currentSuds,
   }: {
     id: string;
     currentSuds: number;
   }) {
-    patchCurrentSuds({ id, currentSuds });
+    setSavingId(id);
 
-    setEditingId(null);
+    const ok = await patchCurrentSuds({ id, currentSuds });
+
+    setSavingId(null);
+
+    if (ok) setEditingId(null);
   }
 
   if (loading) return <FearHierarchyCardLoader />;
@@ -114,12 +120,15 @@ export default function FearHierarchyList() {
                     })
                   : setEditingId(item.id)
               }
-              className="cursor-pointer p-1 rounded shrink-0 text-muted hover:text-primary hover:bg-accent/10 transition-colors"
+              disabled={savingId === item.id}
+              className="cursor-pointer p-1 rounded shrink-0 text-muted hover:text-primary hover:bg-accent/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label={
                 editingId === item.id ? "Done editing" : "Edit current SUDS"
               }
             >
-              {editingId === item.id ? (
+              {savingId === item.id ? (
+                <LoadingSpinner size={12} />
+              ) : editingId === item.id ? (
                 <LuCheck size={12} />
               ) : (
                 <LuPencil size={12} />

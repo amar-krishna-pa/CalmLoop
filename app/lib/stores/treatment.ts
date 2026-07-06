@@ -21,18 +21,33 @@ export const useTreatmentStore = create<TreatmentStore>(() => ({
 }));
 
 export async function fetchFearHierarchyItems() {
-  useTreatmentStore.setState({ fearHierarchyLoading: true, fearHierarchyFetchError: false });
+  useTreatmentStore.setState({
+    fearHierarchyLoading: true,
+    fearHierarchyFetchError: false,
+  });
   try {
     const res = await fetch("/api/treatment/fear-hierarchy");
     if (!res.ok) throw new Error();
     const data = await res.json();
-    useTreatmentStore.setState({ fearHierarchyItems: data.items, fearHierarchyLoading: false });
+    useTreatmentStore.setState({
+      fearHierarchyItems: data.items,
+      fearHierarchyLoading: false,
+    });
   } catch {
-    useTreatmentStore.setState({ fearHierarchyLoading: false, fearHierarchyFetchError: true });
+    useTreatmentStore.setState({
+      fearHierarchyLoading: false,
+      fearHierarchyFetchError: true,
+    });
   }
 }
 
-export function updateCurrentSuds({ id, currentSuds }: { id: string; currentSuds: number }) {
+export function updateCurrentSuds({
+  id,
+  currentSuds,
+}: {
+  id: string;
+  currentSuds: number;
+}) {
   useTreatmentStore.setState((state) => ({
     fearHierarchyItems:
       state.fearHierarchyItems?.map((item) =>
@@ -41,15 +56,24 @@ export function updateCurrentSuds({ id, currentSuds }: { id: string; currentSuds
   }));
 }
 
-export async function patchCurrentSuds({ id, currentSuds }: { id: string; currentSuds: number }) {
+export async function patchCurrentSuds({
+  id,
+  currentSuds,
+}: {
+  id: string;
+  currentSuds: number;
+}): Promise<boolean> {
   try {
     const res = await fetch(`/api/treatment/fear-hierarchy/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ currentSuds }),
     });
+    throw new Error();
     if (!res.ok) throw new Error();
+    return true;
   } catch {
     toast.error("Failed to update SUDS level");
+    return false;
   }
 }
