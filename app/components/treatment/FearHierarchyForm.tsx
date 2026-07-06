@@ -56,7 +56,7 @@ export default function FearHierarchyForm() {
           min={1}
           max={10}
           placeholder="1–10"
-          aria-label="SUDS level (1–10)"
+          aria-label="Initial SUDS level (1–10)"
           value={suds}
           onChange={(e) => setSuds(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
