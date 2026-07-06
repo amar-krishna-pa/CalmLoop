@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/app/lib/cn/cn";
-import FearHierarchyCard from "@/app/components/dashboard/FearHierarchyCard";
+import FearHierarchyCard from "@/app/components/treatment/FearHierarchyCard";
 import ErpTrackerCard from "@/app/components/dashboard/ErpTrackerCard";
 import TriggerLogCard from "@/app/components/dashboard/TriggerLogCard";
 import SafetyBehavioursCard from "@/app/components/dashboard/SafetyBehavioursCard";
