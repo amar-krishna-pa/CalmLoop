@@ -10,21 +10,25 @@ export type HierarchyItem = {
 
 type TreatmentStore = {
   fearHierarchyItems: HierarchyItem[] | null;
+  fearHierarchyLoading: boolean;
+  fearHierarchyFetchError: boolean;
 };
 
 export const useTreatmentStore = create<TreatmentStore>(() => ({
   fearHierarchyItems: null,
+  fearHierarchyLoading: true,
+  fearHierarchyFetchError: false,
 }));
 
 export async function fetchFearHierarchyItems() {
+  useTreatmentStore.setState({ fearHierarchyLoading: true, fearHierarchyFetchError: false });
   try {
     const res = await fetch("/api/treatment/fear-hierarchy");
     if (!res.ok) throw new Error();
     const data = await res.json();
-    useTreatmentStore.setState({ fearHierarchyItems: data.items });
+    useTreatmentStore.setState({ fearHierarchyItems: data.items, fearHierarchyLoading: false });
   } catch {
-    toast.error("Failed to load fear hierarchy");
-    useTreatmentStore.setState({ fearHierarchyItems: [] });
+    useTreatmentStore.setState({ fearHierarchyLoading: false, fearHierarchyFetchError: true });
   }
 }
 

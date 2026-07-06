@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LuCheck, LuPencil } from "react-icons/lu";
+import { LuCheck, LuPencil, LuRefreshCw } from "react-icons/lu";
 import FearHierarchyCardLoader from "@/app/components/loaders/FearHierarchyCardLoader";
 import {
   fetchFearHierarchyItems,
@@ -13,6 +13,10 @@ import Slider from "@/app/components/common/Slider";
 
 export default function FearHierarchyList() {
   const items = useTreatmentStore((state) => state.fearHierarchyItems);
+  const loading = useTreatmentStore((state) => state.fearHierarchyLoading);
+  const fetchError = useTreatmentStore(
+    (state) => state.fearHierarchyFetchError
+  );
 
   const [editingId, setEditingId] = useState<string | null>(null);
 
@@ -32,9 +36,24 @@ export default function FearHierarchyList() {
     setEditingId(null);
   }
 
-  if (items === null) return <FearHierarchyCardLoader />;
+  if (loading) return <FearHierarchyCardLoader />;
 
-  if (items.length === 0) {
+  if (fetchError) {
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center gap-3 border border-subtle rounded-lg h-full">
+        <p className="text-sm text-muted">Failed to load items</p>
+        <button
+          onClick={fetchFearHierarchyItems}
+          className="btn-accent flex items-center gap-1.5 cursor-pointer"
+        >
+          <LuRefreshCw size={13} />
+          Retry
+        </button>
+      </div>
+    );
+  }
+
+  if (items?.length === 0) {
     return (
       <p className="text-sm text-muted h-full flex justify-center items-center border border-subtle rounded-lg">
         No items yet — add your first fear above.
@@ -44,7 +63,7 @@ export default function FearHierarchyList() {
 
   return (
     <ul className="space-y-2">
-      {items.map((item) => (
+      {items?.map((item) => (
         <li
           key={item.id}
           className="p-3 rounded-lg bg-surface border border-subtle flex flex-col gap-2"

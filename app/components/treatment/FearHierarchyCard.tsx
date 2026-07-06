@@ -3,7 +3,7 @@ import FearHierarchyList from "@/app/components/treatment/FearHierarchyList";
 
 export default function FearHierarchyCard() {
   return (
-    <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4 card-tall">
+    <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4 card-tall overflow-hidden">
       <div>
         <h2 className="text-sm font-semibold text-primary">Fear Hierarchy</h2>
         <p className="text-xs text-muted mt-0.5">
