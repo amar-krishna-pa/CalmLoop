@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
+import { cn } from "@/app/lib/cn/cn";
 
 export default function FearHierarchyForm() {
   const [situation, setSituation] = useState("");
@@ -67,7 +68,10 @@ export default function FearHierarchyForm() {
       <button
         onClick={handleSubmit}
         disabled={submitting || !isValid}
-        className="btn-accent w-full h-9 disabled:opacity-60 flex items-center justify-center"
+        className={cn(
+          "btn-accent w-full h-9 disabled:opacity-60 flex items-center justify-center",
+          isValid && !submitting ? "cursor-pointer" : "cursor-not-allowed"
+        )}
       >
         {submitting ? <LoadingSpinner size={14} /> : "Add item"}
       </button>
