@@ -1,6 +1,6 @@
 import { Skeleton } from "./LoadingSkeleton";
 
-const ROWS = [1, 2, 3];
+const ROWS = [1, 2];
 
 export default function FearHierarchyCardLoader() {
   return (

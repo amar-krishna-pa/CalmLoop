@@ -62,7 +62,7 @@
      skeleton loaders never cause layout jumps.                                */
   --card-short: 280px;
   --card-medium: 420px;
-  --card-tall: 560px;
+  --card-tall: 500px;
 }
 
 /* ─── DARK MODE OVERRIDES ────────────────────────────────────────────────────
