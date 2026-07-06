@@ -20,13 +20,6 @@ export default function FearHierarchyCardLoader() {
             <Skeleton className="h-1.5 w-16 rounded-full" />
             <Skeleton className="h-2.5 w-4" />
           </div>
-
-          <div className="flex items-center gap-2">
-            <Skeleton className="h-2.5 w-10 shrink-0" />
-            <Skeleton className="h-1.5 w-16 rounded-full" />
-            <Skeleton className="h-2.5 w-4" />
-            <Skeleton className="h-4 w-4 rounded shrink-0" />
-          </div>
         </div>
       ))}
     </div>
