@@ -131,11 +131,27 @@ export const messages = pgTable("messages", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const fearHierarchyItems = pgTable("fear_hierarchy_items", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  situation: text("situation").notNull(),
+  initialSuds: integer("initial_suds").notNull(),
+  currentSuds: integer("current_suds").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => /* @__PURE__ */ new Date())
+    .notNull(),
+});
+
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
   passkeys: many(passkey),
   chatSessions: many(chatSessions),
+  fearHierarchyItems: many(fearHierarchyItems),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -176,3 +192,13 @@ export const messageRelations = relations(messages, ({ one }) => ({
     references: [chatSessions.id],
   }),
 }));
+
+export const fearHierarchyItemRelations = relations(
+  fearHierarchyItems,
+  ({ one }) => ({
+    user: one(user, {
+      fields: [fearHierarchyItems.userId],
+      references: [user.id],
+    }),
+  })
+);

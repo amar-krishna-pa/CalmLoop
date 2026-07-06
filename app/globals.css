@@ -53,6 +53,9 @@
 
   /* Success — green for save / confirm interactive states */
   --success: #16a34a;
+
+  /* Caution — amber for mid-range severity (between success and danger) */
+  --caution: #ca8a04;
 }
 
 /* ─── DARK MODE OVERRIDES ────────────────────────────────────────────────────
@@ -80,6 +83,9 @@
   /* Danger / success dark overrides */
   --danger: #f87171;
   --success: #4ade80;
+
+  /* Caution dark override */
+  --caution: #fbbf24;
 }
 
 /* ─── TAILWIND V4 THEME BRIDGE ───────────────────────────────────────────────
@@ -102,6 +108,7 @@
 
   --color-danger: var(--danger);
   --color-success: var(--success);
+  --color-caution: var(--caution);
 }
 
 /* ─── GLOBAL BODY DEFAULTS ───────────────────────────────────────────────────
