@@ -56,6 +56,13 @@
 
   /* Caution — amber for mid-range severity (between success and danger) */
   --caution: #ca8a04;
+
+  /* ── Card height tiers ──────────────────────────────────────────────────────
+     Fixed heights keep cards stable between loading and loaded states so
+     skeleton loaders never cause layout jumps.                                */
+  --card-short: 280px;
+  --card-medium: 420px;
+  --card-tall: 560px;
 }
 
 /* ─── DARK MODE OVERRIDES ────────────────────────────────────────────────────
@@ -194,6 +201,17 @@ body {
   }
   .icon-btn:hover {
     opacity: 0.8; /* Gentle fade — indicates interactivity    */
+  }
+
+  /* ── Card height tiers ─────────────────────────────────────────────────── */
+  .card-short {
+    height: var(--card-short);
+  }
+  .card-medium {
+    height: var(--card-medium);
+  }
+  .card-tall {
+    height: var(--card-tall);
   }
 
   /* ── Base input / textarea style ────────────────────────────────────────── */
