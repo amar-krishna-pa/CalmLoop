@@ -47,6 +47,7 @@ Key tables: `user`, `session`, `account`, `passkey`, `verification` (all managed
 ### AI chat — Vercel AI SDK + Groq
 
 `POST /api/chat` handles all chat turns:
+
 1. Validates the request with `ChatRequestSchema` (zod, `app/lib/zod/chat.ts`)
 2. Creates a `chat_sessions` row on the first message, generating a title via `llama-3.1-8b-instant`
 3. Persists the user message, then streams the assistant response using `openai/gpt-oss-120b` via Groq
@@ -72,10 +73,11 @@ All colors come from CSS variables defined in `app/globals.css` and bridged into
 **Brand accent (Tailwind-generated):** `bg-accent`, `bg-accent/10`, `text-accent`, `border-accent`, `bg-accent-hover`  
 **Semantic:** `bg-warning-bg`, `text-warning-text`, `border-warning-border`, `text-danger`, `bg-danger`, `text-success`, `bg-success`
 
-**Reusable component classes** (defined in `@layer components`):  
-- `btn-accent` — primary green action button  
-- `icon-btn` — 32×32 square icon button  
-- `input-base` — themed input/textarea  
+**Reusable component classes** (defined in `@layer components`):
+
+- `btn-accent` — primary green action button
+- `icon-btn` — 32×32 square icon button
+- `input-base` — themed input/textarea
 - `skeleton` — shimmer loading placeholder
 
 ### Use `cn()` for all conditional class expressions
@@ -85,12 +87,39 @@ Import from `@/app/lib/cn/cn`. Never use template-literal ternaries for class na
 ```tsx
 import { cn } from "@/app/lib/cn/cn";
 
-<div className={cn("base-class", isActive && "bg-accent/10 border border-accent/20")} />
+<div
+  className={cn(
+    "base-class",
+    isActive && "bg-accent/10 border border-accent/20"
+  )}
+/>;
 ```
 
 ### Dark mode
 
 Dark mode is driven by the `.dark` class on `<html>` (toggled by next-themes). The `@variant dark` override in `globals.css` makes `dark:` Tailwind variants respond to this class instead of `prefers-color-scheme`. All design token variables automatically swap — no need for `dark:` variants on token-based classes.
+
+## Card heights
+
+All cards must use one of the three height tier classes defined in `globals.css`. Fixed heights prevent layout jumps between loading and loaded states — the skeleton always fills the same space as the real content.
+
+| Class         | Height | When to use                                           |
+| ------------- | ------ | ----------------------------------------------------- |
+| `card-short`  | 280px  | Simple read-only cards with minimal or static content |
+| `card-medium` | 420px  | Cards with a list or moderate scrollable content      |
+| `card-tall`   | 560px  | Cards with both a form and a scrollable list          |
+
+Always pair the height class with `flex flex-col` on the card root. When the card contains a scrollable region (list, feed, etc.), wrap it in a `div` with `flex-1 min-h-0 overflow-y-auto` so it fills the remaining space and scrolls rather than overflowing:
+
+```tsx
+<div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4 card-tall">
+  {/* fixed header */}
+  {/* fixed form */}
+  <div className="flex-1 min-h-0 overflow-y-auto">
+    {/* scrollable content */}
+  </div>
+</div>
+```
 
 ## Loading states
 
@@ -115,10 +144,12 @@ Use `type` for all type declarations. Never use `interface`.
 
 ```ts
 // wrong
-interface Props { id: string }
+interface Props {
+  id: string;
+}
 
 // correct
-type Props = { id: string }
+type Props = { id: string };
 ```
 
 ### Use named parameters for functions with more than one parameter
@@ -146,6 +177,7 @@ onTitleSaved={({ chatSessionId, title }) => ...}
 ## Environment variables
 
 See `.env.example`. Required:
+
 - `DATABASE_URL` — Neon PostgreSQL connection string
 - `GROQ_API_KEY` — Groq API key
 - `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL` — better-auth config
