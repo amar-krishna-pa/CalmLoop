@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { toast } from "sonner";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import { cn } from "@/app/lib/cn/cn";
+import { createFearHierarchyItem } from "@/app/lib/stores/treatment";
 
 export default function FearHierarchyForm() {
   const [situation, setSituation] = useState("");
@@ -18,24 +18,17 @@ export default function FearHierarchyForm() {
     if (!isValid) return;
 
     setSubmitting(true);
-    try {
-      const res = await fetch("/api/treatment/fear-hierarchy", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          situation: situation.trim(),
-          initialSuds: sudsValue,
-        }),
-      });
 
-      if (!res.ok) throw new Error();
+    const ok = await createFearHierarchyItem({
+      situation: situation.trim(),
+      initialSuds: sudsValue,
+    });
 
+    setSubmitting(false);
+
+    if (ok) {
       setSituation("");
       setSuds("");
-    } catch {
-      toast.error("Failed to add item");
-    } finally {
-      setSubmitting(false);
     }
   }
 

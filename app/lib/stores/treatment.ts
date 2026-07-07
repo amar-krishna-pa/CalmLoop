@@ -14,6 +14,35 @@ type TreatmentStore = {
   fearHierarchyFetchError: boolean;
 };
 
+export async function createFearHierarchyItem({
+  situation,
+  initialSuds,
+}: {
+  situation: string;
+  initialSuds: number;
+}): Promise<boolean> {
+  try {
+    const res = await fetch("/api/treatment/fear-hierarchy", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ situation, initialSuds }),
+    });
+
+    if (!res.ok) throw new Error();
+
+    const data = await res.json();
+
+    useTreatmentStore.setState((state) => ({
+      fearHierarchyItems: [...(state.fearHierarchyItems ?? []), data.item],
+    }));
+
+    return true;
+  } catch {
+    toast.error("Failed to add item");
+    return false;
+  }
+}
+
 export const useTreatmentStore = create<TreatmentStore>(() => ({
   fearHierarchyItems: null,
   fearHierarchyLoading: true,
@@ -41,7 +70,7 @@ export async function fetchFearHierarchyItems() {
   }
 }
 
-export function updateCurrentSuds({
+export function updateCurrentSudsState({
   id,
   currentSuds,
 }: {

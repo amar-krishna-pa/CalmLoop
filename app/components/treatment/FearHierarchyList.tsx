@@ -8,7 +8,7 @@ import {
   deleteFearHierarchyItem,
   fetchFearHierarchyItems,
   patchCurrentSuds,
-  updateCurrentSuds,
+  updateCurrentSudsState,
   useTreatmentStore,
 } from "@/app/lib/stores/treatment";
 import Slider from "@/app/components/common/Slider";
@@ -78,7 +78,7 @@ export default function FearHierarchyList() {
   }
 
   return (
-    <ul className="space-y-2">
+    <ul className="space-y-2 mr-2">
       {items?.map((item) => (
         <li
           key={item.id}
@@ -128,7 +128,7 @@ export default function FearHierarchyList() {
               value={item.currentSuds}
               editable={editingId === item.id}
               onChange={(value) =>
-                updateCurrentSuds({ id: item.id, currentSuds: value })
+                updateCurrentSudsState({ id: item.id, currentSuds: value })
               }
               ariaLabel="Current SUDS level"
             />
