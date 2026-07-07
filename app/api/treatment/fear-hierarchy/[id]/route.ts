@@ -69,5 +69,10 @@ export async function DELETE(
     return Response.json({ error: "Not found" }, { status: 404 });
   }
 
+  const today = new Date().toISOString().split("T")[0];
+  if (session.user.lastActivityDate !== today) {
+    await updateStreak({ userId: session.user.id });
+  }
+
   return Response.json({ id: item.id });
 }
