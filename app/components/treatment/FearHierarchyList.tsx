@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { LuCheck, LuPencil, LuRefreshCw, LuTrash2 } from "react-icons/lu";
 import FearHierarchyCardLoader from "@/app/components/loaders/FearHierarchyCardLoader";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
+import ConfirmOverlay from "@/app/components/common/ConfirmOverlay";
 import {
   deleteFearHierarchyItem,
   fetchFearHierarchyItems,
@@ -23,6 +24,7 @@ export default function FearHierarchyList() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [savingId, setSavingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchFearHierarchyItems();
@@ -47,9 +49,12 @@ export default function FearHierarchyList() {
   async function handleDelete({ id }: { id: string }) {
     setDeletingId(id);
 
-    await deleteFearHierarchyItem({ id });
+    const ok = await deleteFearHierarchyItem({ id });
 
     setDeletingId(null);
+    if (ok) {
+      setConfirmDeleteId(null);
+    }
   }
 
   if (loading) return <FearHierarchyCardLoader />;
@@ -82,21 +87,25 @@ export default function FearHierarchyList() {
       {items?.map((item) => (
         <li
           key={item.id}
-          className="p-3 rounded-lg bg-surface border border-subtle flex flex-col gap-2"
+          className="relative p-3 rounded-lg bg-surface border border-subtle flex flex-col gap-2"
         >
+          {confirmDeleteId === item.id && (
+            <ConfirmOverlay
+              message="Delete this item?"
+              loading={deletingId === item.id}
+              onConfirm={() => handleDelete({ id: item.id })}
+              onCancel={() => setConfirmDeleteId(null)}
+            />
+          )}
+
           <div className="flex items-center justify-between gap-2">
             <p className="text-sm text-primary">{item.situation}</p>
             <button
-              onClick={() => handleDelete({ id: item.id })}
-              disabled={deletingId === item.id}
-              className="cursor-pointer p-1 rounded shrink-0 text-muted hover:text-danger hover:bg-danger/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={() => setConfirmDeleteId(item.id)}
+              className="cursor-pointer p-1 rounded shrink-0 text-muted hover:text-danger hover:bg-danger/10 transition-colors"
               aria-label="Delete item"
             >
-              {deletingId === item.id ? (
-                <LoadingSpinner size={12} />
-              ) : (
-                <LuTrash2 size={12} />
-              )}
+              <LuTrash2 size={12} />
             </button>
           </div>
 
