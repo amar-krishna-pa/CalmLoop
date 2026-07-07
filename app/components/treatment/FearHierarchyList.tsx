@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LuCheck, LuPencil, LuRefreshCw } from "react-icons/lu";
+import { LuCheck, LuPencil, LuRefreshCw, LuTrash2 } from "react-icons/lu";
 import FearHierarchyCardLoader from "@/app/components/loaders/FearHierarchyCardLoader";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import {
+  deleteFearHierarchyItem,
   fetchFearHierarchyItems,
   patchCurrentSuds,
   updateCurrentSuds,
@@ -21,6 +22,7 @@ export default function FearHierarchyList() {
 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [savingId, setSavingId] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchFearHierarchyItems();
@@ -40,6 +42,14 @@ export default function FearHierarchyList() {
     setSavingId(null);
 
     if (ok) setEditingId(null);
+  }
+
+  async function handleDelete({ id }: { id: string }) {
+    setDeletingId(id);
+
+    await deleteFearHierarchyItem({ id });
+
+    setDeletingId(null);
   }
 
   if (loading) return <FearHierarchyCardLoader />;
@@ -74,7 +84,21 @@ export default function FearHierarchyList() {
           key={item.id}
           className="p-3 rounded-lg bg-surface border border-subtle flex flex-col gap-2"
         >
-          <p className="text-sm text-primary">{item.situation}</p>
+          <div className="flex items-center justify-between gap-2">
+            <p className="text-sm text-primary">{item.situation}</p>
+            <button
+              onClick={() => handleDelete({ id: item.id })}
+              disabled={deletingId === item.id}
+              className="cursor-pointer p-1 rounded shrink-0 text-muted hover:text-danger hover:bg-danger/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Delete item"
+            >
+              {deletingId === item.id ? (
+                <LoadingSpinner size={12} />
+              ) : (
+                <LuTrash2 size={12} />
+              )}
+            </button>
+          </div>
 
           <div className="flex items-center gap-2">
             <span className="text-[10px] text-muted w-10 shrink-0">

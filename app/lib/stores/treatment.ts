@@ -77,3 +77,26 @@ export async function patchCurrentSuds({
     return false;
   }
 }
+
+export async function deleteFearHierarchyItem({
+  id,
+}: {
+  id: string;
+}): Promise<boolean> {
+  try {
+    const res = await fetch(`/api/treatment/fear-hierarchy/${id}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) throw new Error();
+
+    useTreatmentStore.setState((state) => ({
+      fearHierarchyItems:
+        state.fearHierarchyItems?.filter((item) => item.id !== id) ?? null,
+    }));
+
+    return true;
+  } catch {
+    toast.error("Failed to delete item");
+    return false;
+  }
+}
