@@ -12,7 +12,10 @@ export default function FearHierarchyForm() {
 
   const sudsValue = Number(suds);
   const isValid =
-    situation.trim().length > 0 && sudsValue >= 1 && sudsValue <= 10;
+    situation.trim().length > 0 &&
+    suds.trim() !== "" &&
+    sudsValue >= 0 &&
+    sudsValue <= 10;
 
   async function handleSubmit() {
     if (!isValid) return;
@@ -46,10 +49,10 @@ export default function FearHierarchyForm() {
         />
         <input
           type="number"
-          min={1}
+          min={0}
           max={10}
-          placeholder="1–10"
-          aria-label="Initial SUDS level (1–10)"
+          placeholder="0–10"
+          aria-label="Initial SUDS level (0–10)"
           value={suds}
           onChange={(e) => setSuds(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
