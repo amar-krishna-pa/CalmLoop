@@ -69,8 +69,9 @@ export async function patchCurrentSuds({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ currentSuds }),
     });
-    throw new Error();
+
     if (!res.ok) throw new Error();
+
     return true;
   } catch {
     toast.error("Failed to update SUDS level");
