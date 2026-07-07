@@ -14,6 +14,12 @@ type TreatmentStore = {
   fearHierarchyFetchError: boolean;
 };
 
+export const useTreatmentStore = create<TreatmentStore>(() => ({
+  fearHierarchyItems: null,
+  fearHierarchyLoading: true,
+  fearHierarchyFetchError: false,
+}));
+
 export async function createFearHierarchyItem({
   situation,
   initialSuds,
@@ -33,7 +39,10 @@ export async function createFearHierarchyItem({
     const data = await res.json();
 
     useTreatmentStore.setState((state) => ({
-      fearHierarchyItems: [...(state.fearHierarchyItems ?? []), data.item],
+      fearHierarchyItems: [
+        ...(state.fearHierarchyItems ?? []),
+        data.item,
+      ].sort((a, b) => a.initialSuds - b.initialSuds),
     }));
 
     return true;
@@ -42,12 +51,6 @@ export async function createFearHierarchyItem({
     return false;
   }
 }
-
-export const useTreatmentStore = create<TreatmentStore>(() => ({
-  fearHierarchyItems: null,
-  fearHierarchyLoading: true,
-  fearHierarchyFetchError: false,
-}));
 
 export async function fetchFearHierarchyItems() {
   useTreatmentStore.setState({
