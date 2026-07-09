@@ -1,3 +1,5 @@
+import TriggerLogForm from "@/app/components/dashboard/TriggerLogForm";
+
 type TriggerEntry = {
   id: string;
   trigger: string;
@@ -43,37 +45,40 @@ function AnxietyDot({ level }: { level: number }) {
 
 export default function TriggerLogCard() {
   return (
-    <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-sm font-semibold text-primary">Trigger Log</h2>
-          <p className="text-xs text-muted mt-0.5">
-            Track what sets off your OCD
-          </p>
-        </div>
-        <button className="btn-accent">Log trigger</button>
+    <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4 card-tall">
+      <div>
+        <h2 className="text-sm font-semibold text-primary">Trigger Log</h2>
+        <p className="text-xs text-muted mt-0.5">
+          Track what sets off your OCD
+        </p>
       </div>
 
-      <ul className="space-y-2">
-        {PLACEHOLDER_ENTRIES.map((e) => (
-          <li
-            key={e.id}
-            className="flex gap-3 p-3 rounded-lg bg-surface border border-subtle"
-          >
-            <AnxietyDot level={e.anxietyLevel} />
-            <div className="flex-1 min-w-0 space-y-1">
-              <div className="flex items-start justify-between gap-2">
-                <p className="text-sm text-primary leading-snug">{e.trigger}</p>
-                <span className="text-xs text-muted shrink-0">
-                  {e.anxietyLevel}/10
-                </span>
+      <TriggerLogForm />
+
+      <div className="flex-1 min-h-0 overflow-y-auto">
+        <ul className="space-y-2">
+          {PLACEHOLDER_ENTRIES.map((e) => (
+            <li
+              key={e.id}
+              className="flex gap-3 p-3 rounded-lg bg-surface border border-subtle"
+            >
+              <AnxietyDot level={e.anxietyLevel} />
+              <div className="flex-1 min-w-0 space-y-1">
+                <div className="flex items-start justify-between gap-2">
+                  <p className="text-sm text-primary leading-snug">
+                    {e.trigger}
+                  </p>
+                  <span className="text-xs text-muted shrink-0">
+                    {e.anxietyLevel}/10
+                  </span>
+                </div>
+                <p className="text-xs text-muted">{e.context}</p>
+                <p className="text-[10px] text-muted">{e.time}</p>
               </div>
-              <p className="text-xs text-muted">{e.context}</p>
-              <p className="text-[10px] text-muted">{e.time}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
