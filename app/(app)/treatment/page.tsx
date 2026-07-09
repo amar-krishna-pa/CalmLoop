@@ -4,7 +4,7 @@ import { useState } from "react";
 import { cn } from "@/app/lib/cn/cn";
 import FearHierarchyCard from "@/app/components/treatment/FearHierarchyCard";
 import ErpTrackerCard from "@/app/components/dashboard/ErpTrackerCard";
-import TriggerLogCard from "@/app/components/dashboard/TriggerLogCard";
+import TriggerLogCard from "@/app/components/treatment/TriggerLogCard";
 import SafetyBehavioursCard from "@/app/components/dashboard/SafetyBehavioursCard";
 import ThoughtRecordsCard from "@/app/components/dashboard/ThoughtRecordsCard";
 import BehaviouralExperimentsCard from "@/app/components/dashboard/BehaviouralExperimentsCard";

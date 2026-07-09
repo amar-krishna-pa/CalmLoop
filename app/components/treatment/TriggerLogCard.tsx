@@ -1,4 +1,4 @@
-import TriggerLogForm from "@/app/components/dashboard/TriggerLogForm";
+import TriggerLogForm from "@/app/components/treatment/TriggerLogForm";
 
 type TriggerEntry = {
   id: string;
