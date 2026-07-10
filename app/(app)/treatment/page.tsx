@@ -26,7 +26,7 @@ const TABS: { id: Tab; label: string; sublabel: string }[] = [
   },
   {
     id: "plan",
-    label: "Plan",
+    label: "Maintain",
     sublabel: "Therapist homework & relapse prevention",
   },
 ];
