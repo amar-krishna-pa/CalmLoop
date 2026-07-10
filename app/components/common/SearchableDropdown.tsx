@@ -12,6 +12,8 @@ type Props = {
   disabled?: boolean;
 };
 
+const PANEL_MAX_HEIGHT = 250;
+
 export default function SearchableDropdown({
   options,
   value,
@@ -20,8 +22,20 @@ export default function SearchableDropdown({
   disabled = false,
 }: Props) {
   const [open, setOpen] = useState(false);
+  const [openUpward, setOpenUpward] = useState(false);
   const [query, setQuery] = useState("");
+
   const ref = useRef<HTMLDivElement>(null);
+
+  function handleToggle() {
+    if (!open && ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      setOpenUpward(spaceBelow < PANEL_MAX_HEIGHT && spaceAbove > spaceBelow);
+    }
+    setOpen((o) => !o);
+  }
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -51,7 +65,7 @@ export default function SearchableDropdown({
     <div className="relative" ref={ref}>
       <button
         type="button"
-        onClick={() => setOpen((o) => !o)}
+        onClick={handleToggle}
         disabled={disabled}
         className="input-base cursor-pointer flex items-center justify-between gap-2 text-left disabled:opacity-60 disabled:cursor-not-allowed"
       >
@@ -68,7 +82,12 @@ export default function SearchableDropdown({
       </button>
 
       {open && (
-        <div className="absolute left-0 right-0 mt-1 rounded-lg border border-subtle bg-surface shadow-lg z-50 overflow-hidden">
+        <div
+          className={cn(
+            "absolute left-0 right-0 rounded-lg border border-subtle bg-surface shadow-lg z-50 overflow-hidden",
+            openUpward ? "bottom-full mb-1" : "top-full mt-1"
+          )}
+        >
           <input
             autoFocus
             type="text"
