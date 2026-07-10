@@ -1,7 +1,7 @@
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
 import { triggerLogs } from "@/app/lib/db/schema";
-import { updateStreak } from "@/app/lib/streak/update-streak";
+import { maybeUpdateStreak } from "@/app/utils/maybeUpdateStreak";
 import { and, eq } from "drizzle-orm";
 
 export async function DELETE(
@@ -26,10 +26,7 @@ export async function DELETE(
     return Response.json({ error: "Not found" }, { status: 404 });
   }
 
-  const today = new Date().toISOString().split("T")[0];
-  if (session.user.lastActivityDate !== today) {
-    await updateStreak({ userId: session.user.id });
-  }
+  await maybeUpdateStreak({ user: session.user });
 
   return Response.json({ id: entry.id });
 }

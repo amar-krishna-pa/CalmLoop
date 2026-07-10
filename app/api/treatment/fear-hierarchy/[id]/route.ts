@@ -1,8 +1,8 @@
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
 import { fearHierarchyItems } from "@/app/lib/db/schema";
-import { updateStreak } from "@/app/lib/streak/update-streak";
 import { UpdateFearHierarchyItemSchema } from "@/app/lib/zod/fear-hierarchy";
+import { maybeUpdateStreak } from "@/app/utils/maybeUpdateStreak";
 import { and, eq } from "drizzle-orm";
 
 export async function PATCH(
@@ -36,10 +36,7 @@ export async function PATCH(
     return Response.json({ error: "Not found" }, { status: 404 });
   }
 
-  const today = new Date().toISOString().split("T")[0];
-  if (session.user.lastActivityDate !== today) {
-    await updateStreak({ userId: session.user.id });
-  }
+  await maybeUpdateStreak({ user: session.user });
 
   return Response.json({ item });
 }
@@ -69,10 +66,7 @@ export async function DELETE(
     return Response.json({ error: "Not found" }, { status: 404 });
   }
 
-  const today = new Date().toISOString().split("T")[0];
-  if (session.user.lastActivityDate !== today) {
-    await updateStreak({ userId: session.user.id });
-  }
+  await maybeUpdateStreak({ user: session.user });
 
   return Response.json({ id: item.id });
 }

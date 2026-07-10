@@ -1,8 +1,8 @@
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
 import { triggerLogs } from "@/app/lib/db/schema";
-import { updateStreak } from "@/app/lib/streak/update-streak";
 import { CreateTriggerLogSchema } from "@/app/lib/zod/trigger-log";
+import { maybeUpdateStreak } from "@/app/utils/maybeUpdateStreak";
 import { desc, eq } from "drizzle-orm";
 
 export async function GET() {
@@ -44,10 +44,7 @@ export async function POST(request: Request) {
     })
     .returning();
 
-  const today = new Date().toISOString().split("T")[0];
-  if (session.user.lastActivityDate !== today) {
-    await updateStreak({ userId: session.user.id });
-  }
+  await maybeUpdateStreak({ user: session.user });
 
   return Response.json({ entry }, { status: 201 });
 }

@@ -11,7 +11,7 @@ import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
 import { chatSessions, messages } from "@/app/lib/db/schema";
 import { ChatRequestSchema } from "@/app/lib/zod/chat";
-import { updateStreak } from "@/app/lib/streak/update-streak";
+import { maybeUpdateStreak } from "@/app/utils/maybeUpdateStreak";
 
 const groq = createGroq({ apiKey: process.env.GROQ_API_KEY });
 
@@ -94,10 +94,7 @@ export async function POST(request: Request) {
     return Response.json({ error: "Internal server error" }, { status: 500 });
   }
 
-  const today = new Date().toISOString().split("T")[0];
-  if (session.user.lastActivityDate !== today) {
-    await updateStreak({ userId });
-  }
+  await maybeUpdateStreak({ user: session.user });
 
   try {
     const result = streamText({
