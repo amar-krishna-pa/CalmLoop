@@ -142,6 +142,17 @@ export const triggerLogs = pgTable("trigger_logs", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const safetyBehaviours = pgTable("safety_behaviours", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  behaviour: text("behaviour").notNull(),
+  category: text("category").notNull(),
+  frequency: text("frequency").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const fearHierarchyItems = pgTable("fear_hierarchy_items", {
   id: uuid("id").primaryKey().defaultRandom(),
   userId: text("user_id")
@@ -164,6 +175,7 @@ export const userRelations = relations(user, ({ many }) => ({
   chatSessions: many(chatSessions),
   fearHierarchyItems: many(fearHierarchyItems),
   triggerLogs: many(triggerLogs),
+  safetyBehaviours: many(safetyBehaviours),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -221,3 +233,13 @@ export const triggerLogRelations = relations(triggerLogs, ({ one }) => ({
     references: [user.id],
   }),
 }));
+
+export const safetyBehaviourRelations = relations(
+  safetyBehaviours,
+  ({ one }) => ({
+    user: one(user, {
+      fields: [safetyBehaviours.userId],
+      references: [user.id],
+    }),
+  })
+);
