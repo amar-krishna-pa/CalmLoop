@@ -203,3 +203,26 @@ export async function fetchTriggerLogEntries() {
     });
   }
 }
+
+export async function deleteTriggerLogEntry({
+  id,
+}: {
+  id: string;
+}): Promise<boolean> {
+  try {
+    const res = await fetch(`/api/treatment/trigger-log/${id}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) throw new Error();
+
+    useTreatmentStore.setState((state) => ({
+      triggerLogEntries:
+        state.triggerLogEntries?.filter((entry) => entry.id !== id) ?? null,
+    }));
+
+    return true;
+  } catch {
+    toast.error("Failed to delete entry");
+    return false;
+  }
+}

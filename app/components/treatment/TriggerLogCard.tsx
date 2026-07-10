@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
-import { LuRefreshCw } from "react-icons/lu";
+import { useEffect, useState } from "react";
+import { LuRefreshCw, LuTrash2 } from "react-icons/lu";
 import TriggerLogForm from "@/app/components/treatment/TriggerLogForm";
 import TriggerLogCardLoader from "@/app/components/loaders/TriggerLogCardLoader";
 import AnxietyDot from "@/app/components/dashboard/AnxietyDot";
+import ConfirmOverlay from "@/app/components/common/ConfirmOverlay";
 import formatRelativeTime from "@/app/utils/formatRelativeTime";
 import {
+  deleteTriggerLogEntry,
   fetchTriggerLogEntries,
   useTreatmentStore,
 } from "@/app/lib/stores/treatment";
@@ -16,9 +18,21 @@ export default function TriggerLogCard() {
   const loading = useTreatmentStore((state) => state.triggerLogLoading);
   const fetchError = useTreatmentStore((state) => state.triggerLogFetchError);
 
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+
   useEffect(() => {
     fetchTriggerLogEntries();
   }, []);
+
+  async function handleDelete({ id }: { id: string }) {
+    setDeletingId(id);
+
+    const ok = await deleteTriggerLogEntry({ id });
+
+    setDeletingId(null);
+    if (ok) setConfirmDeleteId(null);
+  }
 
   return (
     <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4 card-tall">
@@ -58,8 +72,17 @@ export default function TriggerLogCard() {
             {entries.map((e) => (
               <li
                 key={e.id}
-                className="flex gap-3 p-3 rounded-lg bg-surface border border-subtle"
+                className="relative flex gap-3 p-3 rounded-lg bg-surface border border-subtle"
               >
+                {confirmDeleteId === e.id && (
+                  <ConfirmOverlay
+                    message="Delete this entry?"
+                    loading={deletingId === e.id}
+                    onConfirm={() => handleDelete({ id: e.id })}
+                    onCancel={() => setConfirmDeleteId(null)}
+                  />
+                )}
+
                 <AnxietyDot level={e.anxietyLevel} />
 
                 <div className="flex-1 min-w-0 space-y-1">
@@ -67,9 +90,20 @@ export default function TriggerLogCard() {
                     <p className="text-sm text-primary leading-snug">
                       {e.trigger}
                     </p>
-                    <span className="text-xs text-muted shrink-0">
-                      {e.anxietyLevel}/10
-                    </span>
+
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-xs text-muted">
+                        {e.anxietyLevel}/10
+                      </span>
+
+                      <button
+                        onClick={() => setConfirmDeleteId(e.id)}
+                        className="cursor-pointer p-1 rounded text-muted hover:text-danger hover:bg-danger/10 transition-colors"
+                        aria-label="Delete entry"
+                      >
+                        <LuTrash2 size={12} />
+                      </button>
+                    </div>
                   </div>
 
                   <p className="text-xs text-muted">{e.context}</p>
