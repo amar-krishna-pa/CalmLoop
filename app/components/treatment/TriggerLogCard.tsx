@@ -54,7 +54,7 @@ export default function TriggerLogCard() {
         )}
 
         {!loading && !fetchError && entries && entries.length > 0 && (
-          <ul className="space-y-2">
+          <ul className="space-y-2 mr-2">
             {entries.map((e) => (
               <li
                 key={e.id}

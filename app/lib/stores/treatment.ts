@@ -34,6 +34,7 @@ export const useTreatmentStore = create<TreatmentStore>(() => ({
   triggerLogFetchError: false,
 }));
 
+// Fear hierarchy actions
 export async function createFearHierarchyItem({
   situation,
   initialSuds,
@@ -147,30 +148,7 @@ export async function deleteFearHierarchyItem({
   }
 }
 
-export async function fetchTriggerLogEntries() {
-  useTreatmentStore.setState({
-    triggerLogLoading: true,
-    triggerLogFetchError: false,
-  });
-
-  try {
-    const res = await fetch("/api/treatment/trigger-log");
-
-    if (!res.ok) throw new Error();
-
-    const data = await res.json();
-    useTreatmentStore.setState({
-      triggerLogEntries: data.entries,
-      triggerLogLoading: false,
-    });
-  } catch {
-    useTreatmentStore.setState({
-      triggerLogLoading: false,
-      triggerLogFetchError: true,
-    });
-  }
-}
-
+// Trigger log actions
 export async function createTriggerLogEntry({
   trigger,
   context,
@@ -199,5 +177,29 @@ export async function createTriggerLogEntry({
   } catch {
     toast.error("Failed to log trigger");
     return false;
+  }
+}
+
+export async function fetchTriggerLogEntries() {
+  useTreatmentStore.setState({
+    triggerLogLoading: true,
+    triggerLogFetchError: false,
+  });
+
+  try {
+    const res = await fetch("/api/treatment/trigger-log");
+
+    if (!res.ok) throw new Error();
+
+    const data = await res.json();
+    useTreatmentStore.setState({
+      triggerLogEntries: data.entries,
+      triggerLogLoading: false,
+    });
+  } catch {
+    useTreatmentStore.setState({
+      triggerLogLoading: false,
+      triggerLogFetchError: true,
+    });
   }
 }
