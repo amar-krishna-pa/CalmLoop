@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import { cn } from "@/app/lib/cn/cn";
+import { createTriggerLogEntry } from "@/app/lib/stores/treatment";
 
 export default function TriggerLogForm() {
   const [trigger, setTrigger] = useState("");
   const [context, setContext] = useState("");
   const [anxietyLevel, setAnxietyLevel] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const anxietyValue = Number(anxietyLevel);
   const isValid =
@@ -16,6 +19,26 @@ export default function TriggerLogForm() {
     anxietyValue >= 0 &&
     anxietyValue <= 10;
 
+  async function handleSubmit() {
+    if (!isValid) return;
+
+    setSubmitting(true);
+
+    const ok = await createTriggerLogEntry({
+      trigger: trigger.trim(),
+      context: context.trim(),
+      anxietyLevel: anxietyValue,
+    });
+
+    setSubmitting(false);
+
+    if (ok) {
+      setTrigger("");
+      setContext("");
+      setAnxietyLevel("");
+    }
+  }
+
   return (
     <div className="flex flex-col gap-2">
       <input
@@ -23,6 +46,8 @@ export default function TriggerLogForm() {
         placeholder="What happened?"
         value={trigger}
         onChange={(e) => setTrigger(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+        disabled={submitting}
         className="input-base"
       />
 
@@ -32,6 +57,8 @@ export default function TriggerLogForm() {
           placeholder="Where/when? (optional)"
           value={context}
           onChange={(e) => setContext(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+          disabled={submitting}
           className="input-base flex-[7]"
         />
         <input
@@ -42,18 +69,21 @@ export default function TriggerLogForm() {
           aria-label="Anxiety level (0–10)"
           value={anxietyLevel}
           onChange={(e) => setAnxietyLevel(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+          disabled={submitting}
           className="input-base flex-[3]"
         />
       </div>
 
       <button
-        disabled={!isValid}
+        onClick={handleSubmit}
+        disabled={submitting || !isValid}
         className={cn(
           "btn-accent w-full h-9 disabled:opacity-60 flex items-center justify-center",
-          isValid ? "cursor-pointer" : "cursor-not-allowed"
+          isValid && !submitting ? "cursor-pointer" : "cursor-not-allowed"
         )}
       >
-        Log trigger
+        {submitting ? <LoadingSpinner size={14} /> : "Log trigger"}
       </button>
     </div>
   );

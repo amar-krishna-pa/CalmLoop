@@ -8,16 +8,30 @@ export type HierarchyItem = {
   currentSuds: number;
 };
 
+export type TriggerLogEntry = {
+  id: string;
+  trigger: string;
+  context: string;
+  anxietyLevel: number;
+  createdAt: string;
+};
+
 type TreatmentStore = {
   fearHierarchyItems: HierarchyItem[] | null;
   fearHierarchyLoading: boolean;
   fearHierarchyFetchError: boolean;
+  triggerLogEntries: TriggerLogEntry[] | null;
+  triggerLogLoading: boolean;
+  triggerLogFetchError: boolean;
 };
 
 export const useTreatmentStore = create<TreatmentStore>(() => ({
   fearHierarchyItems: null,
   fearHierarchyLoading: true,
   fearHierarchyFetchError: false,
+  triggerLogEntries: null,
+  triggerLogLoading: true,
+  triggerLogFetchError: false,
 }));
 
 export async function createFearHierarchyItem({
@@ -39,10 +53,9 @@ export async function createFearHierarchyItem({
     const data = await res.json();
 
     useTreatmentStore.setState((state) => ({
-      fearHierarchyItems: [
-        ...(state.fearHierarchyItems ?? []),
-        data.item,
-      ].sort((a, b) => a.initialSuds - b.initialSuds),
+      fearHierarchyItems: [...(state.fearHierarchyItems ?? []), data.item].sort(
+        (a, b) => a.initialSuds - b.initialSuds
+      ),
     }));
 
     return true;
@@ -130,6 +143,61 @@ export async function deleteFearHierarchyItem({
     return true;
   } catch {
     toast.error("Failed to delete item");
+    return false;
+  }
+}
+
+export async function fetchTriggerLogEntries() {
+  useTreatmentStore.setState({
+    triggerLogLoading: true,
+    triggerLogFetchError: false,
+  });
+
+  try {
+    const res = await fetch("/api/treatment/trigger-log");
+
+    if (!res.ok) throw new Error();
+
+    const data = await res.json();
+    useTreatmentStore.setState({
+      triggerLogEntries: data.entries,
+      triggerLogLoading: false,
+    });
+  } catch {
+    useTreatmentStore.setState({
+      triggerLogLoading: false,
+      triggerLogFetchError: true,
+    });
+  }
+}
+
+export async function createTriggerLogEntry({
+  trigger,
+  context,
+  anxietyLevel,
+}: {
+  trigger: string;
+  context: string;
+  anxietyLevel: number;
+}): Promise<boolean> {
+  try {
+    const res = await fetch("/api/treatment/trigger-log", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ trigger, context, anxietyLevel }),
+    });
+
+    if (!res.ok) throw new Error();
+
+    const data = await res.json();
+
+    useTreatmentStore.setState((state) => ({
+      triggerLogEntries: [data.entry, ...(state.triggerLogEntries ?? [])],
+    }));
+
+    return true;
+  } catch {
+    toast.error("Failed to log trigger");
     return false;
   }
 }
