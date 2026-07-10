@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
-import { LuRefreshCw } from "react-icons/lu";
+import { useEffect, useState } from "react";
+import { LuRefreshCw, LuTrash2 } from "react-icons/lu";
 import SafetyBehaviourForm from "@/app/components/treatment/SafetyBehaviourForm";
 import SafetyBehavioursCardLoader from "@/app/components/loaders/SafetyBehavioursCardLoader";
+import ConfirmOverlay from "@/app/components/common/ConfirmOverlay";
 import {
   useTreatmentStore,
   fetchSafetyBehaviours,
+  deleteSafetyBehaviour,
   type SafetyBehaviour,
 } from "@/app/lib/stores/treatment";
 
@@ -24,9 +26,21 @@ export default function SafetyBehavioursCard() {
     (state) => state.safetyBehavioursFetchError
   );
 
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+
   useEffect(() => {
     fetchSafetyBehaviours();
   }, []);
+
+  async function handleDelete({ id }: { id: string }) {
+    setDeletingId(id);
+
+    const ok = await deleteSafetyBehaviour({ id });
+
+    setDeletingId(null);
+    if (ok) setConfirmDeleteId(null);
+  }
 
   return (
     <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4 card-tall">
@@ -64,19 +78,41 @@ export default function SafetyBehavioursCard() {
             {entries.map((b) => (
               <li
                 key={b.id}
-                className="p-3 rounded-lg bg-surface border border-subtle space-y-1.5"
+                className="relative p-3 rounded-lg bg-surface border border-subtle space-y-1.5"
               >
+                {confirmDeleteId === b.id && (
+                  <ConfirmOverlay
+                    message="Delete this entry?"
+                    loading={deletingId === b.id}
+                    onConfirm={() => handleDelete({ id: b.id })}
+                    onCancel={() => setConfirmDeleteId(null)}
+                  />
+                )}
+
                 <div className="flex items-start justify-between gap-2">
                   <p className="text-sm text-primary leading-snug">
                     {b.behaviour}
                   </p>
+
+                  <button
+                    onClick={() => setConfirmDeleteId(b.id)}
+                    className="shrink-0 cursor-pointer p-1 rounded text-muted hover:text-danger hover:bg-danger/10 transition-colors"
+                    aria-label="Delete entry"
+                  >
+                    <LuTrash2 size={12} />
+                  </button>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-medium border rounded-full px-2 py-0.5 bg-accent/10 text-accent border-accent/20">
+                    {b.category}
+                  </span>
                   <span
-                    className={`shrink-0 text-[10px] font-medium border rounded-full px-2 py-0.5 ${FREQUENCY_COLOR[b.frequency]}`}
+                    className={`text-[10px] font-medium border rounded-full px-2 py-0.5 ${FREQUENCY_COLOR[b.frequency]}`}
                   >
                     {b.frequency}
                   </span>
                 </div>
-                <p className="text-xs text-muted">{b.category}</p>
               </li>
             ))}
           </ul>
