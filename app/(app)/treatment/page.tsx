@@ -5,7 +5,7 @@ import { cn } from "@/app/lib/cn/cn";
 import FearHierarchyCard from "@/app/components/treatment/FearHierarchyCard";
 import ErpTrackerCard from "@/app/components/dashboard/ErpTrackerCard";
 import TriggerLogCard from "@/app/components/treatment/TriggerLogCard";
-import SafetyBehavioursCard from "@/app/components/dashboard/SafetyBehavioursCard";
+import SafetyBehavioursCard from "@/app/components/treatment/SafetyBehavioursCard";
 import ThoughtRecordsCard from "@/app/components/dashboard/ThoughtRecordsCard";
 import BehaviouralExperimentsCard from "@/app/components/dashboard/BehaviouralExperimentsCard";
 import HomeworkCard from "@/app/components/dashboard/HomeworkCard";
