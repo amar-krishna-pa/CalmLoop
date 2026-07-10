@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { toast } from "sonner";
+import { SAFETY_BEHAVIOUR_FREQUENCIES } from "@/app/lib/zod/safety-behaviour";
 
 export type HierarchyItem = {
   id: string;
@@ -16,6 +17,14 @@ export type TriggerLogEntry = {
   createdAt: string;
 };
 
+export type SafetyBehaviour = {
+  id: string;
+  behaviour: string;
+  category: string;
+  frequency: (typeof SAFETY_BEHAVIOUR_FREQUENCIES)[number];
+  createdAt: string;
+};
+
 type TreatmentStore = {
   fearHierarchyItems: HierarchyItem[] | null;
   fearHierarchyLoading: boolean;
@@ -23,6 +32,9 @@ type TreatmentStore = {
   triggerLogEntries: TriggerLogEntry[] | null;
   triggerLogLoading: boolean;
   triggerLogFetchError: boolean;
+  safetyBehaviours: SafetyBehaviour[] | null;
+  safetyBehavioursLoading: boolean;
+  safetyBehavioursFetchError: boolean;
 };
 
 export const useTreatmentStore = create<TreatmentStore>(() => ({
@@ -32,7 +44,18 @@ export const useTreatmentStore = create<TreatmentStore>(() => ({
   triggerLogEntries: null,
   triggerLogLoading: true,
   triggerLogFetchError: false,
+  safetyBehaviours: null,
+  safetyBehavioursLoading: true,
+  safetyBehavioursFetchError: false,
 }));
+
+function sortByFrequency(items: SafetyBehaviour[]): SafetyBehaviour[] {
+  return [...items].sort(
+    (a, b) =>
+      SAFETY_BEHAVIOUR_FREQUENCIES.indexOf(b.frequency) -
+      SAFETY_BEHAVIOUR_FREQUENCIES.indexOf(a.frequency)
+  );
+}
 
 // Fear hierarchy actions
 export async function createFearHierarchyItem({
@@ -223,6 +246,88 @@ export async function deleteTriggerLogEntry({
     return true;
   } catch {
     toast.error("Failed to delete entry");
+    return false;
+  }
+}
+
+// Safety behaviour actions
+export async function createSafetyBehaviour({
+  behaviour,
+  category,
+  frequency,
+}: {
+  behaviour: string;
+  category: string;
+  frequency: (typeof SAFETY_BEHAVIOUR_FREQUENCIES)[number];
+}): Promise<boolean> {
+  try {
+    const res = await fetch("/api/treatment/safety-behaviour", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ behaviour, category, frequency }),
+    });
+
+    if (!res.ok) throw new Error();
+
+    const data = await res.json();
+
+    useTreatmentStore.setState((state) => ({
+      safetyBehaviours: sortByFrequency([
+        ...(state.safetyBehaviours ?? []),
+        data.entry,
+      ]),
+    }));
+
+    return true;
+  } catch {
+    toast.error("Failed to add safety behaviour");
+    return false;
+  }
+}
+
+export async function fetchSafetyBehaviours() {
+  useTreatmentStore.setState({
+    safetyBehavioursLoading: true,
+    safetyBehavioursFetchError: false,
+  });
+
+  try {
+    const res = await fetch("/api/treatment/safety-behaviour");
+
+    if (!res.ok) throw new Error();
+
+    const data = await res.json();
+    useTreatmentStore.setState({
+      safetyBehaviours: data.entries,
+      safetyBehavioursLoading: false,
+    });
+  } catch {
+    useTreatmentStore.setState({
+      safetyBehavioursLoading: false,
+      safetyBehavioursFetchError: true,
+    });
+  }
+}
+
+export async function deleteSafetyBehaviour({
+  id,
+}: {
+  id: string;
+}): Promise<boolean> {
+  try {
+    const res = await fetch(`/api/treatment/safety-behaviour/${id}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) throw new Error();
+
+    useTreatmentStore.setState((state) => ({
+      safetyBehaviours:
+        state.safetyBehaviours?.filter((entry) => entry.id !== id) ?? null,
+    }));
+
+    return true;
+  } catch {
+    toast.error("Failed to delete safety behaviour");
     return false;
   }
 }
