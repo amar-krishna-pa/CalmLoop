@@ -25,6 +25,15 @@ export type SafetyBehaviour = {
   createdAt: string;
 };
 
+export type ErpSession = {
+  id: string;
+  trigger: string;
+  anxietyBefore: number;
+  anxietyAfter: number;
+  notes: string | null;
+  createdAt: string;
+};
+
 type TreatmentStore = {
   fearHierarchyItems: HierarchyItem[] | null;
   fearHierarchyLoading: boolean;
@@ -35,6 +44,9 @@ type TreatmentStore = {
   safetyBehaviours: SafetyBehaviour[] | null;
   safetyBehavioursLoading: boolean;
   safetyBehavioursFetchError: boolean;
+  erpSessions: ErpSession[] | null;
+  erpSessionsLoading: boolean;
+  erpSessionsFetchError: boolean;
 };
 
 export const useTreatmentStore = create<TreatmentStore>(() => ({
@@ -47,6 +59,9 @@ export const useTreatmentStore = create<TreatmentStore>(() => ({
   safetyBehaviours: null,
   safetyBehavioursLoading: true,
   safetyBehavioursFetchError: false,
+  erpSessions: null,
+  erpSessionsLoading: true,
+  erpSessionsFetchError: false,
 }));
 
 function sortByFrequency(items: SafetyBehaviour[]): SafetyBehaviour[] {
@@ -328,6 +343,87 @@ export async function deleteSafetyBehaviour({
     return true;
   } catch {
     toast.error("Failed to delete safety behaviour");
+    return false;
+  }
+}
+
+// ERP session actions
+export async function fetchErpSessions() {
+  useTreatmentStore.setState({
+    erpSessionsLoading: true,
+    erpSessionsFetchError: false,
+  });
+
+  try {
+    const res = await fetch("/api/treatment/erp-session");
+
+    if (!res.ok) throw new Error();
+
+    const data = await res.json();
+    useTreatmentStore.setState({
+      erpSessions: data.sessions,
+      erpSessionsLoading: false,
+    });
+  } catch {
+    useTreatmentStore.setState({
+      erpSessionsLoading: false,
+      erpSessionsFetchError: true,
+    });
+  }
+}
+
+export async function createErpSession({
+  trigger,
+  anxietyBefore,
+  anxietyAfter,
+  notes,
+}: {
+  trigger: string;
+  anxietyBefore: number;
+  anxietyAfter: number;
+  notes?: string;
+}): Promise<boolean> {
+  try {
+    const res = await fetch("/api/treatment/erp-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ trigger, anxietyBefore, anxietyAfter, notes }),
+    });
+
+    if (!res.ok) throw new Error();
+
+    const data = await res.json();
+
+    useTreatmentStore.setState((state) => ({
+      erpSessions: [data.session, ...(state.erpSessions ?? [])],
+    }));
+
+    return true;
+  } catch {
+    toast.error("Failed to log ERP session");
+    return false;
+  }
+}
+
+export async function deleteErpSession({
+  id,
+}: {
+  id: string;
+}): Promise<boolean> {
+  try {
+    const res = await fetch(`/api/treatment/erp-session/${id}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) throw new Error();
+
+    useTreatmentStore.setState((state) => ({
+      erpSessions:
+        state.erpSessions?.filter((session) => session.id !== id) ?? null,
+    }));
+
+    return true;
+  } catch {
+    toast.error("Failed to delete ERP session");
     return false;
   }
 }
