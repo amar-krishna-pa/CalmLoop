@@ -1,3 +1,6 @@
+import type { CSSProperties } from "react";
+import { cn } from "@/app/lib/cn/cn";
+
 type Props = {
   value: number;
   editable: boolean;
@@ -31,6 +34,10 @@ export default function Slider({
     }%)`;
   };
 
+  const range = max - min;
+  const fillPercent =
+    range > 0 ? Math.max(0, Math.min(100, ((value - min) / range) * 100)) : 0;
+
   return (
     <input
       type="range"
@@ -41,8 +48,18 @@ export default function Slider({
       onChange={(e) => onChange?.(Number(e.target.value))}
       readOnly={!editable}
       aria-label={ariaLabel}
-      className={`flex-1 ${editable ? "cursor-pointer" : "cursor-default pointer-events-none opacity-50"}`}
-      style={{ accentColor: sudsColor(value) }}
+      className={cn(
+        "slider-range flex-1",
+        editable
+          ? "cursor-pointer"
+          : "cursor-default pointer-events-none opacity-50"
+      )}
+      style={
+        {
+          "--slider-color": sudsColor(value),
+          "--slider-pct": `${fillPercent}%`,
+        } as CSSProperties
+      }
     />
   );
 }
