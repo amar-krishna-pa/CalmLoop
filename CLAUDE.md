@@ -38,6 +38,18 @@ The root `layout.tsx` renders `<Header>` and wraps everything in `<ThemeProvider
 - Auth API is handled by `app/api/auth/[...all]/route.ts`
 - User roles are stored on `user.role` and default to `"patient"`
 
+### API route ownership checks
+
+Every CRUD route handler must enforce row ownership, not just authentication. `checkSession()` proves *who* the caller is; each query must also prove the rows *belong to them*:
+
+- **Reads (GET):** always include `eq(table.userId, session.user.id)` in the WHERE clause.
+- **Creates (POST):** take `userId` from `session.user.id`, never from the request body.
+- **Updates/deletes on `[id]` routes:** put ownership in the mutation itself — `where(and(eq(table.id, id), eq(table.userId, session.user.id)))` with `.returning()`, and return 404 when no row comes back. Never check ownership in a separate SELECT before mutating.
+- **Client-supplied resource IDs** (e.g. `chatSessionId` in `POST /api/chat`): if the row exists but belongs to another user, return 403; only create it under the caller's own `userId`.
+- **Bulk operations:** combine `inArray(...)` with the `userId` filter so guessed IDs belonging to other users are silently excluded.
+
+When responding to lookups of resources the caller doesn't own, prefer the same response as "not found" (404 or an empty list) so valid IDs belonging to other users aren't discoverable.
+
 ### Database — Drizzle ORM + Neon PostgreSQL
 
 Schema lives in `app/lib/db/schema.ts`. The db client is at `app/lib/db/index.ts`.
