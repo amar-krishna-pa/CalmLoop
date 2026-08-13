@@ -10,14 +10,14 @@ import formatRelativeTime from "@/app/utils/formatRelativeTime";
 import {
   deleteErpSession,
   fetchErpSessions,
-  useTreatmentStore,
-} from "@/app/lib/stores/treatment";
+  useErpSessionStore,
+} from "@/app/lib/stores/treatment/erp-session";
 
 
 export default function ErpTrackerCard() {
-  const sessions = useTreatmentStore((state) => state.erpSessions);
-  const loading = useTreatmentStore((state) => state.erpSessionsLoading);
-  const fetchError = useTreatmentStore((state) => state.erpSessionsFetchError);
+  const sessions = useErpSessionStore((state) => state.sessions);
+  const loading = useErpSessionStore((state) => state.loading);
+  const fetchError = useErpSessionStore((state) => state.fetchError);
 
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);

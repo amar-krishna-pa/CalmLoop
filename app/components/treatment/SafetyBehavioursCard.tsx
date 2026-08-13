@@ -6,11 +6,11 @@ import SafetyBehaviourForm from "@/app/components/treatment/SafetyBehaviourForm"
 import SafetyBehavioursCardLoader from "@/app/components/loaders/SafetyBehavioursCardLoader";
 import ConfirmOverlay from "@/app/components/common/ConfirmOverlay";
 import {
-  useTreatmentStore,
+  useSafetyBehaviourStore,
   fetchSafetyBehaviours,
   deleteSafetyBehaviour,
   type SafetyBehaviour,
-} from "@/app/lib/stores/treatment";
+} from "@/app/lib/stores/treatment/safety-behaviour";
 
 const FREQUENCY_COLOR: Record<SafetyBehaviour["frequency"], string> = {
   Rarely: "bg-success/10 text-success border-success/20",
@@ -20,11 +20,9 @@ const FREQUENCY_COLOR: Record<SafetyBehaviour["frequency"], string> = {
 };
 
 export default function SafetyBehavioursCard() {
-  const entries = useTreatmentStore((state) => state.safetyBehaviours);
-  const loading = useTreatmentStore((state) => state.safetyBehavioursLoading);
-  const fetchError = useTreatmentStore(
-    (state) => state.safetyBehavioursFetchError
-  );
+  const entries = useSafetyBehaviourStore((state) => state.entries);
+  const loading = useSafetyBehaviourStore((state) => state.loading);
+  const fetchError = useSafetyBehaviourStore((state) => state.fetchError);
 
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);

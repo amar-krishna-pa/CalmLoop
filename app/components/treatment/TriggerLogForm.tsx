@@ -3,7 +3,7 @@
 import { useState } from "react";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import { cn } from "@/app/lib/cn/cn";
-import { createTriggerLogEntry } from "@/app/lib/stores/treatment";
+import { createTriggerLogEntry } from "@/app/lib/stores/treatment/trigger-log";
 
 export default function TriggerLogForm() {
   const [trigger, setTrigger] = useState("");

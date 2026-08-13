@@ -3,7 +3,7 @@
 import { useState } from "react";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import { cn } from "@/app/lib/cn/cn";
-import { createErpSession } from "@/app/lib/stores/treatment";
+import { createErpSession } from "@/app/lib/stores/treatment/erp-session";
 
 export default function ErpSessionForm() {
   const [trigger, setTrigger] = useState("");

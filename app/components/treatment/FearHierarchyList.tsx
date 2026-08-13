@@ -10,16 +10,14 @@ import {
   fetchFearHierarchyItems,
   patchCurrentSuds,
   updateCurrentSudsState,
-  useTreatmentStore,
-} from "@/app/lib/stores/treatment";
+  useFearHierarchyStore,
+} from "@/app/lib/stores/treatment/fear-hierarchy";
 import Slider from "@/app/components/common/Slider";
 
 export default function FearHierarchyList() {
-  const items = useTreatmentStore((state) => state.fearHierarchyItems);
-  const loading = useTreatmentStore((state) => state.fearHierarchyLoading);
-  const fetchError = useTreatmentStore(
-    (state) => state.fearHierarchyFetchError
-  );
+  const items = useFearHierarchyStore((state) => state.items);
+  const loading = useFearHierarchyStore((state) => state.loading);
+  const fetchError = useFearHierarchyStore((state) => state.fetchError);
 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [savingId, setSavingId] = useState<string | null>(null);

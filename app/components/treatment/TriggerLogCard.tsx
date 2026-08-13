@@ -10,13 +10,13 @@ import formatRelativeTime from "@/app/utils/formatRelativeTime";
 import {
   deleteTriggerLogEntry,
   fetchTriggerLogEntries,
-  useTreatmentStore,
-} from "@/app/lib/stores/treatment";
+  useTriggerLogStore,
+} from "@/app/lib/stores/treatment/trigger-log";
 
 export default function TriggerLogCard() {
-  const entries = useTreatmentStore((state) => state.triggerLogEntries);
-  const loading = useTreatmentStore((state) => state.triggerLogLoading);
-  const fetchError = useTreatmentStore((state) => state.triggerLogFetchError);
+  const entries = useTriggerLogStore((state) => state.entries);
+  const loading = useTriggerLogStore((state) => state.loading);
+  const fetchError = useTriggerLogStore((state) => state.fetchError);
 
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);

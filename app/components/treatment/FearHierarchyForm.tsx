@@ -3,7 +3,7 @@
 import { useState } from "react";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import { cn } from "@/app/lib/cn/cn";
-import { createFearHierarchyItem } from "@/app/lib/stores/treatment";
+import { createFearHierarchyItem } from "@/app/lib/stores/treatment/fear-hierarchy";
 
 export default function FearHierarchyForm() {
   const [situation, setSituation] = useState("");
