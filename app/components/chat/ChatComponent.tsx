@@ -4,6 +4,7 @@ import { useChat } from "@ai-sdk/react";
 import { useEffect, useRef, useState } from "react";
 import type { UIMessage } from "ai";
 import { fetchSessions } from "@/app/lib/stores/chat";
+import CrisisSupportLink from "@/app/components/chat/CrisisSupportLink";
 
 export default function ChatComponent({
   chatSessionId,
@@ -118,6 +119,7 @@ export default function ChatComponent({
             Send
           </button>
         </form>
+        <CrisisSupportLink />
       </div>
     </div>
   );
