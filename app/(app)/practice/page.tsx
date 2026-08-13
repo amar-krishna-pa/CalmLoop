@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { cn } from "@/app/lib/cn/cn";
-import FearHierarchyCard from "@/app/components/treatment/prepare/FearHierarchyCard";
-import ErpTrackerCard from "@/app/components/treatment/practice/ErpTrackerCard";
-import TriggerLogCard from "@/app/components/treatment/prepare/TriggerLogCard";
-import SafetyBehavioursCard from "@/app/components/treatment/prepare/SafetyBehavioursCard";
+import FearHierarchyCard from "@/app/components/practice/prepare/FearHierarchyCard";
+import ErpTrackerCard from "@/app/components/practice/practice/ErpTrackerCard";
+import TriggerLogCard from "@/app/components/practice/prepare/TriggerLogCard";
+import SafetyBehavioursCard from "@/app/components/practice/prepare/SafetyBehavioursCard";
 import ThoughtRecordsCard from "@/app/components/dashboard/ThoughtRecordsCard";
 import BehaviouralExperimentsCard from "@/app/components/dashboard/BehaviouralExperimentsCard";
 import HomeworkCard from "@/app/components/dashboard/HomeworkCard";
@@ -31,14 +31,14 @@ const TABS: { id: Tab; label: string; sublabel: string }[] = [
   },
 ];
 
-export default function TreatmentPage() {
+export default function PracticePage() {
   const [activeTab, setActiveTab] = useState<Tab>("prepare");
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-xl font-semibold text-primary">Treatment</h1>
-        <p className="text-sm text-muted mt-1">Your active clinical tools</p>
+        <h1 className="text-xl font-semibold text-primary">Practice</h1>
+        <p className="text-sm text-muted mt-1">Your daily ERP practice tools</p>
       </div>
 
       <div className="bg-surface border border-subtle rounded-xl p-1 grid grid-cols-3 gap-1 mb-6">

@@ -11,7 +11,7 @@ import {
   patchCurrentSuds,
   updateCurrentSudsState,
   useFearHierarchyStore,
-} from "@/app/lib/stores/treatment/fear-hierarchy";
+} from "@/app/lib/stores/practice/fear-hierarchy";
 import Slider from "@/app/components/common/Slider";
 
 export default function FearHierarchyList() {

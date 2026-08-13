@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { LuRefreshCw, LuTrash2 } from "react-icons/lu";
-import SafetyBehaviourForm from "@/app/components/treatment/prepare/SafetyBehaviourForm";
+import SafetyBehaviourForm from "@/app/components/practice/prepare/SafetyBehaviourForm";
 import SafetyBehavioursCardLoader from "@/app/components/loaders/SafetyBehavioursCardLoader";
 import ConfirmOverlay from "@/app/components/common/ConfirmOverlay";
 import {
@@ -10,7 +10,7 @@ import {
   fetchSafetyBehaviours,
   deleteSafetyBehaviour,
   type SafetyBehaviour,
-} from "@/app/lib/stores/treatment/safety-behaviour";
+} from "@/app/lib/stores/practice/safety-behaviour";
 
 const FREQUENCY_COLOR: Record<SafetyBehaviour["frequency"], string> = {
   Rarely: "bg-success/10 text-success border-success/20",

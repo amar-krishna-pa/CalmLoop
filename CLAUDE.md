@@ -36,7 +36,7 @@ The root `layout.tsx` renders `<Header>` and wraps everything in `<ThemeProvider
 - Server helper: `app/lib/auth/check-session.ts` — call `checkSession()` at the top of every API route handler that needs the user
 - Client: `app/lib/auth/auth-client.ts` — `authClient` (better-auth React client + passkey plugin)
 - Auth API is handled by `app/api/auth/[...all]/route.ts`
-- User roles are stored on `user.role` and default to `"patient"`
+- User roles are stored on `user.role` and default to `"user"` (existing rows may still hold the old `"patient"` value; `"therapist"` is the other role)
 
 ### API route ownership checks
 

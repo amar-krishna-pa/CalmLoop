@@ -40,7 +40,7 @@ export async function createSafetyBehaviour({
   frequency: (typeof SAFETY_BEHAVIOUR_FREQUENCIES)[number];
 }): Promise<boolean> {
   try {
-    const res = await fetch("/api/treatment/safety-behaviour", {
+    const res = await fetch("/api/practice/safety-behaviour", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ behaviour, category, frequency }),
@@ -68,7 +68,7 @@ export async function fetchSafetyBehaviours() {
   });
 
   try {
-    const res = await fetch("/api/treatment/safety-behaviour");
+    const res = await fetch("/api/practice/safety-behaviour");
 
     if (!res.ok) throw new Error();
 
@@ -91,7 +91,7 @@ export async function deleteSafetyBehaviour({
   id: string;
 }): Promise<boolean> {
   try {
-    const res = await fetch(`/api/treatment/safety-behaviour/${id}`, {
+    const res = await fetch(`/api/practice/safety-behaviour/${id}`, {
       method: "DELETE",
     });
     if (!res.ok) throw new Error();

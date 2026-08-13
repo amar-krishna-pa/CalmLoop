@@ -14,7 +14,7 @@ type HeaderProps = {
 
 const NAV_ITEMS = [
   { label: "Today", href: "/today" },
-  { label: "Treatment", href: "/treatment" },
+  { label: "Practice", href: "/practice" },
   { label: "Reflect", href: "/reflect" },
   { label: "Support", href: "/support" },
   { label: "Learn", href: "/learn" },

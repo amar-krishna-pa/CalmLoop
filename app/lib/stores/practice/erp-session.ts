@@ -29,7 +29,7 @@ export async function fetchErpSessions() {
   });
 
   try {
-    const res = await fetch("/api/treatment/erp-session");
+    const res = await fetch("/api/practice/erp-session");
 
     if (!res.ok) throw new Error();
 
@@ -58,7 +58,7 @@ export async function createErpSession({
   notes?: string;
 }): Promise<boolean> {
   try {
-    const res = await fetch("/api/treatment/erp-session", {
+    const res = await fetch("/api/practice/erp-session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ trigger, anxietyBefore, anxietyAfter, notes }),
@@ -85,7 +85,7 @@ export async function deleteErpSession({
   id: string;
 }): Promise<boolean> {
   try {
-    const res = await fetch(`/api/treatment/erp-session/${id}`, {
+    const res = await fetch(`/api/practice/erp-session/${id}`, {
       method: "DELETE",
     });
     if (!res.ok) throw new Error();

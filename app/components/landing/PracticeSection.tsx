@@ -66,18 +66,18 @@ const phases: Phase[] = [
   },
 ];
 
-export default function TreatmentSection() {
+export default function PracticeSection() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-24">
       <div className="mb-16 text-center max-w-3xl mx-auto">
         <span className="text-xs font-semibold uppercase tracking-widest text-accent">
-          Treatment Journey
+          Your Practice Journey
         </span>
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight mt-3">
-          Eight clinical tools, three phases
+          Eight practical tools, three phases
         </h2>
         <p className="mt-4 text-muted text-base">
-          The Treatment section walks you through building awareness first,
+          The Practice section walks you through building awareness first,
           applying it in practice, then locking in long-term resilience — in
           that order.
         </p>

@@ -17,7 +17,7 @@ const features: Feature[] = [
   },
   {
     icon: LuClipboardList,
-    label: "Treatment",
+    label: "Practice",
     title: "Structured ERP Tools",
     description:
       "Map your fear hierarchy, log exposures, challenge intrusive thoughts, and plan for setbacks — all grounded in ERP and ACT.",

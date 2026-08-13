@@ -31,7 +31,7 @@ export async function createTriggerLogEntry({
   anxietyLevel: number;
 }): Promise<boolean> {
   try {
-    const res = await fetch("/api/treatment/trigger-log", {
+    const res = await fetch("/api/practice/trigger-log", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ trigger, context, anxietyLevel }),
@@ -59,7 +59,7 @@ export async function fetchTriggerLogEntries() {
   });
 
   try {
-    const res = await fetch("/api/treatment/trigger-log");
+    const res = await fetch("/api/practice/trigger-log");
 
     if (!res.ok) throw new Error();
 
@@ -82,7 +82,7 @@ export async function deleteTriggerLogEntry({
   id: string;
 }): Promise<boolean> {
   try {
-    const res = await fetch(`/api/treatment/trigger-log/${id}`, {
+    const res = await fetch(`/api/practice/trigger-log/${id}`, {
       method: "DELETE",
     });
     if (!res.ok) throw new Error();

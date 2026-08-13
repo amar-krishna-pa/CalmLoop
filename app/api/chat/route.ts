@@ -18,7 +18,7 @@ const groq = createGroq({ apiKey: process.env.GROQ_API_KEY });
 async function generateSessionTitle(firstMessage: string): Promise<string> {
   const { text } = await generateText({
     model: groq("llama-3.1-8b-instant"),
-    prompt: `Generate a short title (3-5 words) for a therapy chat session based on this opening message. Return only the title text, nothing else.\n\nMessage: ${firstMessage}`,
+    prompt: `Generate a short title (3-5 words) for a supportive chat about OCD and anxiety based on this opening message. Return only the title text, nothing else.\n\nMessage: ${firstMessage}`,
     maxOutputTokens: 20,
   });
   return text.trim();

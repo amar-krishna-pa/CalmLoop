@@ -28,7 +28,7 @@ export async function createFearHierarchyItem({
   initialSuds: number;
 }): Promise<boolean> {
   try {
-    const res = await fetch("/api/treatment/fear-hierarchy", {
+    const res = await fetch("/api/practice/fear-hierarchy", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ situation, initialSuds }),
@@ -57,7 +57,7 @@ export async function fetchFearHierarchyItems() {
     fetchError: false,
   });
   try {
-    const res = await fetch("/api/treatment/fear-hierarchy");
+    const res = await fetch("/api/practice/fear-hierarchy");
     if (!res.ok) throw new Error();
     const data = await res.json();
     useFearHierarchyStore.setState({
@@ -95,7 +95,7 @@ export async function patchCurrentSuds({
   currentSuds: number;
 }): Promise<boolean> {
   try {
-    const res = await fetch(`/api/treatment/fear-hierarchy/${id}`, {
+    const res = await fetch(`/api/practice/fear-hierarchy/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ currentSuds }),
@@ -116,7 +116,7 @@ export async function deleteFearHierarchyItem({
   id: string;
 }): Promise<boolean> {
   try {
-    const res = await fetch(`/api/treatment/fear-hierarchy/${id}`, {
+    const res = await fetch(`/api/practice/fear-hierarchy/${id}`, {
       method: "DELETE",
     });
     if (!res.ok) throw new Error();

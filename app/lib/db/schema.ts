@@ -17,7 +17,7 @@ export const user = pgTable("user", {
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").default(false).notNull(),
   image: text("image"),
-  role: text("role").notNull().default("patient"),
+  role: text("role").notNull().default("user"),
   currentStreak: integer("current_streak").notNull().default(0),
   longestStreak: integer("longest_streak").notNull().default(0),
   lastActivityDate: date("last_activity_date"),

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { LuRefreshCw, LuTrash2 } from "react-icons/lu";
-import TriggerLogForm from "@/app/components/treatment/prepare/TriggerLogForm";
+import TriggerLogForm from "@/app/components/practice/prepare/TriggerLogForm";
 import TriggerLogCardLoader from "@/app/components/loaders/TriggerLogCardLoader";
 import AnxietyDot from "@/app/components/common/AnxietyDot";
 import ConfirmOverlay from "@/app/components/common/ConfirmOverlay";
@@ -11,7 +11,7 @@ import {
   deleteTriggerLogEntry,
   fetchTriggerLogEntries,
   useTriggerLogStore,
-} from "@/app/lib/stores/treatment/trigger-log";
+} from "@/app/lib/stores/practice/trigger-log";
 
 export default function TriggerLogCard() {
   const entries = useTriggerLogStore((state) => state.entries);

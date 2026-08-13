@@ -8,7 +8,7 @@ import {
   SAFETY_BEHAVIOUR_CATEGORIES,
   SAFETY_BEHAVIOUR_FREQUENCIES,
 } from "@/app/lib/zod/safety-behaviour";
-import { createSafetyBehaviour } from "@/app/lib/stores/treatment/safety-behaviour";
+import { createSafetyBehaviour } from "@/app/lib/stores/practice/safety-behaviour";
 
 export default function SafetyBehaviourForm() {
   const [behaviour, setBehaviour] = useState("");
