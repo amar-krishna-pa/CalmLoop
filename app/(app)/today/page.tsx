@@ -1,5 +1,5 @@
 import DailyQuoteCard from "@/app/components/dashboard/DailyQuoteCard";
-import ProgressCard from "@/app/components/dashboard/ProgressCard";
+import ProgressCard from "@/app/components/today/ProgressCard";
 import UpcomingSessionCard from "@/app/components/dashboard/UpcomingSessionCard";
 import MoodTrackerCard from "@/app/components/dashboard/MoodTrackerCard";
 import SleepStressCard from "@/app/components/dashboard/SleepStressCard";

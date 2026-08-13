@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { LuRefreshCw, LuTrash2 } from "react-icons/lu";
-import ErpSessionForm from "@/app/components/treatment/ErpSessionForm";
+import ErpSessionForm from "@/app/components/treatment/practice/ErpSessionForm";
 import ErpTrackerCardLoader from "@/app/components/loaders/ErpTrackerCardLoader";
 import ConfirmOverlay from "@/app/components/common/ConfirmOverlay";
 import AnxietyBar from "@/app/components/common/AnxietyBar";

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { LuRefreshCw, LuTrash2 } from "react-icons/lu";
-import SafetyBehaviourForm from "@/app/components/treatment/SafetyBehaviourForm";
+import SafetyBehaviourForm from "@/app/components/treatment/prepare/SafetyBehaviourForm";
 import SafetyBehavioursCardLoader from "@/app/components/loaders/SafetyBehavioursCardLoader";
 import ConfirmOverlay from "@/app/components/common/ConfirmOverlay";
 import {

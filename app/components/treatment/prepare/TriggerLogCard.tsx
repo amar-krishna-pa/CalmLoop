@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { LuRefreshCw, LuTrash2 } from "react-icons/lu";
-import TriggerLogForm from "@/app/components/treatment/TriggerLogForm";
+import TriggerLogForm from "@/app/components/treatment/prepare/TriggerLogForm";
 import TriggerLogCardLoader from "@/app/components/loaders/TriggerLogCardLoader";
-import AnxietyDot from "@/app/components/dashboard/AnxietyDot";
+import AnxietyDot from "@/app/components/common/AnxietyDot";
 import ConfirmOverlay from "@/app/components/common/ConfirmOverlay";
 import formatRelativeTime from "@/app/utils/formatRelativeTime";
 import {

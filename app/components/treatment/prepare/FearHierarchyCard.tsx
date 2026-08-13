@@ -1,5 +1,5 @@
-import FearHierarchyForm from "@/app/components/treatment/FearHierarchyForm";
-import FearHierarchyList from "@/app/components/treatment/FearHierarchyList";
+import FearHierarchyForm from "@/app/components/treatment/prepare/FearHierarchyForm";
+import FearHierarchyList from "@/app/components/treatment/prepare/FearHierarchyList";
 
 export default function FearHierarchyCard() {
   return (
