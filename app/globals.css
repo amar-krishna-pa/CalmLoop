@@ -1,110 +1,104 @@
-/* ─── Pull in the full Tailwind utility library ─────────────────────────── */
+/* ════════════════════════════════════════════════════════════════════════════
+   globals.css — single source of truth for the app's look
+
+   1. Tailwind setup        — import + dark-mode variant
+   2. Design tokens         — light (:root) and dark (.dark) variables
+   3. Tailwind theme bridge — expose tokens as Tailwind utilities
+   4. Base styles           — body defaults
+   5. Component classes     — token helpers, buttons, inputs, cards, slider
+   6. Skeleton loader       — shimmer placeholder (kept unlayered, see note)
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* ─── 1. TAILWIND SETUP ─────────────────────────────────────────────────────── */
+
 @import "tailwindcss";
 
-/* ─── DARK MODE: use .dark class (via next-themes) not OS media query ──────
-   Tailwind v4 defaults dark: to prefers-color-scheme. This overrides it to
-   watch for the .dark class on <html> instead, matching Tailwind v3 behavior. */
+/* Tailwind v4 defaults dark: to prefers-color-scheme. This overrides it to
+   watch for the .dark class on <html> (toggled by next-themes) instead,
+   matching Tailwind v3 behavior. */
 @variant dark (&:where(.dark, .dark *));
 
-@keyframes shimmer {
-  from {
-    background-position: 200% center;
-  }
-  to {
-    background-position: -100% center;
-  }
-}
+/* ─── 2. DESIGN TOKENS ──────────────────────────────────────────────────────
+   Every color in the app reads from these variables — change one value here
+   and the whole UI updates automatically. The .dark block reassigns the SAME
+   variable names, so the entire UI repaints with no duplicate rules.         */
 
-.skeleton {
-  background: linear-gradient(90deg, #d1d5db 40%, #e5e7eb 55%, #d1d5db 70%);
-  background-size: 300% 100%;
-  animation: shimmer 2.5s infinite linear;
-}
-
-.dark .skeleton {
-  background: linear-gradient(90deg, #2e3d35 40%, #3a4d42 55%, #2e3d35 70%);
-  background-size: 300% 100%;
-  animation: shimmer 2.5s infinite linear;
-}
-
-/* ─── LIGHT MODE DESIGN TOKENS ──────────────────────────────────────────────
-   CSS custom properties (variables) defined on :root apply globally.
-   Every color in the app reads from these — change one value here and
-   the whole UI updates automatically.                                        */
+/* Light mode (default) */
 :root {
+  /* Backgrounds */
   --bg-primary: #f4f6f4; /* Main page background — off-white with a hint of green  */
   --bg-surface: #e8ede8; /* Slightly darker surface — sidebars, panels, inputs     */
   --bg-card: #ffffff; /* Pure white — cards, modals, dropdowns                  */
+
+  /* Text */
   --text-primary: #1a2420; /* Near-black — main readable body text                   */
-  --text-muted: #6b7f6b; /* Muted green-grey — labels, placeholders, hints         */
-  --text-on-accent: #f4f6f4; /* Light text for when it sits ON the green accent button */
+  --text-muted: #626d62; /* Muted grey, whisper of green — labels, placeholders    */
   --text-accent: #4a7c59; /* Green-tinted text — links, highlights                  */
+  --text-on-accent: #f4f6f4; /* Light text for when it sits ON the green accent button */
+
+  /* Brand accent */
   --accent: #4a7c59; /* Primary brand green — buttons, focus rings             */
   --accent-hover: #3a6347; /* Darker green — hover state of accent elements          */
+
+  /* Borders */
   --border-subtle: #d8e0d8; /* Barely-visible greenish border                         */
 
-  /* Warning / critical info colors (soft reddish rose) */
-  --warning-text: #963e3e; /* Elegant dark rose / terracotta for warning text */
-  --warning-bg: #fde8e8; /* Soft light rose for warning background */
-  --warning-border: #f9dcdc; /* Soft rose border */
+  /* Warning / critical info (soft reddish rose) */
+  --warning-text: #963e3e; /* Elegant dark rose / terracotta for warning text        */
+  --warning-bg: #fde8e8; /* Soft light rose for warning background                 */
+  --warning-border: #f9dcdc; /* Soft rose border                                       */
 
-  /* Danger — bright red for destructive actions and validation errors */
-  --danger: #dc2626;
+  /* Semantic states */
+  --danger: #dc2626; /* Bright red — destructive actions, validation errors    */
+  --success: #16a34a; /* Green — save / confirm interactive states              */
+  --caution: #ca8a04; /* Amber — mid-range severity (between success/danger)    */
 
-  /* Success — green for save / confirm interactive states */
-  --success: #16a34a;
-
-  /* Caution — amber for mid-range severity (between success and danger) */
-  --caution: #ca8a04;
-
-  /* ── Card height tiers ──────────────────────────────────────────────────────
-     Fixed heights keep cards stable between loading and loaded states so
-     skeleton loaders never cause layout jumps.                                */
+  /* Card height tiers — fixed heights keep cards stable between loading and
+     loaded states so skeleton loaders never cause layout jumps. */
   --card-short: 280px;
   --card-medium: 420px;
   --card-tall: 500px;
 }
 
-/* ─── DARK MODE OVERRIDES ────────────────────────────────────────────────────
-   When a "dark" class is added to <html> or <body> (toggled via JS),
-   the SAME variable names are reassigned to dark equivalents.
-   Because all rules below use var(--...), the entire UI repaints
-   automatically — no duplicate style rules needed anywhere.                  */
+/* Dark mode overrides (next-themes adds .dark to <html>) */
 .dark {
-  --bg-primary: #141a17; /* Very dark greenish-black — main background              */
+  /* Backgrounds */
+  --bg-primary: #141a17; /* Very dark greenish-black — main background             */
   --bg-surface: #1e2922; /* Slightly lighter dark — panels, sidebars               */
-  --bg-card: #1e2922; /* Same as surface in dark mode (no pure white contrast)  */
+  --bg-card: #26332b; /* A step lighter than surface so cards lift off the page */
+
+  /* Text */
   --text-primary: #e8ede8; /* Near-white — main readable text                        */
-  --text-muted: #7a9e84; /* Softer green — muted labels and hints                  */
+  --text-muted: #8fa096; /* Muted grey, whisper of green — labels and hints        */
+  --text-accent: #68a87c; /* Brighter green for legibility on dark bg               */
   --text-on-accent: #141a17; /* Dark text on top of the (now lighter) accent           */
-  --text-accent: #5e9e72; /* Brighter green for legibility on dark bg               */
+
+  /* Brand accent */
   --accent: #5e9e72; /* Lighter brand green — stays visible on dark surfaces   */
   --accent-hover: #4e8a61; /* Slightly darker on hover                               */
-  --border-subtle: #2a3830; /* Subtle dark border — barely visible divider            */
 
-  /* Dark mode warning / critical info colors */
-  --warning-text: #e89b9b; /* Soft rose-pink for warning text in dark mode */
-  --warning-bg: #4a2020; /* Dark warm reddish-brown background */
-  --warning-border: #4a2d2d; /* Dark muted rose-brown border */
+  /* Borders */
+  --border-subtle: #3a4a40; /* Subtle dark border — visible but quiet divider         */
 
-  /* Danger / success dark overrides */
+  /* Warning / critical info */
+  --warning-text: #e89b9b; /* Soft rose-pink for warning text in dark mode           */
+  --warning-bg: #4a2020; /* Dark warm reddish-brown background                     */
+  --warning-border: #4a2d2d; /* Dark muted rose-brown border                           */
+
+  /* Semantic states */
   --danger: #f87171;
   --success: #4ade80;
-
-  /* Caution dark override */
   --caution: #fbbf24;
 }
 
-/* ─── TAILWIND V4 THEME BRIDGE ───────────────────────────────────────────────
-   @theme inline maps your CSS variables into Tailwind's own token system.
-   This lets you use them as Tailwind utility classes in your HTML, e.g.
-   bg-accent, bg-accent/10, text-accent, font-sans, etc.                      */
+/* ─── 3. TAILWIND THEME BRIDGE ──────────────────────────────────────────────
+   @theme inline maps the CSS variables into Tailwind's token system, so they
+   work as utility classes (bg-accent, bg-accent/10, text-accent, border-accent,
+   opacity-modifier variants, etc.).                                          */
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Registering these lets Tailwind generate bg-accent, bg-accent/10,
-     text-accent, border-accent, and opacity-modifier variants automatically */
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-subtle: var(--border-subtle);
@@ -118,92 +112,101 @@
   --color-caution: var(--caution);
 }
 
-/* ─── GLOBAL BODY DEFAULTS ───────────────────────────────────────────────────
-   Sets baseline styles for the entire page.
-   All three values come from variables, so they swap automatically
-   when dark mode activates.                                                   */
+/* ─── 4. BASE STYLES ────────────────────────────────────────────────────────── */
+
 body {
-  background-color: var(--bg-primary); /* Page background                    */
-  color: var(--text-primary); /* Default text colour                */
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif; /* Geist → Arial → Helvetica fallback */
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif; /* Geist → Arial → Helvetica */
 }
 
-/* ─── REUSABLE COMPONENT CLASSES ─────────────────────────────────────────────
-   @layer components registers these inside Tailwind's component layer.
-   That means Tailwind utility classes (e.g. bg-red-500) can still
-   override these if needed — correct specificity is preserved.               */
+/* ─── 5. COMPONENT CLASSES ──────────────────────────────────────────────────
+   @layer components registers these inside Tailwind's component layer, so
+   Tailwind utilities (e.g. bg-red-500) can still override them if needed.    */
 @layer components {
-  /* Background helpers — apply a themed background to any element */
+  /* ── Token helpers — apply a themed color to any element ────────────────── */
+
+  /* Backgrounds */
   .bg-primary {
     background-color: var(--bg-primary);
-  } /* Main page background  */
+  }
   .bg-surface {
     background-color: var(--bg-surface);
-  } /* Panel / sidebar bg    */
+  }
   .bg-card {
     background-color: var(--bg-card);
-  } /* Card / modal bg       */
+  }
 
-  /* Text colour helpers */
+  /* Text */
   .text-primary {
     color: var(--text-primary);
-  } /* Main body text        */
+  }
   .text-muted {
     color: var(--text-muted);
-  } /* Subdued / hint text   */
-  .text-on-accent {
-    color: var(--text-on-accent);
-  } /* Text on green buttons */
+  }
   .text-accent {
     color: var(--text-accent);
-  } /* Green highlight text  */
+  }
+  .text-on-accent {
+    color: var(--text-on-accent);
+  }
 
-  /* Border colour helpers */
+  /* Borders */
   .border-subtle {
     border-color: var(--border-subtle);
-  } /* Soft divider border   */
+  }
   .border-accent {
     border-color: var(--accent);
-  } /* Green accent border   */
+  }
 
-  /* ── Primary action button ─────────────────────────────────────────────── */
+  /* ── Primary action button ──────────────────────────────────────────────── */
   .btn-accent {
-    background-color: var(
-      --accent
-    ); /* Green background                         */
-    color: var(--text-on-accent); /* Light text on top of the green           */
-    font-size: 13px; /* Slightly smaller than base text          */
-    font-weight: 500; /* Medium weight — not bold, not thin       */
-    padding: 6px 12px; /* Comfortable click target, not too chunky */
-    border-radius: 8px; /* Rounded corners                          */
-    transition: background-color 0.15s; /* Smooth colour shift on hover             */
+    background-color: var(--accent);
+    color: var(--text-on-accent);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: background-color 0.15s;
   }
   .btn-accent:hover {
-    background-color: var(
-      --accent-hover
-    ); /* Darkens slightly when hovered            */
+    background-color: var(--accent-hover);
   }
 
   /* ── Small square icon button ───────────────────────────────────────────── */
   .icon-btn {
-    width: 32px; /* Fixed 32×32 square                       */
+    width: 32px;
     height: 32px;
-    border-radius: 8px; /* Rounded, but not a full circle           */
-    display: flex; /* Centres the icon inside                  */
+    border-radius: 8px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(
-      --bg-primary
-    ); /* Blends with the page background          */
-    border: 1px solid var(--border-subtle); /* Subtle visible edge                      */
-    color: var(--text-muted); /* Muted icon colour                        */
-    transition: opacity 0.15s; /* Fades slightly on hover instead of colour shift */
+    background-color: var(--bg-primary); /* Blends with the page background */
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    transition: opacity 0.15s;
   }
   .icon-btn:hover {
-    opacity: 0.8; /* Gentle fade — indicates interactivity    */
+    opacity: 0.8;
   }
 
-  /* ── Card height tiers ─────────────────────────────────────────────────── */
+  /* ── Base input / textarea ──────────────────────────────────────────────── */
+  .input-base {
+    background-color: var(--bg-surface); /* Slightly sunken look vs the page bg */
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    width: 100%;
+    transition: background-color 0.15s;
+  }
+  .input-base:focus {
+    outline: none; /* Replace the default browser ring… */
+    box-shadow: 0 0 0 2px var(--accent); /* …with a clean green glow ring */
+  }
+
+  /* ── Card height tiers ──────────────────────────────────────────────────── */
   .card-short {
     height: var(--card-short);
   }
@@ -212,24 +215,6 @@ body {
   }
   .card-tall {
     height: var(--card-tall);
-  }
-
-  /* ── Base input / textarea style ────────────────────────────────────────── */
-  .input-base {
-    background-color: var(
-      --bg-surface
-    ); /* Slightly sunken look vs the page bg      */
-    border: 1px solid var(--border-subtle); /* Thin border to define the field edge     */
-    color: var(--text-primary); /* User's typed text colour                 */
-    border-radius: 8px; /* Matches button radius for visual harmony */
-    padding: 8px 12px; /* Roomy enough to type comfortably         */
-    font-size: 14px; /* Slightly smaller than headline text      */
-    width: 100%; /* Stretches to fill its container          */
-    transition: background-color 0.15s; /* Smooth bg shift on focus                 */
-  }
-  .input-base:focus {
-    outline: none; /* Removes the default browser focus ring   */
-    box-shadow: 0 0 0 2px var(--accent); /* Replaces it with a clean green glow ring */
   }
 
   /* ── Range slider ───────────────────────────────────────────────────────────
@@ -285,4 +270,29 @@ body {
     background: var(--slider-color);
     border: 2px solid var(--bg-card);
   }
+}
+
+/* ─── 6. SKELETON LOADER ────────────────────────────────────────────────────
+   Shimmer placeholder used by loader components. Kept OUTSIDE @layer so it
+   stays unlayered — unlayered CSS wins over layered, preserving the original
+   cascade behavior.                                                          */
+@keyframes shimmer {
+  from {
+    background-position: 200% center;
+  }
+  to {
+    background-position: -100% center;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #d1d5db 40%, #e5e7eb 55%, #d1d5db 70%);
+  background-size: 300% 100%;
+  animation: shimmer 2.5s infinite linear;
+}
+
+.dark .skeleton {
+  background: linear-gradient(90deg, #2e3d35 40%, #3a4d42 55%, #2e3d35 70%);
+  background-size: 300% 100%;
+  animation: shimmer 2.5s infinite linear;
 }
