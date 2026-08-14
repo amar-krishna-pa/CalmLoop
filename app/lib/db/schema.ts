@@ -176,6 +176,8 @@ export const erpSessions = pgTable("erp_sessions", {
   trigger: text("trigger").notNull(),
   anxietyBefore: integer("anxiety_before").notNull(),
   anxietyAfter: integer("anxiety_after").notNull(),
+  prediction: text("prediction"),
+  outcome: text("outcome"),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
