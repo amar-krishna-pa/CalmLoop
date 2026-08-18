@@ -2,12 +2,6 @@
 
 import { useState } from "react";
 import { cn } from "@/app/lib/cn/cn";
-import FearHierarchyCard from "@/app/components/practice/prepare/FearHierarchyCard";
-import ErpTrackerCard from "@/app/components/practice/practice/ErpTrackerCard";
-import TriggerLogCard from "@/app/components/practice/prepare/TriggerLogCard";
-import SafetyBehavioursCard from "@/app/components/practice/prepare/SafetyBehavioursCard";
-import ThoughtRecordsCard from "@/app/components/dashboard/ThoughtRecordsCard";
-import BehaviouralExperimentsCard from "@/app/components/dashboard/BehaviouralExperimentsCard";
 import HomeworkCard from "@/app/components/dashboard/HomeworkCard";
 import RelapsePreventionCard from "@/app/components/dashboard/RelapsePreventionCard";
 
@@ -67,18 +61,21 @@ export default function PracticePage() {
       </div>
 
       {activeTab === "prepare" && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <TriggerLogCard />
-          <FearHierarchyCard />
-          <SafetyBehavioursCard />
+        <div className="bg-card border border-subtle rounded-xl p-8 flex flex-col items-center justify-center text-center card-medium">
+          <p className="text-sm font-medium text-primary">Nothing here yet</p>
+          <p className="text-xs text-muted mt-1 max-w-sm">
+            This is being rebuilt around a single place to describe what you
+            went through.
+          </p>
         </div>
       )}
 
       {activeTab === "practice" && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <ErpTrackerCard />
-          <ThoughtRecordsCard />
-          <BehaviouralExperimentsCard />
+        <div className="bg-card border border-subtle rounded-xl p-8 flex flex-col items-center justify-center text-center card-medium">
+          <p className="text-sm font-medium text-primary">Nothing here yet</p>
+          <p className="text-xs text-muted mt-1 max-w-sm">
+            Exposure practice will return once the new Prepare flow lands.
+          </p>
         </div>
       )}
 

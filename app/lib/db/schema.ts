@@ -131,66 +131,11 @@ export const messages = pgTable("messages", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const triggerLogs = pgTable("trigger_logs", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
-  trigger: text("trigger").notNull(),
-  context: text("context").notNull(),
-  anxietyLevel: integer("anxiety_level").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
-export const safetyBehaviours = pgTable("safety_behaviours", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
-  behaviour: text("behaviour").notNull(),
-  category: text("category").notNull(),
-  frequency: text("frequency").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
-export const fearHierarchyItems = pgTable("fear_hierarchy_items", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
-  situation: text("situation").notNull(),
-  initialSuds: integer("initial_suds").notNull(),
-  currentSuds: integer("current_suds").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at")
-    .defaultNow()
-    .$onUpdate(() => /* @__PURE__ */ new Date())
-    .notNull(),
-});
-
-export const erpSessions = pgTable("erp_sessions", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
-  trigger: text("trigger").notNull(),
-  anxietyBefore: integer("anxiety_before").notNull(),
-  anxietyAfter: integer("anxiety_after").notNull(),
-  prediction: text("prediction"),
-  outcome: text("outcome"),
-  notes: text("notes"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
   passkeys: many(passkey),
   chatSessions: many(chatSessions),
-  fearHierarchyItems: many(fearHierarchyItems),
-  triggerLogs: many(triggerLogs),
-  safetyBehaviours: many(safetyBehaviours),
-  erpSessions: many(erpSessions),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -232,36 +177,3 @@ export const messageRelations = relations(messages, ({ one }) => ({
   }),
 }));
 
-export const fearHierarchyItemRelations = relations(
-  fearHierarchyItems,
-  ({ one }) => ({
-    user: one(user, {
-      fields: [fearHierarchyItems.userId],
-      references: [user.id],
-    }),
-  })
-);
-
-export const triggerLogRelations = relations(triggerLogs, ({ one }) => ({
-  user: one(user, {
-    fields: [triggerLogs.userId],
-    references: [user.id],
-  }),
-}));
-
-export const safetyBehaviourRelations = relations(
-  safetyBehaviours,
-  ({ one }) => ({
-    user: one(user, {
-      fields: [safetyBehaviours.userId],
-      references: [user.id],
-    }),
-  })
-);
-
-export const erpSessionRelations = relations(erpSessions, ({ one }) => ({
-  user: one(user, {
-    fields: [erpSessions.userId],
-    references: [user.id],
-  }),
-}));

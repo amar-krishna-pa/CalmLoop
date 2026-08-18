@@ -119,7 +119,7 @@ All cards must use one of the three height tier classes defined in `globals.css`
 | ------------- | ------ | ----------------------------------------------------- |
 | `card-short`  | 280px  | Simple read-only cards with minimal or static content |
 | `card-medium` | 420px  | Cards with a list or moderate scrollable content      |
-| `card-tall`   | 560px  | Cards with both a form and a scrollable list          |
+| `card-tall`   | 500px  | Cards with both a form and a scrollable list          |
 
 Always pair the height class with `flex flex-col` on the card root. When the card contains a scrollable region (list, feed, etc.), wrap it in a `div` with `flex-1 min-h-0 overflow-y-auto` so it fills the remaining space and scrolls rather than overflowing:
 
@@ -147,6 +147,15 @@ Use `null` (not `[]` or `""`) as the initial state sentinel to distinguish "stil
 ### Never define components inside other component files
 
 Every component must live in its own file. Defining a component function inside another component's file is an anti-pattern — extract it to its own file and import it.
+
+### Inline forms vs. modal forms
+
+Card forms follow the weight of the entry:
+
+- **Quick capture (1–3 fields)** — render the form inline at the top of the card, above the scrollable list (Trigger Log, Fear Hierarchy, Safety Behaviours).
+- **Structured entry (4+ fields)** — keep the card list-only with an action button in the card header, and put the form inside `<Modal>` from `app/components/common/Modal.tsx` (ERP Tracker). An inline form that large crowds out the list, which is the part with actual value.
+
+`Modal` handles focus trapping, Escape-to-close, backdrop click, body scroll lock, and renders through a portal. Give modal form fields real `<label>` elements rather than placeholder-only labelling.
 
 ## TypeScript conventions
 
