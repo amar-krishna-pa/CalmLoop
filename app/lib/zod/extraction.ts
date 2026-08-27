@@ -45,12 +45,6 @@ const Fear = z.object({
     .describe(
       "What kind of fear this is. Take this from what the person is afraid of, never from the ritual they performed. A fear can have more than one theme. 'Symmetry and ordering' is about how things are arranged; 'Just right' is about the feeling of incompleteness until something is correct."
     ),
-  trigger: z
-    .string()
-    .nullable()
-    .describe(
-      "The specific event that set this off on this occasion, in a few words. A moment, not a pattern. Null if the entry does not describe one."
-    ),
   behaviours: z
     .array(Behaviour)
     .describe(

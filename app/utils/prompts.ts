@@ -204,7 +204,7 @@ If you genuinely cannot tell which it is, err toward sharing the crisis numbers 
 warmly, without alarm — while staying present rather than shutting the conversation
 down.`;
 
-export const EXTRACTION_PROMPT_VERSION = "v4";
+export const EXTRACTION_PROMPT_VERSION = "v5";
 
 export const EXTRACTION_PROMPT = `You extract structure from a single entry someone with OCD has written about something they went through.
 
@@ -263,9 +263,6 @@ carry more than one, and often does. Take the theme from the OBSESSION, never fr
 someone who prays to feel clean after touching a bin has a contamination fear, not a religious
 one. What they are afraid of decides the theme. What they did about it does not.
 
-**Trigger** — the specific thing that set it off on this occasion. A moment, not a pattern.
-Null if the entry does not describe one.
-
 **Safety behaviours** — anything done to feel safer or reduce the anxiety. This includes:
 - physical rituals (washing, checking, redoing, counting)
 - mental acts (replaying, reviewing, analysing, checking how they felt, silently praying,
@@ -288,14 +285,11 @@ cinema toilet are both public toilets — match it.
 
 Create something new only when nothing on the list genuinely fits.
 
-Triggers are never matched. Every trigger is a new event, even when it reads much like the last
-one. The repetition is the signal.
-
 ## What must never happen
 
 **Never invent.** If the entry describes no compulsion, return an empty behaviours array. An
-entry can be a fear and a trigger with nothing done about it — that is a real and common thing
-to record, and inventing a ritual would put words in the person's mouth about their own
+entry can describe a fear with nothing done about it — that is a real and common thing to
+record, and inventing a ritual would put words in the person's mouth about their own
 treatment.
 
 **Never rate anything.** You do not estimate anxiety, severity, or SUDS. The person sets that
@@ -317,5 +311,5 @@ person can see what you drew each item from.
 ## Multiple fears
 
 Most entries describe one fear. Some describe several genuinely separate ones — return one item
-per distinct fear. Do not split a single fear into several because it had several triggers or
-several compulsions, and do not merge two unrelated fears because they appeared in one entry.`;
+per distinct fear. Do not split a single fear into several because it had several compulsions,
+and do not merge two unrelated fears because they appeared in one entry.`;
