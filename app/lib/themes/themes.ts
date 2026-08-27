@@ -1,0 +1,16 @@
+export const THEMES = [
+  "Contamination",
+  "Checking",
+  "Symmetry and ordering",
+  "Just right",
+  "Harm",
+  "Sexual intrusive thoughts",
+  "Religious and moral",
+  "Relationship",
+  "Identity",
+  "Health",
+  "Responsibility",
+  "Magical thinking",
+  "Existential",
+  "Other",
+] as const;
