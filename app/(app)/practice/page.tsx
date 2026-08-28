@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/app/lib/cn/cn";
+import EntryCard from "@/app/components/dashboard/EntryCard";
 import HomeworkCard from "@/app/components/dashboard/HomeworkCard";
 import RelapsePreventionCard from "@/app/components/dashboard/RelapsePreventionCard";
 
@@ -60,15 +61,7 @@ export default function PracticePage() {
         ))}
       </div>
 
-      {activeTab === "prepare" && (
-        <div className="bg-card border border-subtle rounded-xl p-8 flex flex-col items-center justify-center text-center card-medium">
-          <p className="text-sm font-medium text-primary">Nothing here yet</p>
-          <p className="text-xs text-muted mt-1 max-w-sm">
-            This is being rebuilt around a single place to describe what you
-            went through.
-          </p>
-        </div>
-      )}
+      {activeTab === "prepare" && <EntryCard />}
 
       {activeTab === "practice" && (
         <div className="bg-card border border-subtle rounded-xl p-8 flex flex-col items-center justify-center text-center card-medium">
