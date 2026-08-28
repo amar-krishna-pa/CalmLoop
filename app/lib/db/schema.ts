@@ -131,11 +131,53 @@ export const messages = pgTable("messages", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const fears = pgTable(
+  "fears",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    themes: text("themes").array().notNull().default([]),
+    behaviours: text("behaviours").array().notNull().default([]),
+    // Set by the person in the save preview, never by extraction.
+    initialSuds: integer("initial_suds").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .notNull(),
+  },
+  (table) => [index("fears_user_id_idx").on(table.userId)]
+);
+
+// One row each time an entry turned out to be about this fear. Holds the quote the extraction
+export const fearOccurrences = pgTable(
+  "fear_occurrences",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    fearId: uuid("fear_id")
+      .notNull()
+      .references(() => fears.id, { onDelete: "cascade" }),
+    evidence: text("evidence").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => [
+    index("fear_occurrences_user_id_idx").on(table.userId),
+    index("fear_occurrences_fear_id_idx").on(table.fearId),
+  ]
+);
+
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
   passkeys: many(passkey),
   chatSessions: many(chatSessions),
+  fears: many(fears),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -177,3 +219,21 @@ export const messageRelations = relations(messages, ({ one }) => ({
   }),
 }));
 
+export const fearRelations = relations(fears, ({ one, many }) => ({
+  user: one(user, {
+    fields: [fears.userId],
+    references: [user.id],
+  }),
+  occurrences: many(fearOccurrences),
+}));
+
+export const fearOccurrenceRelations = relations(fearOccurrences, ({ one }) => ({
+  fear: one(fears, {
+    fields: [fearOccurrences.fearId],
+    references: [fears.id],
+  }),
+  user: one(user, {
+    fields: [fearOccurrences.userId],
+    references: [user.id],
+  }),
+}));

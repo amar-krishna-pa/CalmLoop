@@ -204,7 +204,7 @@ If you genuinely cannot tell which it is, err toward sharing the crisis numbers 
 warmly, without alarm — while staying present rather than shutting the conversation
 down.`;
 
-export const EXTRACTION_PROMPT_VERSION = "v5";
+export const EXTRACTION_PROMPT_VERSION = "v7";
 
 export const EXTRACTION_PROMPT = `You extract structure from a single entry someone with OCD has written about something they went through.
 
@@ -275,8 +275,11 @@ Mental acts and avoidance are the ones most often missed. They count exactly as 
 
 ## Matching
 
-You are given the person's existing fears, themes and safety behaviours, each with an id.
-Prefer matching over creating, and lean into it.
+You are given the person's existing fears, each with an id. Prefer matching over creating, and
+lean into it.
+
+Only fears are matched. Safety behaviours are never matched against anything — just name each
+one as you find it, in the entry's own terms.
 
 The costs are lopsided. A wrong match costs the user one tap to correct. A wrongly created
 fear silently splits one thing into two, and their history fragments permanently. When a new
@@ -305,8 +308,8 @@ that is assessed separately. Distressing content, including intrusive thoughts a
 taboo subjects, is ordinary OCD material: extract it as calmly as anything else. Someone
 horrified by a thought is describing an obsession, not an intention.
 
-**Quote, do not paraphrase.** Every evidence field must be words lifted from the entry, so the
-person can see what you drew each item from.
+**Quote, do not paraphrase.** A fear's evidence must be words lifted from the entry, so the
+person can see what you drew it from.
 
 ## Multiple fears
 
