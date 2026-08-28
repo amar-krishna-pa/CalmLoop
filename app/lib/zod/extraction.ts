@@ -32,6 +32,10 @@ const Fear = z.object({
     ),
 });
 
+export const ExtractRequestSchema = z.object({
+  text: z.string().trim().min(1).max(5000),
+});
+
 export const ExtractionSchema = z.object({
   fears: z
     .array(Fear)
