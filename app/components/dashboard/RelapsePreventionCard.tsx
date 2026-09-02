@@ -56,7 +56,7 @@ export default function RelapsePreventionCard() {
             {COPING_STEPS.map((s, i) => (
               <li key={s.id} className="flex items-start gap-2.5">
                 <span className="shrink-0 w-5 h-5 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center">
-                  <span className="text-[10px] font-bold text-accent">{i + 1}</span>
+                  <span className="text-2xs font-bold text-accent">{i + 1}</span>
                 </span>
                 <p className="text-sm text-primary leading-snug pt-0.5">{s.step}</p>
               </li>

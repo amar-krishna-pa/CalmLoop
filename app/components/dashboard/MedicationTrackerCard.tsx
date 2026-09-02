@@ -40,7 +40,7 @@ export default function MedicationTrackerCard() {
         </div>
         <div className="text-right">
           <p className="text-lg font-bold text-accent">{adherencePercent}%</p>
-          <p className="text-[10px] text-muted">adherence</p>
+          <p className="text-2xs text-muted">adherence</p>
         </div>
       </div>
 

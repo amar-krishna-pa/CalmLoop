@@ -70,7 +70,7 @@ export default function SleepStressCard() {
                   />
                 )}
               </div>
-              <span className="text-[10px] text-muted">{d.day}</span>
+              <span className="text-2xs text-muted">{d.day}</span>
             </div>
           );
         })}

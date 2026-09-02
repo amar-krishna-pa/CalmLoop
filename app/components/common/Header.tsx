@@ -32,7 +32,7 @@ export default function Header({ userName }: HeaderProps) {
       <div className="flex items-center h-full">
         <Link
           href="/today"
-          className="text-[17px] font-semibold tracking-tight text-accent mr-4 px-1"
+          className="text-brand font-semibold tracking-tight text-accent mr-4 px-1"
         >
           CalmLoop
         </Link>

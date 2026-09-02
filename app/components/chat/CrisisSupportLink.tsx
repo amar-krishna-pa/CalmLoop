@@ -41,7 +41,7 @@ export default function CrisisSupportLink() {
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
           className={cn(
-            "text-[12px] underline underline-offset-2 transition-colors cursor-pointer",
+            "text-xs underline underline-offset-2 transition-colors cursor-pointer",
             open ? "text-accent" : "text-muted hover:text-accent"
           )}
         >

@@ -99,6 +99,25 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
+  /* Tailwind's default type scale, increased by 2px app-wide. */
+  --text-2xs: 12px;
+  --text-caption: 13px;
+  --text-xs: 14px;
+  --text-compact: 15px;
+  --text-sm: 16px;
+  --text-base: 18px;
+  --text-brand: 19px;
+  --text-lg: 20px;
+  --text-xl: 22px;
+  --text-2xl: 26px;
+  --text-3xl: 32px;
+  --text-4xl: 38px;
+  --text-5xl: 50px;
+  --text-6xl: 62px;
+  --text-7xl: 74px;
+  --text-8xl: 98px;
+  --text-9xl: 130px;
+
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-subtle: var(--border-subtle);
@@ -118,6 +137,7 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif; /* Geist → Arial → Helvetica */
+  font-size: var(--text-base);
 }
 
 /* ─── 5. COMPONENT CLASSES ──────────────────────────────────────────────────
@@ -163,7 +183,7 @@ body {
   .btn-accent {
     background-color: var(--accent);
     color: var(--text-on-accent);
-    font-size: 13px;
+    font-size: var(--text-compact);
     font-weight: 500;
     padding: 6px 12px;
     border-radius: 8px;
@@ -197,7 +217,7 @@ body {
     color: var(--text-primary);
     border-radius: 8px;
     padding: 8px 12px;
-    font-size: 14px;
+    font-size: var(--text-sm);
     width: 100%;
     transition: background-color 0.15s;
   }

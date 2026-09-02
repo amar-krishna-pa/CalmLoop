@@ -60,7 +60,7 @@ export default function SignUpPage() {
             </Link>
           </p>
 
-          <p className="text-[11px] text-muted text-center mt-4 leading-relaxed">
+          <p className="text-caption text-muted text-center mt-4 leading-relaxed">
             By creating an account you agree to our &nbsp;
             <Link href="#" className="underline hover:text-primary">
               Terms of Service

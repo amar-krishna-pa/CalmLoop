@@ -59,7 +59,7 @@ export default function MoodTrackerCard() {
                   />
                 )}
               </div>
-              <span className="text-[10px] text-muted">{r.day}</span>
+              <span className="text-2xs text-muted">{r.day}</span>
             </div>
           ))}
         </div>

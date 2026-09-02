@@ -50,7 +50,7 @@ export default function PsychoeducationCard() {
           <div key={step.label} className="flex gap-3 items-start">
             <div className="flex flex-col items-center shrink-0">
               <div className={`w-6 h-6 rounded-full ${step.accent} flex items-center justify-center`}>
-                <span className="text-[10px] font-bold text-white">{i + 1}</span>
+                <span className="text-2xs font-bold text-white">{i + 1}</span>
               </div>
               {i < OCD_CYCLE.length - 1 && (
                 <div className="w-px h-4 bg-subtle mt-1" />

@@ -6,7 +6,7 @@ import EntryCard from "@/app/components/dashboard/EntryCard";
 import HomeworkCard from "@/app/components/dashboard/HomeworkCard";
 import RelapsePreventionCard from "@/app/components/dashboard/RelapsePreventionCard";
 
-type Tab = "prepare" | "practice" | "plan";
+type Tab = "prepare" | "exposures" | "maintain";
 
 const TABS: { id: Tab; label: string; sublabel: string }[] = [
   {
@@ -15,12 +15,12 @@ const TABS: { id: Tab; label: string; sublabel: string }[] = [
     sublabel: "Map your triggers, fears & safety behaviours",
   },
   {
-    id: "practice",
-    label: "Practice",
+    id: "exposures",
+    label: "Exposures",
     sublabel: "Log exposures, challenge thoughts & test predictions",
   },
   {
-    id: "plan",
+    id: "maintain",
     label: "Maintain",
     sublabel: "Therapist homework & relapse prevention",
   },
@@ -54,7 +54,7 @@ export default function PracticePage() {
             >
               {tab.label}
             </span>
-            <span className="text-[11px] text-muted mt-0.5 hidden sm:block">
+            <span className="text-caption text-muted mt-0.5 hidden sm:block">
               {tab.sublabel}
             </span>
           </button>
@@ -63,7 +63,7 @@ export default function PracticePage() {
 
       {activeTab === "prepare" && <EntryCard />}
 
-      {activeTab === "practice" && (
+      {activeTab === "exposures" && (
         <div className="bg-card border border-subtle rounded-xl p-8 flex flex-col items-center justify-center text-center card-medium">
           <p className="text-sm font-medium text-primary">Nothing here yet</p>
           <p className="text-xs text-muted mt-1 max-w-sm">
@@ -72,7 +72,7 @@ export default function PracticePage() {
         </div>
       )}
 
-      {activeTab === "plan" && (
+      {activeTab === "maintain" && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <HomeworkCard />
           <RelapsePreventionCard />

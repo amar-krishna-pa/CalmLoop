@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
 import { fears } from "@/app/lib/db/schema";
+import type { ExtractedFearPreview } from "@/app/lib/types/extraction";
 import { ExtractRequestSchema, ExtractionSchema } from "@/app/lib/zod/extraction";
 import { EXTRACTION_PROMPT } from "@/app/utils/prompts";
 
@@ -77,8 +78,11 @@ export async function POST(request: Request) {
     };
   });
 
-  // A new fear with no name is unusable in the preview — there is nothing to show or save.
-  const usable = preview.filter((fear) => fear.name);
+  // A new fear with no name is unusable in the preview — there is nothing to show or save. The
+  // predicate keeps the response matching the type the client reads it back as.
+  const usable = preview.filter(
+    (fear): fear is ExtractedFearPreview => fear.name !== null
+  );
 
   return Response.json({ fears: usable });
 }

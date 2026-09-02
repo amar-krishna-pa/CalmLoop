@@ -56,7 +56,7 @@ export default function ProfileDropdown({ userName }: ProfileDropdownProps) {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen((o) => !o)}
-        className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-medium bg-primary border border-subtle text-primary cursor-pointer"
+        className="w-8 h-8 rounded-full flex items-center justify-center text-caption font-medium bg-primary border border-subtle text-primary cursor-pointer"
         aria-label="Account menu"
       >
         {getInitials(userName)}
@@ -65,7 +65,7 @@ export default function ProfileDropdown({ userName }: ProfileDropdownProps) {
       {open && (
         <div className="absolute right-0 mt-2 w-48 rounded-lg border border-subtle bg-surface shadow-lg py-1 z-50">
           <div className="px-3 py-2 border-b border-subtle">
-            <p className="text-[12px] font-medium text-primary truncate">
+            <p className="text-xs font-medium text-primary truncate">
               {userName}
             </p>
           </div>
@@ -77,7 +77,7 @@ export default function ProfileDropdown({ userName }: ProfileDropdownProps) {
                 href={item.href}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  "block px-3 py-2 text-[13px] transition-colors",
+                  "block px-3 py-2 text-compact transition-colors",
                   pathname === item.href
                     ? "text-accent font-medium"
                     : "text-muted hover:text-primary"
@@ -91,7 +91,7 @@ export default function ProfileDropdown({ userName }: ProfileDropdownProps) {
           <Link
             href="/profile"
             onClick={() => setOpen(false)}
-            className="block w-full text-left px-3 py-2 text-[13px] text-muted hover:text-primary hover:bg-surface/60 transition-colors"
+            className="block w-full text-left px-3 py-2 text-compact text-muted hover:text-primary hover:bg-surface/60 transition-colors"
           >
             Profile
           </Link>
@@ -99,7 +99,7 @@ export default function ProfileDropdown({ userName }: ProfileDropdownProps) {
           <div className="border-t border-subtle mt-1 pt-1">
             <button
               onClick={handleLogout}
-              className="cursor-pointer w-full text-left px-3 py-2 text-[13px] text-warning-text hover:bg-surface/60 transition-colors"
+              className="cursor-pointer w-full text-left px-3 py-2 text-compact text-warning-text hover:bg-surface/60 transition-colors"
             >
               Log out
             </button>

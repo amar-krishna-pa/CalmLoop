@@ -57,7 +57,7 @@ export default function FeaturesSection() {
               <div className="w-12 h-12 rounded-xl bg-surface border border-subtle flex items-center justify-center text-accent">
                 <Icon size={22} />
               </div>
-              <span className="text-[10px] font-semibold uppercase tracking-widest text-muted border border-subtle rounded-full px-2.5 py-1">
+              <span className="text-2xs font-semibold uppercase tracking-widest text-muted border border-subtle rounded-full px-2.5 py-1">
                 {label}
               </span>
             </div>

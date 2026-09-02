@@ -27,7 +27,7 @@ export default function ChatDemoSection() {
                 <span className="text-xs font-semibold text-muted">
                   Intrusive Thought & Compulsion
                 </span>
-                <span className="text-[10px] bg-warning-bg text-warning-text px-2 py-0.5 rounded-full font-medium">
+                <span className="text-2xs bg-warning-bg text-warning-text px-2 py-0.5 rounded-full font-medium">
                   Spike
                 </span>
               </div>
@@ -50,7 +50,7 @@ export default function ChatDemoSection() {
                 <span className="text-xs font-semibold text-accent">
                   CalmLoop ERP Response
                 </span>
-                <span className="text-[10px] bg-accent/20 text-accent dark:text-accent px-2 py-0.5 rounded-full font-medium">
+                <span className="text-2xs bg-accent/20 text-accent dark:text-accent px-2 py-0.5 rounded-full font-medium">
                   Exposure
                 </span>
               </div>
