@@ -12,17 +12,17 @@ const TABS: { id: Tab; label: string; sublabel: string }[] = [
   {
     id: "prepare",
     label: "Prepare",
-    sublabel: "Map your triggers, fears & safety behaviours",
+    sublabel: "Map triggers & safety behaviours",
   },
   {
     id: "exposures",
     label: "Exposures",
-    sublabel: "Log exposures, challenge thoughts & test predictions",
+    sublabel: "Log exposures & test predictions",
   },
   {
     id: "maintain",
     label: "Maintain",
-    sublabel: "Therapist homework & relapse prevention",
+    sublabel: "Homework & relapse planning",
   },
 ];
 
@@ -54,7 +54,7 @@ export default function PracticePage() {
             >
               {tab.label}
             </span>
-            <span className="text-caption text-muted mt-0.5 hidden sm:block">
+            <span className="text-2xs text-muted mt-0.5 hidden sm:block">
               {tab.sublabel}
             </span>
           </button>
