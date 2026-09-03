@@ -82,18 +82,17 @@ export default function EntryCard() {
         </h2>
       </div>
 
-      <div className="relative">
+      <div className="flex flex-1 min-h-0 flex-col gap-3">
         <textarea
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="What happened, and what did you do about it?"
           disabled={isExtracting}
-          rows={4}
           maxLength={5000}
-          className="input-base resize-none pr-14 pb-11"
+          className="min-h-0 flex-1 w-full resize-none rounded-xl border border-subtle bg-primary px-3 py-2 text-sm text-primary placeholder:text-muted transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/10 disabled:cursor-not-allowed disabled:opacity-60"
         />
 
-        <div className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-3">
+        <div className="flex items-center justify-between gap-3 px-1">
           <span className="text-caption text-muted">
             A few sentences is enough
           </span>
