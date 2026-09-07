@@ -4,12 +4,16 @@ import { useState } from "react";
 import { LuArrowUp, LuPencilLine } from "react-icons/lu";
 import { toast } from "sonner";
 
+import ExtractionPreviewModal from "@/app/components/dashboard/ExtractionPreviewModal";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import type { ExtractedFearPreview } from "@/app/lib/types/extraction";
 
-export default function EntryCard() {
+export default function FearHierarchyCard() {
   const [value, setValue] = useState("");
   const [isExtracting, setIsExtracting] = useState(false);
+  const [previewFears, setPreviewFears] = useState<
+    ExtractedFearPreview[] | null
+  >(null);
 
   async function handleSubmit() {
     setIsExtracting(true);
@@ -29,43 +33,12 @@ export default function EntryCard() {
 
       // An entry with no OCD content in it is a correct result, not a failure.
       if (fears.length === 0) {
-        console.info("[CalmLoop extraction] No fears found", { fears });
         toast.success("Nothing to add from that one.");
-        setValue("");
+        setPreviewFears(null);
         return;
       }
 
-      // The preview is the next piece — for now the extraction is just surfaced.
-      toast.success(
-        `Found ${fears.length === 1 ? "1 fear" : `${fears.length} fears`}`
-      );
-
-      console.groupCollapsed(
-        `[CalmLoop extraction] ${fears.length} ${fears.length === 1 ? "fear" : "fears"} found`
-      );
-      console.log("Raw extraction:", fears);
-      console.table(
-        fears.map((fear, index) => ({
-          number: index + 1,
-          name: fear.name,
-          matchedExistingFear: fear.fearId !== null,
-          fearId: fear.fearId ?? "New fear",
-          themes: fear.themes.join(", "),
-          behaviours: fear.behaviours.join(", ") || "None",
-          evidence: fear.evidence,
-        }))
-      );
-
-      fears.forEach((fear, index) => {
-        console.groupCollapsed(`Fear ${index + 1}: ${fear.name}`);
-        console.log("Matched existing fear:", fear.fearId !== null);
-        console.log("Fear ID:", fear.fearId);
-        console.log("Themes:", fear.themes);
-        console.log("Evidence:", fear.evidence);
-        console.log("Safety behaviours:", fear.behaviours);
-        console.groupEnd();
-      });
-      console.groupEnd();
+      setPreviewFears(fears);
     } catch {
       toast.error("Could not read that entry. Try again.");
     } finally {
@@ -74,7 +47,8 @@ export default function EntryCard() {
   }
 
   return (
-    <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-3 card-short">
+    <>
+      <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-3 card-short">
       <div className="flex items-center gap-2">
         <LuPencilLine size={15} className="text-muted" />
         <h2 className="text-sm font-semibold text-primary">
@@ -108,6 +82,17 @@ export default function EntryCard() {
           </button>
         </div>
       </div>
-    </div>
+      </div>
+
+      {previewFears && (
+        <ExtractionPreviewModal
+          fears={previewFears}
+          onDiscard={() => setPreviewFears(null)}
+          onSave={({ fears }) => {
+            toast.info("Save will be connected in the next step.");
+          }}
+        />
+      )}
+    </>
   );
 }

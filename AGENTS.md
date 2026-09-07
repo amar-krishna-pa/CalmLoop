@@ -142,6 +142,17 @@ Always show a loading indicator when UI depends on an async operation or API cal
 
 Use `null` (not `[]` or `""`) as the initial state sentinel to distinguish "still loading" from "loaded but empty".
 
+## Motion and transitions
+
+Use brief, purposeful transitions when UI elements are inserted, removed, expanded, or collapsed so users retain spatial context and layout changes do not feel abrupt.
+
+- Use the shared motion tokens: `--motion-fast` (150ms) for hover and micro-interactions, `--motion-row` (180ms) for inserting or removing individual items, and `--motion-section` (250ms) for expanding or collapsing larger panels.
+- Use the corresponding Tailwind utilities `duration-fast`, `duration-row`, and `duration-section`; do not introduce arbitrary transition durations when one of these tokens applies.
+- Prefer `ease-out` for entry and `ease-in` for removal.
+- Animate opacity and layout or transform properties only.
+- Do not animate initial page rendering or routine data updates without a clear UX benefit.
+- Always respect `prefers-reduced-motion`.
+
 ## Component conventions
 
 ### Never define components inside other component files

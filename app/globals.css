@@ -25,10 +25,18 @@
 
 /* Light mode (default) */
 :root {
+  /* Motion */
+  --motion-fast: 150ms;
+  --motion-row: 180ms;
+  --motion-section: 250ms;
+
   /* Backgrounds */
   --bg-primary: #f4f6f4; /* Main page background — off-white with a hint of green  */
   --bg-surface: #e8ede8; /* Slightly darker surface — sidebars, panels, inputs     */
   --bg-card: #ffffff; /* Pure white — cards, modals, dropdowns                  */
+  --bg-modal: #ffffff; /* Neutral elevated surface for focused modal content       */
+  --bg-modal-section: #f5f6f5; /* Quiet neutral grouping inside modal forms              */
+  --modal-overlay: rgba(22, 26, 24, 0.42);
 
   /* Text */
   --text-primary: #1a2420; /* Near-black — main readable body text                   */
@@ -66,6 +74,9 @@
   --bg-primary: #141a17; /* Very dark greenish-black — main background             */
   --bg-surface: #1e2922; /* Slightly lighter dark — panels, sidebars               */
   --bg-card: #26332b; /* A step lighter than surface so cards lift off the page */
+  --bg-modal: #202421; /* Neutral charcoal — modal content without a green cast   */
+  --bg-modal-section: #191d1b; /* Dark neutral inset for grouped modal fields             */
+  --modal-overlay: rgba(8, 10, 9, 0.7);
 
   /* Text */
   --text-primary: #e8ede8; /* Near-white — main readable text                        */
@@ -99,6 +110,10 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
+  --duration-fast: var(--motion-fast);
+  --duration-row: var(--motion-row);
+  --duration-section: var(--motion-section);
+
   /* Tailwind's default type scale, increased by 2px app-wide. */
   --text-2xs: 12px;
   --text-caption: 13px;
@@ -121,6 +136,8 @@
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-subtle: var(--border-subtle);
+  --color-modal: var(--bg-modal);
+  --color-modal-section: var(--bg-modal-section);
 
   --color-warning-text: var(--warning-text);
   --color-warning-bg: var(--warning-bg);
@@ -189,7 +206,7 @@ body {
     border-radius: 8px;
     transition: background-color 0.15s;
   }
-  .btn-accent:hover {
+  .btn-accent:not(:disabled):hover {
     background-color: var(--accent-hover);
   }
 
@@ -224,6 +241,23 @@ body {
   .input-base:focus {
     outline: none; /* Replace the default browser ring… */
     box-shadow: 0 0 0 2px var(--accent); /* …with a clean green glow ring */
+  }
+
+  .modal-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-subtle) transparent;
+  }
+  .modal-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .modal-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .modal-scrollbar::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: 9999px;
+    background-color: var(--border-subtle);
+    background-clip: padding-box;
   }
 
   /* ── Card height tiers ──────────────────────────────────────────────────── */
@@ -302,6 +336,71 @@ body {
   }
   to {
     background-position: -100% center;
+  }
+}
+
+@keyframes safety-behaviour-reveal {
+  from {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+  to {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+}
+
+@keyframes safety-behaviour-remove {
+  from {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+  to {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+}
+
+@keyframes safety-behaviour-remove-last {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes safety-behaviour-empty-reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.safety-behaviour-reveal {
+  animation: safety-behaviour-reveal var(--motion-row) ease-out;
+}
+
+.safety-behaviour-remove {
+  animation: safety-behaviour-remove var(--motion-row) ease-in forwards;
+}
+
+.safety-behaviour-remove-last {
+  animation: safety-behaviour-remove-last var(--motion-row) ease-in forwards;
+}
+
+.safety-behaviour-empty-reveal {
+  animation: safety-behaviour-empty-reveal var(--motion-row) ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .safety-behaviour-reveal,
+  .safety-behaviour-remove,
+  .safety-behaviour-remove-last,
+  .safety-behaviour-empty-reveal {
+    animation: none;
   }
 }
 

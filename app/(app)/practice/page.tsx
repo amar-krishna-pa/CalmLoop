@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/app/lib/cn/cn";
-import EntryCard from "@/app/components/dashboard/EntryCard";
+import FearHierarchyCard from "@/app/components/dashboard/FearHierarchyCard.tsx";
 import HomeworkCard from "@/app/components/dashboard/HomeworkCard";
 import RelapsePreventionCard from "@/app/components/dashboard/RelapsePreventionCard";
 
@@ -61,7 +61,7 @@ export default function PracticePage() {
         ))}
       </div>
 
-      {activeTab === "prepare" && <EntryCard />}
+      {activeTab === "prepare" && <FearHierarchyCard />}
 
       {activeTab === "exposures" && (
         <div className="bg-card border border-subtle rounded-xl p-8 flex flex-col items-center justify-center text-center card-medium">

@@ -4,11 +4,14 @@ import { useEffect, useId, useRef } from "react";
 import { createPortal } from "react-dom";
 import { LuX } from "react-icons/lu";
 
+import { cn } from "@/app/lib/cn/cn";
+
 type Props = {
   title: string;
   description?: string;
   onClose: () => void;
   children: React.ReactNode;
+  size?: "default" | "large";
 };
 
 const FOCUSABLE =
@@ -19,9 +22,15 @@ export default function Modal({
   description,
   onClose,
   children,
+  size = "default",
 }: Props) {
   const panelRef = useRef<HTMLDivElement>(null);
+  const onCloseRef = useRef(onClose);
   const titleId = useId();
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   useEffect(() => {
     const panel = panelRef.current;
@@ -35,7 +44,7 @@ export default function Modal({
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        onClose();
+        onCloseRef.current();
         return;
       }
 
@@ -65,13 +74,14 @@ export default function Modal({
       document.body.style.overflow = overflow;
       previouslyFocused?.focus();
     };
-  }, [onClose]);
+  }, []);
 
   if (typeof document === "undefined") return null;
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-md"
+      style={{ backgroundColor: "var(--modal-overlay)" }}
       onClick={onClose}
     >
       <div
@@ -80,7 +90,10 @@ export default function Modal({
         aria-modal="true"
         aria-labelledby={titleId}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-md max-h-[85vh] overflow-y-auto bg-card border border-subtle rounded-xl p-5 flex flex-col gap-4"
+        className={cn(
+          "w-full max-h-[85vh] overflow-hidden bg-modal/70 backdrop-blur-xl border border-subtle/60 rounded-xl p-5 flex flex-col gap-4 shadow-xl",
+          size === "large" ? "max-w-3xl" : "max-w-md"
+        )}
       >
         <div className="flex items-start justify-between gap-3">
           <div>
