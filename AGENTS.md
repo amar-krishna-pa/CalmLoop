@@ -146,12 +146,34 @@ Use `null` (not `[]` or `""`) as the initial state sentinel to distinguish "stil
 
 Use brief, purposeful transitions when UI elements are inserted, removed, expanded, or collapsed so users retain spatial context and layout changes do not feel abrupt.
 
-- Use the shared motion tokens: `--motion-fast` (150ms) for hover and micro-interactions, `--motion-row` (180ms) for inserting or removing individual items, and `--motion-section` (250ms) for expanding or collapsing larger panels.
-- Use the corresponding Tailwind utilities `duration-fast`, `duration-row`, and `duration-section`; do not introduce arbitrary transition durations when one of these tokens applies.
-- Prefer `ease-out` for entry and `ease-in` for removal.
+- For CSS transitions, use the shared motion tokens: `--motion-fast` for hover and micro-interactions, `--motion-row` for inserting or removing individual items, and `--motion-section` for expanding or collapsing larger panels.
+- For CSS transitions, use the corresponding Tailwind utilities `duration-fast`, `duration-row`, and `duration-section`; do not introduce arbitrary transition durations when one of these tokens applies.
+- For CSS transitions, prefer `ease-out` for entry and `ease-in` for removal.
 - Animate opacity and layout or transform properties only.
 - Do not animate initial page rendering or routine data updates without a clear UX benefit.
-- Always respect `prefers-reduced-motion`.
+- Preserve existing CSS support for `prefers-reduced-motion`; do not introduce per-component reduced-motion hooks or conditional Motion animation values.
+
+### Motion implementation
+
+When creating or changing interactive UI, include purposeful animations for user-triggered state changes as part of the implementation.
+
+Use `app/components/dashboard/SafetyBehavioursEditor.tsx` as the reference for editable lists and switching between populated and empty states. Use `app/components/dashboard/ThemeSelector.tsx` as the reference for selectable chips and collapsible panels. Consistency means shared timing defaults and state-change behaviour; choose movement appropriate to the control rather than applying the same animation to every element. Follow the rules below even where a reference does not yet implement them.
+
+- Use Motion from `motion/react` for enter/exit and layout animations. Use CSS transitions for simple hover and focus feedback and icon state changes such as chevron rotation. Apply `transition-transform` with a shared duration utility directly to the icon; do not add a Motion wrapper just to rotate an icon.
+- Wrap conditionally rendered animated elements in `AnimatePresence` so removal animations finish before the elements unmount.
+- Keep keyed animated rows directly inside a shared `AnimatePresence`; do not wrap each mapped row in its own presence boundary.
+- Use stable data IDs for keys, never array indices or IDs generated during rendering.
+- Use `layout` when adding, removing, or resizing content should smoothly reposition surrounding elements. Use `layout="position"` when only their position should animate.
+- For selectable chips, combine opacity with a small scale change (`0.8` to `1`) and use `layout` with `AnimatePresence mode="popLayout"` to reposition remaining chips. Give the containing element `position: relative` when using `popLayout`.
+- For editable input rows, animate opacity and height between `0` and `"auto"` when adding or removing rows within a populated list. Keep spacing inside the animated wrapper so it collapses with the row; avoid scaling inputs and their text.
+- For collapsible sections, animate height between `0` and `"auto"` with `overflow-hidden`, alongside opacity.
+- Use `overflow-hidden` only where height animation needs clipping. Leave enough inner padding for input borders and focus rings so they are not cut off; opacity-only wrappers do not need clipping.
+- Switching between an empty state and the first or last item must use an opacity crossfade, with no sliding, height collapse, or delayed reveal of the empty text. For form lists, use an outer `AnimatePresence initial={false} mode="popLayout"` around keyed empty/list wrappers and a separate presence boundary for rows within the list.
+- Match empty-state height to the control it replaces: input height for editable lists and chip height for theme selections. Use muted, left-aligned text without a decorative visible border.
+- Use `initial={false}` on `AnimatePresence` to avoid animating initial rendering. Also use it on nested chip or row lists so opening a panel does not replay entrance animations for every item. Subsequent user-triggered additions, removals, and expansion should still animate.
+- Use Motion’s default timing and easing for Motion animations. Omit explicit `transition` durations and easing unless a specific interaction requires custom timing; CSS duration tokens do not need to be applied to Motion.
+- Do not import or use `useReducedMotion`. Use the same Motion animation values for all users, without `shouldReduceMotion` branches. Do not add a `MotionConfig` reduced-motion override as a substitute.
+- Check adding, removing, expanding, collapsing, and empty-state transitions when relevant to the UI being changed.
 
 ## Component conventions
 
