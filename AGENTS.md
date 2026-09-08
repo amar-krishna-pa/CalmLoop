@@ -157,7 +157,7 @@ Use brief, purposeful transitions when UI elements are inserted, removed, expand
 
 When creating or changing interactive UI, include purposeful animations for user-triggered state changes as part of the implementation.
 
-Use `app/components/dashboard/SafetyBehavioursEditor.tsx` as the reference for editable lists and switching between populated and empty states. Use `app/components/dashboard/ThemeSelector.tsx` as the reference for selectable chips and collapsible panels. Consistency means shared timing defaults and state-change behaviour; choose movement appropriate to the control rather than applying the same animation to every element. Follow the rules below even where a reference does not yet implement them.
+Use `app/components/practice/prepare/fear-hierarchy/SafetyBehavioursEditor.tsx` as the reference for editable lists and switching between populated and empty states. Use `app/components/practice/prepare/fear-hierarchy/ThemeSelector.tsx` as the reference for selectable chips and collapsible panels. Consistency means shared timing defaults and state-change behaviour; choose movement appropriate to the control rather than applying the same animation to every element. Follow the rules below even where a reference does not yet implement them.
 
 - Use Motion from `motion/react` for enter/exit and layout animations. Use CSS transitions for simple hover and focus feedback and icon state changes such as chevron rotation. Apply `transition-transform` with a shared duration utility directly to the icon; do not add a Motion wrapper just to rotate an icon.
 - Wrap conditionally rendered animated elements in `AnimatePresence` so removal animations finish before the elements unmount.

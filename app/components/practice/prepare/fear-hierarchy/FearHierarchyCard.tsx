@@ -4,7 +4,7 @@ import { useState } from "react";
 import { LuArrowUp, LuPencilLine } from "react-icons/lu";
 import { toast } from "sonner";
 
-import ExtractionPreviewModal from "@/app/components/dashboard/ExtractionPreviewModal";
+import ExtractionPreviewModal from "@/app/components/practice/prepare/fear-hierarchy/ExtractionPreviewModal";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import type { ExtractedFearPreview } from "@/app/lib/types/extraction";
 

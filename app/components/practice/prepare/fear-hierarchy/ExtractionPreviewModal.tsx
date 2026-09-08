@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import Modal from "@/app/components/common/Modal";
-import ExtractedFearEditor from "@/app/components/dashboard/ExtractedFearEditor";
+import ExtractedFearEditor from "@/app/components/practice/prepare/fear-hierarchy/ExtractedFearEditor";
 import type { ExtractedFearPreview, PreviewFear } from "@/app/lib/types/extraction";
 
 import type { FearToSave } from "@/app/lib/zod/save-fears";

@@ -3,9 +3,9 @@
 import { useId, useState } from "react";
 import { LuTrash2 } from "react-icons/lu";
 
-import SafetyBehavioursEditor from "@/app/components/dashboard/SafetyBehavioursEditor";
-import SudsDropdown from "@/app/components/dashboard/SudsDropdown";
-import ThemeSelector from "@/app/components/dashboard/ThemeSelector";
+import SafetyBehavioursEditor from "@/app/components/practice/prepare/fear-hierarchy/SafetyBehavioursEditor";
+import SudsDropdown from "@/app/components/practice/prepare/fear-hierarchy/SudsDropdown";
+import ThemeSelector from "@/app/components/practice/prepare/fear-hierarchy/ThemeSelector";
 import type { PreviewFear } from "@/app/lib/types/extraction";
 
 type Props = {

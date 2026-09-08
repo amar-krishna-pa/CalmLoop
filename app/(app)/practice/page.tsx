@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/app/lib/cn/cn";
-import FearHierarchyCard from "@/app/components/dashboard/FearHierarchyCard.tsx";
+import FearHierarchyCard from "@/app/components/practice/prepare/fear-hierarchy/FearHierarchyCard";
 import HomeworkCard from "@/app/components/dashboard/HomeworkCard";
 import RelapsePreventionCard from "@/app/components/dashboard/RelapsePreventionCard";
 
