@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { and, asc, eq } from "drizzle-orm";
 
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
@@ -18,6 +18,21 @@ function mergeBehaviours({
     (behaviour) => !seen.has(behaviour.toLowerCase())
   );
   return [...existing, ...additions];
+}
+
+export async function GET() {
+  const session = await checkSession();
+  if (!session) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const savedFears = await db
+    .select({ id: fears.id, name: fears.name })
+    .from(fears)
+    .where(eq(fears.userId, session.user.id))
+    .orderBy(asc(fears.name), asc(fears.id));
+
+  return Response.json({ fears: savedFears });
 }
 
 export async function POST(request: Request) {
