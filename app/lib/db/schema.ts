@@ -44,7 +44,7 @@ export const session = pgTable(
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
   },
-  (table) => [index("session_userId_idx").on(table.userId)]
+  (table) => [index("session_userId_idx").on(table.userId)],
 );
 
 export const account = pgTable(
@@ -68,7 +68,7 @@ export const account = pgTable(
       .$onUpdate(() => /* @__PURE__ */ new Date())
       .notNull(),
   },
-  (table) => [index("account_userId_idx").on(table.userId)]
+  (table) => [index("account_userId_idx").on(table.userId)],
 );
 
 export const verification = pgTable(
@@ -84,7 +84,7 @@ export const verification = pgTable(
       .$onUpdate(() => /* @__PURE__ */ new Date())
       .notNull(),
   },
-  (table) => [index("verification_identifier_idx").on(table.identifier)]
+  (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
 export const passkey = pgTable(
@@ -107,7 +107,7 @@ export const passkey = pgTable(
   (table) => [
     index("passkey_credentialId_idx").on(table.credentialID),
     index("passkey_userId_idx").on(table.userId),
-  ]
+  ],
 );
 
 export const chatSessions = pgTable("chat_sessions", {
@@ -147,7 +147,7 @@ export const fears = pgTable(
       .$onUpdate(() => /* @__PURE__ */ new Date())
       .notNull(),
   },
-  (table) => [index("fears_user_id_idx").on(table.userId)]
+  (table) => [index("fears_user_id_idx").on(table.userId)],
 );
 
 // One row each time an entry turned out to be about this fear. Holds the quote the extraction
@@ -175,7 +175,32 @@ export const fearOccurrences = pgTable(
   (table) => [
     index("fear_occurrences_user_id_idx").on(table.userId),
     index("fear_occurrences_fear_id_idx").on(table.fearId),
-  ]
+  ],
+);
+
+// One row per completed ERP session, preserving the occurrence's rating history.
+export const erpSessions = pgTable(
+  "erp_sessions",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    fearOccurrenceId: uuid("fear_occurrence_id")
+      .notNull()
+      .references(() => fearOccurrences.id, { onDelete: "cascade" }),
+    suds: integer("suds").notNull(),
+    completedAt: timestamp("completed_at").defaultNow().notNull(),
+  },
+  (table) => [
+    index("erp_sessions_user_id_idx").on(table.userId),
+
+    index("erp_sessions_user_fear_completed_at_idx").on(
+      table.userId,
+      table.fearOccurrenceId,
+      table.completedAt,
+    ),
+  ],
 );
 
 export const userRelations = relations(user, ({ many }) => ({
@@ -184,6 +209,7 @@ export const userRelations = relations(user, ({ many }) => ({
   passkeys: many(passkey),
   chatSessions: many(chatSessions),
   fears: many(fears),
+  erpSessions: many(erpSessions),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -215,7 +241,7 @@ export const chatSessionRelations = relations(
       references: [user.id],
     }),
     messages: many(messages),
-  })
+  }),
 );
 
 export const messageRelations = relations(messages, ({ one }) => ({
@@ -233,13 +259,28 @@ export const fearRelations = relations(fears, ({ one, many }) => ({
   occurrences: many(fearOccurrences),
 }));
 
-export const fearOccurrenceRelations = relations(fearOccurrences, ({ one }) => ({
-  fear: one(fears, {
-    fields: [fearOccurrences.fearId],
-    references: [fears.id],
+export const fearOccurrenceRelations = relations(
+  fearOccurrences,
+  ({ one, many }) => ({
+    fear: one(fears, {
+      fields: [fearOccurrences.fearId],
+      references: [fears.id],
+    }),
+    user: one(user, {
+      fields: [fearOccurrences.userId],
+      references: [user.id],
+    }),
+    erpSessions: many(erpSessions),
   }),
+);
+
+export const erpSessionRelations = relations(erpSessions, ({ one }) => ({
   user: one(user, {
-    fields: [fearOccurrences.userId],
+    fields: [erpSessions.userId],
     references: [user.id],
+  }),
+  fearOccurrence: one(fearOccurrences, {
+    fields: [erpSessions.fearOccurrenceId],
+    references: [fearOccurrences.id],
   }),
 }));
