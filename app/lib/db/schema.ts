@@ -141,8 +141,6 @@ export const fears = pgTable(
     name: text("name").notNull(),
     themes: text("themes").array().notNull().default([]),
     behaviours: text("behaviours").array().notNull().default([]),
-    // Set by the person in the save preview, never by extraction.
-    initialSuds: integer("initial_suds").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
       .defaultNow()
@@ -164,7 +162,15 @@ export const fearOccurrences = pgTable(
       .notNull()
       .references(() => fears.id, { onDelete: "cascade" }),
     evidence: text("evidence").notNull(),
+    // Set by the person in the save preview, never by extraction.
+    initialSuds: integer("initial_suds").notNull(),
+    // Remains null until the person records a rating after an ERP session.
+    currentSuds: integer("current_suds"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .notNull(),
   },
   (table) => [
     index("fear_occurrences_user_id_idx").on(table.userId),
