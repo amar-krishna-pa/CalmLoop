@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import Modal from "@/app/components/common/Modal";
+import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import ExtractedFearEditor from "@/app/components/practice/prepare/fear-hierarchy/ExtractedFearEditor";
 import type { ExtractedFearPreview, PreviewFear } from "@/app/lib/types/extraction";
 
@@ -10,11 +11,12 @@ import type { FearToSave } from "@/app/lib/zod/save-fears";
 
 type Props = {
   fears: ExtractedFearPreview[];
+  isSaving: boolean;
   onDiscard: () => void;
   onSave: ({ fears }: { fears: FearToSave[] }) => void;
 };
 
-export default function ExtractionPreviewModal({ fears: initialFears, onDiscard, onSave }: Props) {
+export default function ExtractionPreviewModal({ fears: initialFears, isSaving, onDiscard, onSave }: Props) {
   const [fears, setFears] = useState<PreviewFear[]>(
     initialFears.map((fear) => ({ ...fear, initialSuds: null }))
   );
@@ -49,7 +51,7 @@ export default function ExtractionPreviewModal({ fears: initialFears, onDiscard,
     <Modal title="Review your entry" description="You can edit anything before saving." onClose={onDiscard} size="large">
       <div className="flex min-h-0 flex-col gap-4">
         <div className="modal-scrollbar min-h-0 max-h-[58vh] overflow-y-auto pr-1">
-          <div className="flex flex-col gap-4">
+          <fieldset disabled={isSaving} className="flex min-w-0 flex-col gap-4">
             {fears.map((fear, fearIndex) => (
               <div
                 key={`${fear.evidence}`}
@@ -66,7 +68,7 @@ export default function ExtractionPreviewModal({ fears: initialFears, onDiscard,
               />
               </div>
             ))}
-          </div>
+          </fieldset>
         </div>
 
         <div className="flex flex-col gap-3 border-t border-subtle/60 pt-3 sm:flex-row sm:items-center sm:justify-between">
@@ -76,6 +78,7 @@ export default function ExtractionPreviewModal({ fears: initialFears, onDiscard,
             <button
               type="button"
               onClick={onDiscard}
+              disabled={isSaving}
               className="min-h-11 w-full cursor-pointer rounded-lg border border-transparent px-5 text-compact font-medium text-muted transition-colors duration-fast hover:border-subtle/60 hover:bg-modal-section hover:text-primary sm:w-auto"
             >
               Discard
@@ -91,10 +94,11 @@ export default function ExtractionPreviewModal({ fears: initialFears, onDiscard,
                   })),
                 })
               }
-              disabled={!canSave}
+              disabled={!canSave || isSaving}
+              aria-label={isSaving ? "Saving entry" : "Save entry"}
               className="btn-accent min-h-11 w-full cursor-pointer px-5 duration-fast disabled:cursor-not-allowed disabled:opacity-50 sm:min-w-32 sm:w-auto"
             >
-              Save entry
+              {isSaving ? <LoadingSpinner /> : "Save entry"}
             </button>
           </div>
         </div>
