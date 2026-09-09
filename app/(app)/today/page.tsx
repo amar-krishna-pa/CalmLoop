@@ -1,9 +1,9 @@
-import DailyQuoteCard from "@/app/components/dashboard/DailyQuoteCard";
+import DailyQuoteCard from "@/app/components/today/DailyQuoteCard";
 import ProgressCard from "@/app/components/today/ProgressCard";
-import UpcomingSessionCard from "@/app/components/dashboard/UpcomingSessionCard";
-import MoodTrackerCard from "@/app/components/dashboard/MoodTrackerCard";
-import SleepStressCard from "@/app/components/dashboard/SleepStressCard";
-import MedicationTrackerCard from "@/app/components/dashboard/MedicationTrackerCard";
+import UpcomingSessionCard from "@/app/components/today/UpcomingSessionCard";
+import MoodTrackerCard from "@/app/components/today/MoodTrackerCard";
+import SleepStressCard from "@/app/components/today/SleepStressCard";
+import MedicationTrackerCard from "@/app/components/today/MedicationTrackerCard";
 
 export default function TodayPage() {
   return (

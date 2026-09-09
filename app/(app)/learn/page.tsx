@@ -1,5 +1,5 @@
-import PsychoeducationCard from "@/app/components/dashboard/PsychoeducationCard";
-import CognitiveDistortionsCard from "@/app/components/dashboard/CognitiveDistortionsCard";
+import PsychoeducationCard from "@/app/components/learn/PsychoeducationCard";
+import CognitiveDistortionsCard from "@/app/components/learn/CognitiveDistortionsCard";
 
 export default function LearnPage() {
   return (

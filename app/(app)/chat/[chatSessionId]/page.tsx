@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import type { UIMessage } from "ai";
-import ChatComponent from "@/app/components/chat/ChatComponent";
+import ChatComponent from "@/app/components/support/chat/ChatComponent";
 import ChatPageLoader from "@/app/components/loaders/ChatPageLoader";
 
 export default function ChatPage() {

@@ -1,5 +1,5 @@
-import JournalCard from "@/app/components/dashboard/JournalCard";
-import OcdSubtypesCard from "@/app/components/dashboard/OcdSubtypesCard";
+import JournalCard from "@/app/components/reflect/JournalCard";
+import OcdSubtypesCard from "@/app/components/reflect/OcdSubtypesCard";
 
 export default function ReflectPage() {
   return (

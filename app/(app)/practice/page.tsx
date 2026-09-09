@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { cn } from "@/app/lib/cn/cn";
 import FearInputCard from "@/app/components/practice/prepare/fear-hierarchy/FearInputCard";
-import HomeworkCard from "@/app/components/dashboard/HomeworkCard";
-import RelapsePreventionCard from "@/app/components/dashboard/RelapsePreventionCard";
+import HomeworkCard from "@/app/components/practice/maintain/HomeworkCard";
+import RelapsePreventionCard from "@/app/components/practice/maintain/RelapsePreventionCard";
 
 type Tab = "prepare" | "exposures" | "maintain";
 

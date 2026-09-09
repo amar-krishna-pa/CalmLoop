@@ -1,5 +1,5 @@
-import ChatsCard from "@/app/components/dashboard/ChatsCard";
-import GroundingExercisesCard from "@/app/components/dashboard/GroundingExercisesCard";
+import ChatsCard from "@/app/components/support/ChatsCard";
+import GroundingExercisesCard from "@/app/components/support/GroundingExercisesCard";
 
 export default function SupportPage() {
   return (
