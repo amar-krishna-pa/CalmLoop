@@ -1,12 +1,12 @@
 "use client";
 
 import { useId, useState } from "react";
-import SavedFearCombobox from "@/app/components/practice/prepare/fear-hierarchy/SavedFearCombobox";
+import SavedFearCombobox from "@/app/components/practice/prepare/fear-hierarchy/extraction-preview/fear-editor/SavedFearCombobox";
 import { LuTrash2 } from "react-icons/lu";
 
-import SafetyBehavioursEditor from "@/app/components/practice/prepare/fear-hierarchy/SafetyBehavioursEditor";
-import SudsDropdown from "@/app/components/practice/prepare/fear-hierarchy/SudsDropdown";
-import ThemeSelector from "@/app/components/practice/prepare/fear-hierarchy/ThemeSelector";
+import SafetyBehavioursEditor from "@/app/components/practice/prepare/fear-hierarchy/extraction-preview/fear-editor/SafetyBehavioursEditor";
+import SudsDropdown from "@/app/components/practice/prepare/fear-hierarchy/extraction-preview/fear-editor/SudsDropdown";
+import ThemeSelector from "@/app/components/practice/prepare/fear-hierarchy/extraction-preview/fear-editor/ThemeSelector";
 import type { PreviewFear } from "@/app/lib/types/extraction";
 
 type Props = {

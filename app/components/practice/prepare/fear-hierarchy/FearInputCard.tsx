@@ -4,12 +4,12 @@ import { useState } from "react";
 import { LuArrowUp, LuPencilLine } from "react-icons/lu";
 import { toast } from "sonner";
 
-import ExtractionPreviewModal from "@/app/components/practice/prepare/fear-hierarchy/ExtractionPreviewModal";
+import ExtractionPreviewModal from "@/app/components/practice/prepare/fear-hierarchy/extraction-preview/ExtractionPreviewModal";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import type { ExtractedFearPreview } from "@/app/lib/types/extraction";
 import type { FearToSave } from "@/app/lib/zod/save-fears";
 
-export default function FearHierarchyCard() {
+export default function FearInputCard() {
   const [value, setValue] = useState("");
   const [isExtracting, setIsExtracting] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
