@@ -1,9 +1,8 @@
 "use client";
 
 import { useId, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import SavedFearCombobox from "@/app/components/practice/prepare/fear-hierarchy/SavedFearCombobox";
 import { LuTrash2 } from "react-icons/lu";
-import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 
 import SafetyBehavioursEditor from "@/app/components/practice/prepare/fear-hierarchy/SafetyBehavioursEditor";
 import SudsDropdown from "@/app/components/practice/prepare/fear-hierarchy/SudsDropdown";
@@ -33,9 +32,6 @@ export default function ExtractedFearEditor({
   savedFears,
 }: Props) {
   const situationId = useId();
-  const savedFearsListId = useId();
-
-  const [isMatchExpanded, setIsMatchExpanded] = useState(false);
   const [isThemeEditorExpanded, setIsThemeEditorExpanded] = useState(false);
 
   console.log(fear);
@@ -81,72 +77,12 @@ export default function ExtractedFearEditor({
           )}
 
           {fear.fearId === null && (
-            <div className="flex flex-col items-start gap-1.5">
-              <button
-                type="button"
-                onClick={() => {
-                  if (savedFearsError) {
-                    setIsMatchExpanded(true);
-                    onLoadSavedFears();
-                    return;
-                  }
-                  setIsMatchExpanded(!isMatchExpanded);
-                  if (!isMatchExpanded) onLoadSavedFears();
-                }}
-                disabled={isLoadingSavedFears}
-                aria-expanded={isMatchExpanded}
-                aria-controls={savedFearsListId}
-                aria-label={
-                  isLoadingSavedFears ? "Loading saved fears" : undefined
-                }
-                className="flex min-h-5 self-start items-center text-left text-2xs font-medium text-accent cursor-pointer transition-opacity duration-fast hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {isLoadingSavedFears ? (
-                  <LoadingSpinner />
-                ) : savedFearsError ? (
-                  "Retry loading saved fears"
-                ) : isMatchExpanded ? (
-                  "Hide saved fears"
-                ) : (
-                  "Match an existing fear"
-                )}
-              </button>
-              <p role="status" className="text-2xs text-muted empty:hidden">
-                {savedFearsError}
-              </p>
-              <AnimatePresence initial={false}>
-                {isMatchExpanded && savedFears !== null && (
-                  <motion.div
-                    id={savedFearsListId}
-                    key="saved-fears"
-                    className="w-full overflow-hidden"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                  >
-                    {savedFears.length === 0 ? (
-                      <p className="py-1 text-2xs font-normal text-muted">
-                        No saved fears yet.
-                      </p>
-                    ) : (
-                      <ul
-                        aria-label="Saved fears"
-                        className="max-h-48 overflow-y-auto rounded-lg border border-subtle bg-modal/70 text-xs font-normal text-primary"
-                      >
-                        {savedFears.map((savedFear) => (
-                          <li
-                            key={savedFear.id}
-                            className="border-b border-subtle px-3 py-2 last:border-b-0"
-                          >
-                            {savedFear.name}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+            <SavedFearCombobox
+              savedFears={savedFears}
+              isLoading={isLoadingSavedFears}
+              error={savedFearsError}
+              onLoad={onLoadSavedFears}
+            />
           )}
         </div>
 
