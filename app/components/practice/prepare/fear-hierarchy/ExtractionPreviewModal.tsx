@@ -7,7 +7,7 @@ import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import ExtractedFearEditor from "@/app/components/practice/prepare/fear-hierarchy/ExtractedFearEditor";
 import type { ExtractedFearPreview, PreviewFear } from "@/app/lib/types/extraction";
 
-import type { FearToSave } from "@/app/lib/zod/save-fears";
+import { SaveFearsSchema, type FearToSave } from "@/app/lib/zod/save-fears";
 
 type Props = {
   fears: ExtractedFearPreview[];
@@ -40,12 +40,12 @@ export default function ExtractionPreviewModal({ fears: initialFears, isSaving, 
     setFears(remainingFears);
   }
 
-  const canSave = fears.every(
-    (fear) =>
-      fear.name.trim() &&
-      fear.evidence.trim() &&
-      (fear.fearId !== null || fear.initialSuds !== null)
-  );
+  const savePayload = SaveFearsSchema.safeParse({
+    fears: fears.map((fear) => ({
+      ...fear,
+      behaviours: fear.behaviours.map(({ value }) => value),
+    })),
+  });
 
   return (
     <Modal title="Review your entry" description="You can edit anything before saving." onClose={onDiscard} size="large">
@@ -86,15 +86,11 @@ export default function ExtractionPreviewModal({ fears: initialFears, isSaving, 
 
             <button
               type="button"
-              onClick={() =>
-                onSave({
-                  fears: fears.map((fear) => ({
-                    ...fear,
-                    behaviours: fear.behaviours.map(({ value }) => value),
-                  })),
-                })
-              }
-              disabled={!canSave || isSaving}
+              onClick={() => {
+                if (!savePayload.success || isSaving) return;
+                onSave(savePayload.data);
+              }}
+              disabled={!savePayload.success || isSaving}
               aria-label={isSaving ? "Saving entry" : "Save entry"}
               className="btn-accent min-h-11 w-full cursor-pointer px-5 duration-fast disabled:cursor-not-allowed disabled:opacity-50 sm:min-w-32 sm:w-auto"
             >
