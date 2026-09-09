@@ -82,6 +82,11 @@ export default function ExtractedFearEditor({
               isLoading={isLoadingSavedFears}
               error={savedFearsError}
               onLoad={onLoadSavedFears}
+              onSelect={({ fear: savedFear }) =>
+                onChange({
+                  fear: { ...fear, fearId: savedFear.id, name: savedFear.name },
+                })
+              }
             />
           )}
         </div>

@@ -12,9 +12,10 @@ type Props = {
   isLoading: boolean;
   error: string | null;
   onLoad: () => void;
+  onSelect: ({ fear }: { fear: { id: string; name: string } }) => void;
 };
 
-export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad }: Props) {
+export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad, onSelect }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
   const inputGroupRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
@@ -28,6 +29,10 @@ export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad
         items={savedFears ?? []}
         itemToStringLabel={(fear) => fear.name}
         itemToStringValue={(fear) => fear.id}
+        onValueChange={(fear) => {
+          if (fear === null) return;
+          onSelect({ fear });
+        }}
         openOnInputClick
         open={open}
         onOpenChange={(nextOpen) => {
