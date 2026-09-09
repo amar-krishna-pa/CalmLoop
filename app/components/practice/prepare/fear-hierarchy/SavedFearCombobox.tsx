@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { Combobox, ComboboxInput, ComboboxTrigger, ComboboxContent, ComboboxList, ComboboxItem, ComboboxEmpty, ComboboxStatus } from "@/app/components/ui/combobox";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import { AnimatePresence, motion } from "motion/react";
@@ -8,6 +8,8 @@ import { LuChevronDown } from "react-icons/lu";
 import { cn } from "@/app/lib/cn/cn";
 
 type Props = {
+  leadingAction?: ReactNode;
+  triggerLabel?: string;
   savedFears: { id: string; name: string }[] | null;
   isLoading: boolean;
   error: string | null;
@@ -15,14 +17,14 @@ type Props = {
   onSelect: ({ fear }: { fear: { id: string; name: string } }) => void;
 };
 
-export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad, onSelect }: Props) {
+export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad, onSelect, leadingAction, triggerLabel = "Match an existing fear" }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
   const inputGroupRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div ref={containerRef} className="relative w-full" onKeyDown={(event) => {
+    <div ref={containerRef} className="relative flex w-full flex-wrap items-center gap-x-2" onKeyDown={(event) => {
       if (open && event.key === "Escape") event.stopPropagation();
     }}>
       <Combobox<{ id: string; name: string }>
@@ -31,6 +33,8 @@ export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad
         itemToStringValue={(fear) => fear.id}
         onValueChange={(fear) => {
           if (fear === null) return;
+          setOpen(false);
+          setIsExpanded(false);
           onSelect({ fear });
         }}
         openOnInputClick
@@ -40,6 +44,8 @@ export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad
           if (nextOpen) onLoad();
         }}
       >
+        {leadingAction}
+        {leadingAction && <span aria-hidden="true" className="text-2xs text-muted">·</span>}
         <button
           type="button"
           aria-expanded={isExpanded}
@@ -50,7 +56,7 @@ export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad
           }}
           className="flex min-h-5 items-center text-left text-2xs font-medium text-accent cursor-pointer transition-opacity duration-fast hover:opacity-80"
         >
-          {isExpanded ? "Hide saved fears" : "Match an existing fear"}
+          {isExpanded ? "Hide saved fears" : triggerLabel}
         </button>
         <AnimatePresence initial={false}>
           {isExpanded && (
@@ -59,7 +65,7 @@ export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className="overflow-hidden"
+              className="w-full basis-full overflow-hidden"
             >
               <div className="p-1 pt-2">
                 <div ref={inputGroupRef} className="relative w-full">

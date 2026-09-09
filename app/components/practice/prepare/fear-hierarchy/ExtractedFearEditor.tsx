@@ -66,18 +66,17 @@ export default function ExtractedFearEditor({
             maxLength={120}
             className="input-base border-subtle/60 bg-modal/70 disabled:cursor-not-allowed disabled:opacity-60"
           />
-          {fear.fearId && (
-            <button
-              type="button"
-              onClick={() => onChange({ fear: { ...fear, fearId: null } })}
-              className="flex min-h-5 self-start items-center text-left text-2xs font-medium text-accent cursor-pointer transition-opacity duration-fast hover:opacity-80"
-            >
-              Save as a new fear instead
-            </button>
-          )}
-
-          {fear.fearId === null && (
             <SavedFearCombobox
+              leadingAction={fear.fearId ? (
+                <button
+                  type="button"
+                  onClick={() => onChange({ fear: { ...fear, fearId: null } })}
+                  className="flex min-h-5 items-center text-left text-2xs font-medium text-accent cursor-pointer transition-opacity duration-fast hover:opacity-80"
+                >
+                  Save as a new fear instead
+                </button>
+              ) : undefined}
+              triggerLabel={fear.fearId === null ? "Match an existing fear" : "Change match"}
               savedFears={savedFears}
               isLoading={isLoadingSavedFears}
               error={savedFearsError}
@@ -88,7 +87,6 @@ export default function ExtractedFearEditor({
                 })
               }
             />
-          )}
         </div>
 
         <ThemeSelector
