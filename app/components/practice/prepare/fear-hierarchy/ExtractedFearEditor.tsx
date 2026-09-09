@@ -66,13 +66,11 @@ export default function ExtractedFearEditor({
             maxLength={120}
             className="input-base border-subtle/60 bg-modal/70 disabled:cursor-not-allowed disabled:opacity-60"
           />
-        </div>
-
         {fear.fearId && (
           <button
             type="button"
             onClick={() => onChange({ fear: { ...fear, fearId: null } })}
-            className="self-start text-2xs font-medium text-accent cursor-pointer hover:underline"
+            className="flex min-h-5 self-start items-center text-left text-2xs font-medium text-accent cursor-pointer transition-opacity duration-fast hover:opacity-80"
           >
             Save as a new fear instead
           </button>
@@ -87,7 +85,7 @@ export default function ExtractedFearEditor({
               aria-label={
                 isLoadingSavedFears ? "Loading saved fears" : undefined
               }
-              className="min-h-8 text-2xs font-medium text-accent cursor-pointer transition-opacity duration-fast hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-60"
+              className="flex min-h-5 self-start items-center text-left text-2xs font-medium text-accent cursor-pointer transition-opacity duration-fast hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isLoadingSavedFears ? (
                 <LoadingSpinner />
@@ -97,11 +95,12 @@ export default function ExtractedFearEditor({
                 "Match an existing fear"
               )}
             </button>
-            <p role="status" className="text-2xs text-muted">
+            <p role="status" className="text-2xs text-muted empty:hidden">
               {savedFearsError}
             </p>
           </div>
         )}
+        </div>
 
         <ThemeSelector
           selectedThemes={fear.themes}
