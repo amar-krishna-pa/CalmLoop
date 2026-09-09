@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 import { LuTrash2 } from "react-icons/lu";
+import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 
 import SafetyBehavioursEditor from "@/app/components/practice/prepare/fear-hierarchy/SafetyBehavioursEditor";
 import SudsDropdown from "@/app/components/practice/prepare/fear-hierarchy/SudsDropdown";
@@ -14,14 +15,21 @@ type Props = {
   fearCount: number;
   onChange: ({ fear }: { fear: PreviewFear }) => void;
   onRemove: () => void;
+  onLoadSavedFears: () => void;
+  isLoadingSavedFears: boolean;
+  savedFearsError: string | null;
+  savedFearCount: number | null;
 };
 
 export default function ExtractedFearEditor({
   fear,
-  fearIndex,
   fearCount,
   onChange,
   onRemove,
+  onLoadSavedFears,
+  isLoadingSavedFears,
+  savedFearsError,
+  savedFearCount,
 }: Props) {
   const situationId = useId();
   const [isThemeEditorExpanded, setIsThemeEditorExpanded] = useState(false);
@@ -68,6 +76,31 @@ export default function ExtractedFearEditor({
           >
             Save as a new fear instead
           </button>
+        )}
+
+        {fear.fearId === null && (
+          <div className="flex flex-col items-start gap-1.5">
+            <button
+              type="button"
+              onClick={onLoadSavedFears}
+              disabled={isLoadingSavedFears || savedFearCount !== null}
+              aria-label={
+                isLoadingSavedFears ? "Loading saved fears" : undefined
+              }
+              className="min-h-8 text-2xs font-medium text-accent cursor-pointer transition-opacity duration-fast hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isLoadingSavedFears ? (
+                <LoadingSpinner />
+              ) : savedFearsError ? (
+                "Retry loading saved fears"
+              ) : (
+                "Match an existing fear"
+              )}
+            </button>
+            <p role="status" className="text-2xs text-muted">
+              {savedFearsError}
+            </p>
+          </div>
         )}
 
         <ThemeSelector

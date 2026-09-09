@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { z } from "zod";
 
 import Modal from "@/app/components/common/Modal";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
@@ -8,6 +9,10 @@ import ExtractedFearEditor from "@/app/components/practice/prepare/fear-hierarch
 import type { ExtractedFearPreview, PreviewFear } from "@/app/lib/types/extraction";
 
 import { SaveFearsSchema, type FearToSave } from "@/app/lib/zod/save-fears";
+
+const SavedFearsResponseSchema = z.object({
+  fears: z.array(z.object({ id: z.string().uuid(), name: z.string() })),
+});
 
 type Props = {
   fears: ExtractedFearPreview[];
@@ -20,6 +25,31 @@ export default function ExtractionPreviewModal({ fears: initialFears, isSaving, 
   const [fears, setFears] = useState<PreviewFear[]>(
     initialFears.map((fear) => ({ ...fear, initialSuds: null }))
   );
+  const [savedFears, setSavedFears] = useState<{ id: string; name: string }[] | null>(null);
+  const [isLoadingSavedFears, setIsLoadingSavedFears] = useState(false);
+  const [savedFearsError, setSavedFearsError] = useState<string | null>(null);
+
+  async function loadSavedFears() {
+    if (savedFears !== null || isLoadingSavedFears) return;
+
+    setIsLoadingSavedFears(true);
+    setSavedFearsError(null);
+    try {
+      const response = await fetch("/api/fears");
+      if (response.status === 401) {
+        setSavedFearsError("Please sign in again to load your saved fears.");
+        return;
+      }
+      if (!response.ok) throw new Error("Could not load saved fears");
+
+      const data = SavedFearsResponseSchema.parse(await response.json());
+      setSavedFears(data.fears);
+    } catch {
+      setSavedFearsError("Could not load saved fears. Please try again.");
+    } finally {
+      setIsLoadingSavedFears(false);
+    }
+  }
 
   function updateFear({ fear }: { fear: PreviewFear }) {
     setFears((currentFears) =>
@@ -61,6 +91,10 @@ export default function ExtractionPreviewModal({ fears: initialFears, isSaving, 
                 fear={fear}
                 fearIndex={fearIndex}
                 fearCount={fears.length}
+                onLoadSavedFears={loadSavedFears}
+                isLoadingSavedFears={isLoadingSavedFears}
+                savedFearsError={savedFearsError}
+                savedFearCount={savedFears?.length ?? null}
                 onChange={({ fear: updatedFear }) =>
                   updateFear({ fear: updatedFear })
                 }
