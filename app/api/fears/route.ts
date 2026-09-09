@@ -88,6 +88,7 @@ export async function POST(request: Request) {
         userId,
         fearId: updated.id,
         evidence: fear.evidence,
+        initialSuds: fear.initialSuds,
       });
 
       saved.push({ fearId: updated.id, name: updated.name });
@@ -101,7 +102,6 @@ export async function POST(request: Request) {
         name: fear.name,
         themes: fear.themes,
         behaviours: fear.behaviours,
-        initialSuds: fear.initialSuds as number,
       })
       .returning({ id: fears.id, name: fears.name });
 
@@ -109,6 +109,7 @@ export async function POST(request: Request) {
       userId,
       fearId: created.id,
       evidence: fear.evidence,
+      initialSuds: fear.initialSuds,
     });
 
     saved.push({ fearId: created.id, name: created.name });
