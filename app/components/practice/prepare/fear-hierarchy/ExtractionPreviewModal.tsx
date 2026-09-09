@@ -94,7 +94,7 @@ export default function ExtractionPreviewModal({ fears: initialFears, isSaving, 
                 onLoadSavedFears={loadSavedFears}
                 isLoadingSavedFears={isLoadingSavedFears}
                 savedFearsError={savedFearsError}
-                savedFearCount={savedFears?.length ?? null}
+                savedFears={savedFears}
                 onChange={({ fear: updatedFear }) =>
                   updateFear({ fear: updatedFear })
                 }
