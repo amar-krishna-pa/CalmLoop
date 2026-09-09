@@ -4,8 +4,8 @@ import { GoPasskeyFill } from "react-icons/go";
 import { LuTrash2 } from "react-icons/lu";
 import { authClient } from "@/app/lib/auth/auth-client";
 import { toast } from "sonner";
-import LoadingSpinner from "../loaders/LoadingSpinner";
-import PasskeyTableSkeleton from "../loaders/PasskeyTableSkeleton";
+import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
+import PasskeyTableSkeleton from "@/app/components/loaders/PasskeyTableSkeleton";
 
 type Passkey = {
   id: string;

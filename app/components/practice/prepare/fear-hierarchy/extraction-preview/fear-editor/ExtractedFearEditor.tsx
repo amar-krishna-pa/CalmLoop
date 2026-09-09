@@ -7,7 +7,7 @@ import { LuTrash2 } from "react-icons/lu";
 import SafetyBehavioursEditor from "@/app/components/practice/prepare/fear-hierarchy/extraction-preview/fear-editor/SafetyBehavioursEditor";
 import SudsDropdown from "@/app/components/practice/prepare/fear-hierarchy/extraction-preview/fear-editor/SudsDropdown";
 import ThemeSelector from "@/app/components/practice/prepare/fear-hierarchy/extraction-preview/fear-editor/ThemeSelector";
-import type { PreviewFear } from "@/app/lib/types/extraction";
+import type { PreviewFear } from "@/app/lib/fears/types";
 
 type Props = {
   fear: PreviewFear;

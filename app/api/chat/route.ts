@@ -6,12 +6,12 @@ import {
   convertToModelMessages,
 } from "ai";
 import { eq } from "drizzle-orm";
-import { SYSTEM_PROMPT } from "@/app/utils/prompts";
+import { SYSTEM_PROMPT } from "@/app/lib/ai/prompts/chat";
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
 import { chatSessions, messages } from "@/app/lib/db/schema";
 import { ChatRequestSchema } from "@/app/lib/zod/chat";
-import { maybeUpdateStreak } from "@/app/utils/maybeUpdateStreak";
+import { maybeUpdateStreak } from "@/app/lib/streak/maybe-update-streak";
 
 const groq = createGroq({ apiKey: process.env.GROQ_API_KEY });
 

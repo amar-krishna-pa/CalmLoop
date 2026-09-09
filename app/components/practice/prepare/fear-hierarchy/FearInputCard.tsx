@@ -6,8 +6,8 @@ import { toast } from "sonner";
 
 import ExtractionPreviewModal from "@/app/components/practice/prepare/fear-hierarchy/extraction-preview/ExtractionPreviewModal";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
-import type { ExtractedFearPreview } from "@/app/lib/types/extraction";
-import type { FearToSave } from "@/app/lib/zod/save-fears";
+import type { ExtractedFearPreview } from "@/app/lib/fears/types";
+import type { FearToSave } from "@/app/lib/fears/save-schema";
 
 export default function FearInputCard() {
   const [value, setValue] = useState("");

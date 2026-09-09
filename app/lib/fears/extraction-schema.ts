@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { THEMES } from "@/app/lib/themes/themes";
+import { THEMES } from "@/app/lib/fears/themes";
 
 const Fear = z.object({
   matchedId: z

@@ -1,4 +1,4 @@
-import type { THEMES } from "@/app/lib/themes/themes";
+import type { THEMES } from "@/app/lib/fears/themes";
 
 export type PreviewBehaviour = {
   id: string;

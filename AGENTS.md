@@ -23,7 +23,7 @@ No test suite exists yet. There is no `pnpm test` command.
 
 ```
 app/
-  (app)/          # Authenticated app routes (chat, dashboard, profile)
+  (app)/          # Authenticated app routes (today, practice, reflect, support, learn, chat, profile)
   (auth)/         # Auth routes (login, signup) — no Header/shell
   api/            # API routes
 ```

@@ -6,9 +6,9 @@ import { z } from "zod";
 import Modal from "@/app/components/common/Modal";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import ExtractedFearEditor from "@/app/components/practice/prepare/fear-hierarchy/extraction-preview/fear-editor/ExtractedFearEditor";
-import type { ExtractedFearPreview, PreviewFear } from "@/app/lib/types/extraction";
+import type { ExtractedFearPreview, PreviewFear } from "@/app/lib/fears/types";
 
-import { SaveFearsSchema, type FearToSave } from "@/app/lib/zod/save-fears";
+import { SaveFearsSchema, type FearToSave } from "@/app/lib/fears/save-schema";
 
 const SavedFearsResponseSchema = z.object({
   fears: z.array(z.object({ id: z.string().uuid(), name: z.string() })),

@@ -1,4 +1,4 @@
-import PasskeySection from "@/app/components/auth/PasskeySection";
+import PasskeySection from "@/app/components/profile/security/PasskeySection";
 import EditNameField from "@/app/components/profile/EditNameField";
 
 type Props = {

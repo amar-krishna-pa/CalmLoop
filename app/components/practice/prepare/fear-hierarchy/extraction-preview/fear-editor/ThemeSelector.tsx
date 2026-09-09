@@ -1,7 +1,7 @@
 "use client";
 import { LuChevronDown } from "react-icons/lu";
 import { cn } from "@/app/lib/cn/cn";
-import { THEMES } from "@/app/lib/themes/themes";
+import { THEMES } from "@/app/lib/fears/themes";
 import { AnimatePresence, motion } from "motion/react";
 
 type Theme = (typeof THEMES)[number];

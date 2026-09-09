@@ -1,7 +1,7 @@
 "use client";
 
 import { LuPlus, LuTrash2 } from "react-icons/lu";
-import type { PreviewBehaviour } from "@/app/lib/types/extraction";
+import type { PreviewBehaviour } from "@/app/lib/fears/types";
 import { AnimatePresence, motion } from "motion/react";
 
 type Props = {
