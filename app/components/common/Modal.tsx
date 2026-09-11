@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef } from "react";
 import { createPortal } from "react-dom";
 import { LuX } from "react-icons/lu";
+import { motion } from "motion/react";
 
 import { cn } from "@/app/lib/cn/cn";
 
@@ -79,7 +80,10 @@ export default function Modal({
   if (typeof document === "undefined") return null;
 
   return createPortal(
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-md"
       style={{ backgroundColor: "var(--modal-overlay)" }}
       onClick={onClose}
@@ -116,7 +120,7 @@ export default function Modal({
 
         {children}
       </div>
-    </div>,
+    </motion.div>,
     document.body
   );
 }

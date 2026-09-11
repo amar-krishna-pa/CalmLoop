@@ -6,6 +6,7 @@ import SavedFearsLoader from "@/app/components/loaders/SavedFearsLoader";
 import { THEMES } from "@/app/lib/fears/themes";
 import SavedFearsThemeFilter from "@/app/components/practice/prepare/fear-hierarchy/SavedFearsThemeFilter";
 import { AnimatePresence, motion } from "motion/react";
+import SavedFearItem from "@/app/components/practice/prepare/fear-hierarchy/SavedFearItem";
 
 const SavedFearsSchema = z.object({
   fears: z.array(
@@ -13,6 +14,7 @@ const SavedFearsSchema = z.object({
       id: z.string().uuid(),
       name: z.string(),
       themes: z.array(z.enum(THEMES)),
+      behaviours: z.array(z.string()),
     }),
   ),
 });
@@ -144,24 +146,7 @@ export default function SavedFearsCard() {
                   exit={{ opacity: 0 }}
                   className="py-4 first:pt-0 last:pb-0"
                 >
-                  <p className="wrap-break-words text-sm font-medium text-primary">
-                    {fear.name}
-                  </p>
-                  {fear.themes.length > 0 && (
-                    <ul
-                      aria-label="Themes"
-                      className="mt-2 flex flex-wrap gap-2"
-                    >
-                      {fear.themes.map((theme) => (
-                        <li
-                          key={theme}
-                          className="rounded-full border-2 border-accent bg-modal px-3 py-1.5 text-xs text-primary"
-                        >
-                          {theme}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  <SavedFearItem fear={fear} />
                 </motion.li>
               ))}
             </AnimatePresence>

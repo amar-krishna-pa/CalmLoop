@@ -27,7 +27,12 @@ export async function GET() {
   }
 
   const savedFears = await db
-    .select({ id: fears.id, name: fears.name, themes: fears.themes })
+    .select({
+      id: fears.id,
+      name: fears.name,
+      themes: fears.themes,
+      behaviours: fears.behaviours,
+    })
     .from(fears)
     .where(eq(fears.userId, session.user.id))
     .orderBy(asc(fears.name), asc(fears.id));
