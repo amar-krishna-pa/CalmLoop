@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { cn } from "@/app/lib/cn/cn";
 import FearInputCard from "@/app/components/practice/prepare/fear-hierarchy/FearInputCard";
+import SavedFearsCard from "@/app/components/practice/prepare/fear-hierarchy/SavedFearsCard";
 import HomeworkCard from "@/app/components/practice/maintain/HomeworkCard";
 import RelapsePreventionCard from "@/app/components/practice/maintain/RelapsePreventionCard";
 
@@ -43,13 +44,13 @@ export default function PracticePage() {
             onClick={() => setActiveTab(tab.id)}
             className={cn(
               "flex flex-col items-center py-2.5 px-3 rounded-lg transition-colors duration-200 cursor-pointer focus:outline-none",
-              activeTab === tab.id ? "bg-accent/10" : "hover:bg-accent/5"
+              activeTab === tab.id ? "bg-accent/10" : "hover:bg-accent/5",
             )}
           >
             <span
               className={cn(
                 "text-sm font-semibold transition-colors",
-                activeTab === tab.id ? "text-accent" : "text-muted"
+                activeTab === tab.id ? "text-accent" : "text-muted",
               )}
             >
               {tab.label}
@@ -61,7 +62,13 @@ export default function PracticePage() {
         ))}
       </div>
 
-      {activeTab === "prepare" && <FearInputCard />}
+      {activeTab === "prepare" && (
+        <div className="flex flex-col gap-4">
+          <FearInputCard />
+
+          <SavedFearsCard />
+        </div>
+      )}
 
       {activeTab === "exposures" && (
         <div className="bg-card border border-subtle rounded-xl p-8 flex flex-col items-center justify-center text-center card-medium">
