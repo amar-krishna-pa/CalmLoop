@@ -9,7 +9,11 @@ import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import type { ExtractedFearPreview } from "@/app/lib/fears/types";
 import type { FearToSave } from "@/app/lib/fears/save-schema";
 
-export default function FearInputCard() {
+type Props = {
+  onSaved: () => void;
+};
+
+export default function FearInputCard({ onSaved }: Props) {
   const [value, setValue] = useState("");
   const [isExtracting, setIsExtracting] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -67,7 +71,10 @@ export default function FearInputCard() {
 
       setPreviewFears(null);
       setValue("");
+
       toast.success("Entry saved.");
+
+      onSaved();
     } catch {
       toast.error("Could not save your entry. Please try again.");
     } finally {

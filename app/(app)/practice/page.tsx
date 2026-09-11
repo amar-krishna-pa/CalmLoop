@@ -29,6 +29,7 @@ const TABS: { id: Tab; label: string; sublabel: string }[] = [
 
 export default function PracticePage() {
   const [activeTab, setActiveTab] = useState<Tab>("prepare");
+  const [savedFearsVersion, setSavedFearsVersion] = useState(0);
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
@@ -64,9 +65,11 @@ export default function PracticePage() {
 
       {activeTab === "prepare" && (
         <div className="flex flex-col gap-4">
-          <FearInputCard />
+          <FearInputCard
+            onSaved={() => setSavedFearsVersion((version) => version + 1)}
+          />
 
-          <SavedFearsCard />
+          <SavedFearsCard key={savedFearsVersion} />
         </div>
       )}
 
