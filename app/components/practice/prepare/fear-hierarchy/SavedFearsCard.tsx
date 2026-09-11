@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { z } from "zod";
 import SavedFearsLoader from "@/app/components/loaders/SavedFearsLoader";
 import { THEMES } from "@/app/lib/fears/themes";
+import SavedFearsThemeFilter from "@/app/components/practice/prepare/fear-hierarchy/SavedFearsThemeFilter";
+import { AnimatePresence, motion } from "motion/react";
 
 const SavedFearsSchema = z.object({
   fears: z.array(
@@ -21,6 +23,17 @@ export default function SavedFearsCard() {
   const [fears, setFears] = useState<SavedFear[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
+  const [selectedTheme, setSelectedTheme] = useState<
+    (typeof THEMES)[number] | null
+  >(null);
+
+  const availableThemes = THEMES.filter((theme) =>
+    fears?.some((fear) => fear.themes.includes(theme)),
+  );
+
+  const visibleFears = fears?.filter(
+    (fear) => selectedTheme === null || fear.themes.includes(selectedTheme),
+  );
 
   useEffect(() => {
     const controller = new AbortController();
@@ -73,11 +86,20 @@ export default function SavedFearsCard() {
           Saved fears
         </h2>
         {fears !== null && (
-          <span className="text-xs text-muted">
+          <span aria-live="polite" className="text-xs text-muted">
+            {selectedTheme !== null ? `${visibleFears?.length ?? 0} of ` : ""}
             {fears.length} {fears.length === 1 ? "fear" : "fears"}
           </span>
         )}
       </div>
+
+      {!error && fears !== null && fears.length > 0 && (
+        <SavedFearsThemeFilter
+          themes={availableThemes}
+          value={selectedTheme}
+          onChange={({ theme }) => setSelectedTheme(theme)}
+        />
+      )}
 
       <div className="flex-1 min-h-0 overflow-y-auto">
         {error ? (
@@ -109,26 +131,38 @@ export default function SavedFearsCard() {
             </p>
           </div>
         ) : (
-          <ul className="divide-y divide-subtle">
-            {fears.map((fear) => (
-              <li key={fear.id} className="py-4 first:pt-0 last:pb-0">
-                <p className="wrap-break-words text-sm font-medium text-primary">
-                  {fear.name}
-                </p>
-                {fear.themes.length > 0 && (
-                  <ul aria-label="Themes" className="mt-2 flex flex-wrap gap-2">
-                    {fear.themes.map((theme) => (
-                      <li
-                        key={theme}
-                        className="rounded-full border-2 border-accent bg-modal px-3 py-1.5 text-xs text-primary"
-                      >
-                        {theme}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
+          <ul className="relative divide-y divide-subtle">
+            <AnimatePresence initial={false} mode="popLayout">
+              {visibleFears?.map((fear) => (
+                <motion.li
+                  key={fear.id}
+                  layout="position"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="py-4 first:pt-0 last:pb-0"
+                >
+                  <p className="wrap-break-words text-sm font-medium text-primary">
+                    {fear.name}
+                  </p>
+                  {fear.themes.length > 0 && (
+                    <ul
+                      aria-label="Themes"
+                      className="mt-2 flex flex-wrap gap-2"
+                    >
+                      {fear.themes.map((theme) => (
+                        <li
+                          key={theme}
+                          className="rounded-full border-2 border-accent bg-modal px-3 py-1.5 text-xs text-primary"
+                        >
+                          {theme}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </motion.li>
+              ))}
+            </AnimatePresence>
           </ul>
         )}
       </div>
