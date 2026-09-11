@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
 import Header from "./components/common/header/Header";
+import PageTransition from "./components/common/PageTransition";
 import { headers } from "next/headers";
 import { auth } from "@/app/lib/auth/auth";
 
@@ -38,7 +39,9 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header userName={session?.user?.name ?? null} />
-          <main className="h-[calc(100dvh-3.5rem)]">{children}</main>
+          <main className="h-[calc(100dvh-3.5rem)]">
+            <PageTransition>{children}</PageTransition>
+          </main>
           <Toaster richColors position="top-center" />
         </ThemeProvider>
       </body>

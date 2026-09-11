@@ -1,5 +1,8 @@
 "use client";
 
+import { AnimatePresence } from "motion/react";
+import PresenceFade from "@/app/components/common/PresenceFade";
+import ChatSessionRow from "./ChatSessionRow";
 import { useState } from "react";
 import ChatSessionsSidebarLoader from "@/app/components/loaders/ChatSessionsSidebarLoader";
 import { useRouter } from "next/navigation";
@@ -7,25 +10,25 @@ import { LuPencil } from "react-icons/lu";
 import ChatSessionItem from "./ChatSessionItem";
 import SidebarDeleteControls from "./SidebarDeleteControls";
 import { cn } from "@/app/lib/cn";
-import { useChatStore, removeSessions } from "@/app/lib/stores/chat";
+import { useChatStore,removeSessions } from "@/app/lib/stores/chat";
 
-type Props = {
+type Props={
   currentSessionId: string;
 };
 
 export default function ChatSessionsSidebar({ currentSessionId }: Props) {
-  const [isDeleteMode, setIsDeleteMode] = useState(false);
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleteMode,setIsDeleteMode]=useState(false);
+  const [selectedIds,setSelectedIds]=useState<Set<string>>(new Set());
+  const [isDeleting,setIsDeleting]=useState(false);
 
-  const chatSessions = useChatStore((s) => s.chatSessions);
+  const chatSessions=useChatStore((s) => s.chatSessions);
 
-  const router = useRouter();
+  const router=useRouter();
 
   function toggleSelect(id: string) {
     setSelectedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
+      const next=new Set(prev);
+      if(next.has(id)) {
         next.delete(id);
       } else {
         next.add(id);
@@ -41,20 +44,20 @@ export default function ChatSessionsSidebar({ currentSessionId }: Props) {
   }
 
   async function deleteSelected() {
-    if (selectedIds.size === 0) return;
+    if(selectedIds.size===0) return;
 
     setIsDeleting(true);
     try {
-      const res = await fetch("/api/chat/chat-sessions", {
+      const res=await fetch("/api/chat/chat-sessions",{
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ids: Array.from(selectedIds) }),
       });
-      if (res.ok) {
+      if(res.ok) {
         removeSessions(selectedIds);
         cancelDeleteMode();
 
-        if (currentSessionId && selectedIds.has(currentSessionId)) {
+        if(currentSessionId&&selectedIds.has(currentSessionId)) {
           router.push(`/chat/${crypto.randomUUID()}`);
         }
       }
@@ -75,7 +78,7 @@ export default function ChatSessionsSidebar({ currentSessionId }: Props) {
             "transition-colors duration-150",
             isDeleteMode
               ? "opacity-50 cursor-not-allowed"
-              : "cursor-pointer hover:bg-surface"
+              :"cursor-pointer hover:bg-surface"
           )}
         >
           <LuPencil size={13} />
@@ -92,27 +95,37 @@ export default function ChatSessionsSidebar({ currentSessionId }: Props) {
         />
       </div>
 
-      <div className="flex-1 overflow-y-auto px-2 pb-3">
-        {chatSessions == null ? (
+      <div className="relative flex-1 overflow-y-auto px-2 pb-3">
+        {chatSessions==null? (
           <ChatSessionsSidebarLoader />
-        ) : chatSessions.length === 0 ? (
-          <p className="text-xs text-muted text-center mt-8 px-3">
-            No past sessions yet.
-          </p>
-        ) : (
-          <ul className="space-y-0.5">
-            {chatSessions.map((s) => (
-              <li key={s.id}>
-                <ChatSessionItem
-                  chatSession={s}
-                  isActive={s.id === currentSessionId}
-                  isDeleteMode={isDeleteMode}
-                  isSelected={selectedIds.has(s.id)}
-                  onToggleSelect={() => toggleSelect(s.id)}
-                />
-              </li>
-            ))}
-          </ul>
+        ):(
+          <AnimatePresence initial={false} mode="popLayout">
+            {chatSessions.length===0? (
+              <PresenceFade key="empty">
+                <p className="text-xs text-muted text-center mt-8 px-3">
+                  No past sessions yet.
+                </p>
+              </PresenceFade>
+            ):(
+              <PresenceFade key="list">
+                <ul>
+                  <AnimatePresence initial={false}>
+                    {chatSessions.map((s) => (
+                      <ChatSessionRow key={s.id}>
+                        <ChatSessionItem
+                          chatSession={s}
+                          isActive={s.id===currentSessionId}
+                          isDeleteMode={isDeleteMode}
+                          isSelected={selectedIds.has(s.id)}
+                          onToggleSelect={() => toggleSelect(s.id)}
+                        />
+                      </ChatSessionRow>
+                    ))}
+                  </AnimatePresence>
+                </ul>
+              </PresenceFade>
+            )}
+          </AnimatePresence>
         )}
       </div>
     </div>

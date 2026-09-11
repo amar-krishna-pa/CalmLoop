@@ -57,6 +57,7 @@ export default function PracticePage() {
                 className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-accent/10"
               />
             )}
+
             <span
               className={cn(
                 "text-sm font-semibold",
@@ -65,6 +66,7 @@ export default function PracticePage() {
             >
               {tab.label}
             </span>
+
             <span className="text-2xs text-muted mt-0.5 hidden sm:block">
               {tab.sublabel}
             </span>
@@ -92,7 +94,9 @@ export default function PracticePage() {
 
             {activeTab === "exposures" && (
               <div className="bg-card border border-subtle rounded-xl p-8 flex flex-col items-center justify-center text-center card-medium">
-                <p className="text-sm font-medium text-primary">Nothing here yet</p>
+                <p className="text-sm font-medium text-primary">
+                  Nothing here yet
+                </p>
                 <p className="text-xs text-muted mt-1 max-w-sm">
                   Exposure practice will return once the new Prepare flow lands.
                 </p>

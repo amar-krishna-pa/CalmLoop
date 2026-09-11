@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "motion/react";
 import { cn } from "@/app/lib/cn";
 
 type NavItemProps =
@@ -9,19 +10,37 @@ type NavItemProps =
 
 export default function NavItem({ label, isActive, href, onClick }: NavItemProps) {
   const className = cn(
-    "h-14 flex items-center px-3 text-sm border-b-2 transition-colors duration-150",
+    "relative h-14 flex items-center px-3 pb-0.5 text-sm",
     isActive
-      ? "text-primary border-accent"
-      : "text-primary/50 border-transparent hover:text-primary"
+      ? "text-primary"
+      : "text-primary/50 hover:text-primary"
+  );
+
+  const content = (
+    <>
+      {label}
+      {isActive && (
+        <motion.span
+          layoutId="header-navigation-underline"
+          initial={false}
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-0.5 bg-accent"
+        />
+      )}
+    </>
   );
 
   if (href) {
-    return <Link href={href} className={className}>{label}</Link>;
+    return (
+      <Link href={href} className={className} aria-current={isActive ? "page" : undefined}>
+        {content}
+      </Link>
+    );
   }
 
   return (
     <button onClick={onClick} className={cn(className, "cursor-pointer")}>
-      {label}
+      {content}
     </button>
   );
 }
