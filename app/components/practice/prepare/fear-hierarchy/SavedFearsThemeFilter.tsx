@@ -33,15 +33,12 @@ export default function SavedFearsThemeFilter({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="w-full sm:max-w-xs">
-      <label
-        htmlFor={inputId}
-        className="mb-1.5 block text-xs font-medium text-primary"
-      >
+    <div className="max-w-full">
+      <label htmlFor={inputId} className="sr-only">
         Filter by theme
       </label>
       <Combobox<string>
-        items={["All themes", ...themes]}
+        items={["All themes", ...[...themes].sort()]}
         value={value ?? "All themes"}
         onValueChange={(selected) => {
           onChange({
@@ -56,7 +53,7 @@ export default function SavedFearsThemeFilter({
           <ComboboxInput
             id={inputId}
             placeholder="Search themes…"
-            className="focus:shadow-none"
+            className="w-56 max-w-full focus:shadow-none"
           />
           <ComboboxTrigger
             aria-label="Show themes"

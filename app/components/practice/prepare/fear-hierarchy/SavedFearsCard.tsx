@@ -94,11 +94,13 @@ export default function SavedFearsCard() {
       </div>
 
       {!error && fears !== null && fears.length > 0 && (
-        <SavedFearsThemeFilter
-          themes={availableThemes}
-          value={selectedTheme}
-          onChange={({ theme }) => setSelectedTheme(theme)}
-        />
+        <div className="flex flex-wrap items-center gap-2">
+          <SavedFearsThemeFilter
+            themes={availableThemes}
+            value={selectedTheme}
+            onChange={({ theme }) => setSelectedTheme(theme)}
+          />
+        </div>
       )}
 
       <div className="flex-1 min-h-0 overflow-y-auto">
