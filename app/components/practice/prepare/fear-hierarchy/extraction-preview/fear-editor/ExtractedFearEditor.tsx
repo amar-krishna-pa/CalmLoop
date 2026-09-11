@@ -118,13 +118,13 @@ export default function ExtractedFearEditor({
 
         <div className="flex flex-col gap-1.5">
           <label
-            htmlFor={fear?.evidence}
+            htmlFor={fear.previewId}
             className="text-xs font-medium text-primary"
           >
             How distressing did this feel?
           </label>
           <SudsDropdown
-            id={fear?.evidence}
+            id={fear.previewId}
             value={fear.initialSuds}
             onChange={({ value }) =>
               onChange({ fear: { ...fear, initialSuds: value } })

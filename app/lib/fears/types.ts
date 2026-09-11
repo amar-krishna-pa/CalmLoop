@@ -14,5 +14,6 @@ export type ExtractedFearPreview = {
 };
 
 export type PreviewFear = ExtractedFearPreview & {
+  previewId: string;
   initialSuds: number | null;
 };

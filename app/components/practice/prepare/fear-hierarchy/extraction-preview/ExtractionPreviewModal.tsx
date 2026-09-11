@@ -27,8 +27,12 @@ export default function ExtractionPreviewModal({
   onDiscard,
   onSave,
 }: Props) {
-  const [fears, setFears] = useState<PreviewFear[]>(
-    initialFears.map((fear) => ({ ...fear, initialSuds: null })),
+  const [fears, setFears] = useState<PreviewFear[]>(() =>
+    initialFears.map((fear) => ({
+      ...fear,
+      previewId: crypto.randomUUID(),
+      initialSuds: null,
+    })),
   );
   const [savedFears, setSavedFears] = useState<
     { id: string; name: string }[] | null
@@ -61,14 +65,14 @@ export default function ExtractionPreviewModal({
   function updateFear({ fear }: { fear: PreviewFear }) {
     setFears((currentFears) =>
       currentFears.map((currentFear) =>
-        currentFear?.evidence === fear.evidence ? fear : currentFear,
+        currentFear.previewId === fear.previewId ? fear : currentFear,
       ),
     );
   }
 
   function removeFear({ fear }: { fear: PreviewFear }) {
     const remainingFears = fears.filter(
-      (currentFear) => currentFear?.evidence !== fear.evidence,
+      (currentFear) => currentFear.previewId !== fear.previewId,
     );
 
     if (remainingFears.length === 0) {
@@ -98,7 +102,7 @@ export default function ExtractionPreviewModal({
           <fieldset disabled={isSaving} className="flex min-w-0 flex-col gap-4">
             {fears.map((fear, fearIndex) => (
               <div
-                key={`${fear.evidence}`}
+                key={fear.previewId}
                 className="border-b-2 border-subtle pb-4 last:border-b-0 last:pb-0"
               >
                 <ExtractedFearEditor
