@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { LuArrowUp, LuPencilLine } from "react-icons/lu";
+import { LuPencilLine } from "react-icons/lu";
 import { toast } from "sonner";
 
 import ExtractionPreviewModal from "@/app/components/practice/prepare/fear-extraction/fear-preview/ExtractionPreviewModal";
@@ -110,11 +110,11 @@ export default function FearInputCard({ onSaved }: Props) {
               type="button"
               onClick={handleSubmit}
               disabled={!value.trim() || isExtracting}
-              aria-label="Continue"
-              title="Continue"
-              className="flex size-8 shrink-0 items-center justify-center rounded-full bg-accent text-on-accent transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
+              aria-label={isExtracting ? "Finding fears" : "Find fears"}
+              aria-busy={isExtracting}
+              className="flex h-8 min-w-24 shrink-0 items-center justify-center rounded-lg bg-accent px-3 text-xs font-medium text-on-accent hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
             >
-              {isExtracting ? <LoadingSpinner /> : <LuArrowUp size={16} />}
+              {isExtracting ? <LoadingSpinner /> : "Find fears"}
             </button>
           </div>
         </div>
