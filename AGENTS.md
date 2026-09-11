@@ -98,10 +98,10 @@ Use `HorizontalDivider` from `app/components/common/HorizontalDivider.tsx` for h
 
 ### Use `cn()` for all conditional class expressions
 
-Import from `@/app/lib/cn/cn`. Never use template-literal ternaries for class names — always `cn(...)`.
+Import from `@/app/lib/cn`. Never use template-literal ternaries for class names — always `cn(...)`.
 
 ```tsx
-import { cn } from "@/app/lib/cn/cn";
+import { cn } from "@/app/lib/cn";
 
 <div
   className={cn(

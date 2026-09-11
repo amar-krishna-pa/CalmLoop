@@ -1,4 +1,4 @@
-import { cn } from "@/app/lib/cn/cn";
+import { cn } from "@/app/lib/cn";
 
 type SkeletonProps = {
   className?: string;

@@ -1,5 +1,5 @@
 import PasskeySection from "@/app/components/profile/security/PasskeySection";
-import EditNameField from "@/app/components/profile/EditNameField";
+import PersonalInfoSection from "@/app/components/profile/personal-info/PersonalInfoSection";
 
 type Props = {
   user: {
@@ -17,23 +17,7 @@ export default function PatientProfile({ user }: Props) {
         Manage your personal information.
       </p>
 
-      <section className="mb-10">
-        <h2 className="text-base font-semibold text-primary mb-4">
-          Personal Info
-        </h2>
-        <div className="rounded-xl border border-subtle">
-          <div className="border-b border-subtle">
-            <EditNameField initialName={user.name} />
-          </div>
-
-          <div className="flex items-center justify-between px-4 py-3">
-            <span className="text-sm text-muted">Email</span>
-            <span className="text-sm font-medium text-primary">
-              {user.email}
-            </span>
-          </div>
-        </div>
-      </section>
+      <PersonalInfoSection name={user.name} email={user.email} />
 
       <PasskeySection />
     </div>

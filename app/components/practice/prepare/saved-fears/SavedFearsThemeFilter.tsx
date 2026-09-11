@@ -12,7 +12,7 @@ import {
   ComboboxItem,
   ComboboxEmpty,
 } from "@/app/components/ui/combobox";
-import { cn } from "@/app/lib/cn/cn";
+import { cn } from "@/app/lib/cn";
 import { THEMES } from "@/app/lib/fears/themes";
 
 type Theme = (typeof THEMES)[number];

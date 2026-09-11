@@ -1,6 +1,6 @@
 "use client";
 import { LuChevronDown } from "react-icons/lu";
-import { cn } from "@/app/lib/cn/cn";
+import { cn } from "@/app/lib/cn";
 import { THEMES } from "@/app/lib/fears/themes";
 import { AnimatePresence, motion } from "motion/react";
 

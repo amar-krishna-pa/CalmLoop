@@ -5,7 +5,7 @@ import { Combobox, ComboboxInput, ComboboxTrigger, ComboboxContent, ComboboxList
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import { AnimatePresence, motion } from "motion/react";
 import { LuChevronDown } from "react-icons/lu";
-import { cn } from "@/app/lib/cn/cn";
+import { cn } from "@/app/lib/cn";
 
 type Props = {
   leadingAction?: ReactNode;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/app/lib/cn/cn";
+import { cn } from "@/app/lib/cn";
 import FearInputCard from "@/app/components/practice/prepare/fear-extraction/FearInputCard";
 import SavedFearsCard from "@/app/components/practice/prepare/saved-fears/SavedFearsCard";
 import HomeworkCard from "@/app/components/practice/maintain/HomeworkCard";

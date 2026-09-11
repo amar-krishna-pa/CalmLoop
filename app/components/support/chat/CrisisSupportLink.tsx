@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/app/lib/cn/cn";
+import { cn } from "@/app/lib/cn";
 
 const HELPLINES = [
   {

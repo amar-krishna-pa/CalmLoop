@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { cn } from "@/app/lib/cn/cn";
+import { cn } from "@/app/lib/cn";
 
 type Props = {
   value: number;

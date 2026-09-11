@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/app/lib/cn/cn";
+import { cn } from "@/app/lib/cn";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import { LuTrash2, LuX } from "react-icons/lu";
 

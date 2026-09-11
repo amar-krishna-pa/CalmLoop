@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { LuCheck, LuChevronDown } from "react-icons/lu";
 import { AnimatePresence, motion } from "motion/react";
 
-import { cn } from "@/app/lib/cn/cn";
+import { cn } from "@/app/lib/cn";
 
 type Props = {
   id: string;

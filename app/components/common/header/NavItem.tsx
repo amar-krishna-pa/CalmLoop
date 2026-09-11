@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { cn } from "@/app/lib/cn/cn";
+import { cn } from "@/app/lib/cn";
 
 type NavItemProps =
   | { label: string; isActive: boolean; href: string; onClick?: never }

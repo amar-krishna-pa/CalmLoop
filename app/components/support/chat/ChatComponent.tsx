@@ -4,7 +4,8 @@ import { useChat } from "@ai-sdk/react";
 import { useEffect, useRef, useState } from "react";
 import type { UIMessage } from "ai";
 import { fetchSessions } from "@/app/lib/stores/chat";
-import CrisisSupportLink from "@/app/components/support/chat/CrisisSupportLink";
+import ChatMessage from "@/app/components/support/chat/ChatMessage";
+import ChatComposer from "@/app/components/support/chat/ChatComposer";
 
 export default function ChatComponent({
   chatSessionId,
@@ -56,25 +57,7 @@ export default function ChatComponent({
           )}
 
           {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${
-                message.role === "user" ? "justify-end" : "justify-start"
-              }`}
-            >
-              <div
-                className={`max-w-[85%] sm:max-w-[70%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
-                  message.role === "user"
-                    ? "bg-accent text-on-accent"
-                    : "bg-card text-primary border border-subtle"
-                }`}
-              >
-                {message.parts.map((part, i) => {
-                  if (part.type === "text")
-                    return <span key={i}>{part.text}</span>;
-                })}
-              </div>
-            </div>
+            <ChatMessage key={message.id} message={message} />
           ))}
 
           {status === "submitted" && (
@@ -89,38 +72,12 @@ export default function ChatComponent({
         </div>
       </div>
 
-      <div className="border-t border-subtle px-4 py-3">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            submit();
-          }}
-          className="flex gap-2 items-center max-w-2xl mx-auto"
-        >
-          <textarea
-            value={input}
-            placeholder="Share what's on your mind…"
-            rows={1}
-            disabled={isBusy}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                submit();
-              }
-            }}
-            className="input-base resize-none disabled:opacity-50"
-          />
-          <button
-            type="submit"
-            disabled={isBusy || !input.trim()}
-            className="btn-accent disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
-          >
-            Send
-          </button>
-        </form>
-        <CrisisSupportLink />
-      </div>
+      <ChatComposer
+        input={input}
+        isBusy={isBusy}
+        onInputChange={({ value }) => setInput(value)}
+        onSubmit={submit}
+      />
     </div>
   );
 }

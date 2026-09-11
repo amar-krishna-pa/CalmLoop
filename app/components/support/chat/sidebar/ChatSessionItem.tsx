@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/app/lib/cn/cn";
+import { cn } from "@/app/lib/cn";
 import formatRelativeTime from "@/app/utils/formatRelativeTime";
 import Link from "next/link";
 import { useRef, useState } from "react";

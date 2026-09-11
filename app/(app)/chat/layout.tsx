@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { LuMenu } from "react-icons/lu";
 import ChatSessionsSidebar from "@/app/components/support/chat/sidebar/ChatSessionsSidebar";
-import { cn } from "@/app/lib/cn/cn";
+import { cn } from "@/app/lib/cn";
 import { fetchSessions } from "@/app/lib/stores/chat";
 
 export default function Layout({ children }: { children: React.ReactNode }) {

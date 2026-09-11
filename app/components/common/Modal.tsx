@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { LuX } from "react-icons/lu";
 import { motion } from "motion/react";
 
-import { cn } from "@/app/lib/cn/cn";
+import { cn } from "@/app/lib/cn";
 
 type Props = {
   title: string;

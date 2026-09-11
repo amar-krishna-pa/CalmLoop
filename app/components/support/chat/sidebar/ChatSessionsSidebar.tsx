@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { LuPencil } from "react-icons/lu";
 import ChatSessionItem from "./ChatSessionItem";
 import SidebarDeleteControls from "./SidebarDeleteControls";
-import { cn } from "@/app/lib/cn/cn";
+import { cn } from "@/app/lib/cn";
 import { useChatStore, removeSessions } from "@/app/lib/stores/chat";
 
 type Props = {
