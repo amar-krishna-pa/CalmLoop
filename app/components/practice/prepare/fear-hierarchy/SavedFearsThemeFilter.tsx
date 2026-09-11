@@ -1,6 +1,7 @@
 "use client";
 
-import { useId, useRef, useState } from "react";
+import { Fragment, useId, useRef, useState } from "react";
+import HorizontalDivider from "@/app/components/common/HorizontalDivider";
 import { LuChevronDown } from "react-icons/lu";
 import {
   Combobox,
@@ -71,13 +72,14 @@ export default function SavedFearsThemeFilter({
           <ComboboxEmpty>No themes match your search.</ComboboxEmpty>
           <ComboboxList className="max-h-48 overflow-y-auto">
             {(theme: string) => (
-              <ComboboxItem
-                key={theme}
-                value={theme}
-                className="rounded-none border-b border-subtle last:border-b-0"
-              >
-                {theme}
-              </ComboboxItem>
+              <Fragment key={theme}>
+                <ComboboxItem value={theme} className="rounded-none">
+                  {theme}
+                </ComboboxItem>
+                <div aria-hidden="true" className="last:hidden">
+                  <HorizontalDivider />
+                </div>
+              </Fragment>
             )}
           </ComboboxList>
         </ComboboxContent>
