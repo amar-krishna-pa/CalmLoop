@@ -4,7 +4,7 @@ import { useState } from "react";
 import { LuArrowUp, LuPencilLine } from "react-icons/lu";
 import { toast } from "sonner";
 
-import ExtractionPreviewModal from "@/app/components/practice/prepare/fear-hierarchy/extraction-preview/ExtractionPreviewModal";
+import ExtractionPreviewModal from "@/app/components/practice/prepare/fear-extraction/fear-preview/ExtractionPreviewModal";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import type { ExtractedFearPreview } from "@/app/lib/fears/types";
 import type { FearToSave } from "@/app/lib/fears/save-schema";

@@ -2,7 +2,7 @@
 
 import Modal from "@/app/components/common/Modal";
 import HorizontalDivider from "@/app/components/common/HorizontalDivider";
-import FearOccurrences from "@/app/components/practice/prepare/fear-hierarchy/FearOccurrences";
+import FearOccurrences from "@/app/components/practice/prepare/saved-fears/FearOccurrences";
 
 type Props = {
   fear: { id: string; name: string; themes: string[]; behaviours: string[] };

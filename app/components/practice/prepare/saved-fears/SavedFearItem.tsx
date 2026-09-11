@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence } from "motion/react";
 import { LuChevronRight } from "react-icons/lu";
-import SavedFearModal from "@/app/components/practice/prepare/fear-hierarchy/SavedFearModal";
+import SavedFearModal from "@/app/components/practice/prepare/saved-fears/SavedFearModal";
 
 type Props = {
   fear: { id: string; name: string; themes: string[]; behaviours: string[] };

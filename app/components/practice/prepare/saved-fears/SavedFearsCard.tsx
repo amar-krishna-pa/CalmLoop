@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { z } from "zod";
 import SavedFearsLoader from "@/app/components/loaders/SavedFearsLoader";
 import { THEMES } from "@/app/lib/fears/themes";
-import SavedFearsThemeFilter from "@/app/components/practice/prepare/fear-hierarchy/SavedFearsThemeFilter";
+import SavedFearsThemeFilter from "@/app/components/practice/prepare/saved-fears/SavedFearsThemeFilter";
 import { AnimatePresence, motion } from "motion/react";
-import SavedFearItem from "@/app/components/practice/prepare/fear-hierarchy/SavedFearItem";
+import SavedFearItem from "@/app/components/practice/prepare/saved-fears/SavedFearItem";
 
 const SavedFearsSchema = z.object({
   fears: z.array(
