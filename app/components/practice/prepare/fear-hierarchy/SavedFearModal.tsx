@@ -1,16 +1,18 @@
 "use client";
 
 import Modal from "@/app/components/common/Modal";
+import HorizontalDivider from "@/app/components/common/HorizontalDivider";
+import FearOccurrences from "@/app/components/practice/prepare/fear-hierarchy/FearOccurrences";
 
 type Props = {
-  fear: { name: string; themes: string[]; behaviours: string[] };
+  fear: { id: string; name: string; themes: string[]; behaviours: string[] };
   onClose: () => void;
 };
 
 export default function SavedFearModal({ fear, onClose }: Props) {
   return (
     <Modal title={fear.name} onClose={onClose} size="large">
-      <div className="min-h-0 flex-1 space-y-5 overflow-y-auto">
+      <div className="min-h-0 flex-1 space-y-4 overflow-y-auto">
         <section className="space-y-2" aria-label="Themes">
           <h3 className="text-xs font-medium text-primary">Themes</h3>
           {fear.themes.length === 0 ? (
@@ -29,6 +31,8 @@ export default function SavedFearModal({ fear, onClose }: Props) {
           )}
         </section>
 
+        <HorizontalDivider />
+
         <section className="space-y-2" aria-label="Safety behaviours">
           <h3 className="text-xs font-medium text-primary">
             Safety behaviours
@@ -46,6 +50,10 @@ export default function SavedFearModal({ fear, onClose }: Props) {
             </ul>
           )}
         </section>
+
+        <HorizontalDivider />
+
+        <FearOccurrences key={fear.id} fearId={fear.id} />
       </div>
     </Modal>
   );
