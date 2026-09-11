@@ -92,6 +92,10 @@ All colors come from CSS variables defined in `app/globals.css` and bridged into
 - `input-base` — themed input/textarea
 - `skeleton` — shimmer loading placeholder
 
+### Section dividers
+
+Use `HorizontalDivider` from `app/components/common/HorizontalDivider.tsx` for horizontal separators between sections. Avoid duplicating separator styles with `<hr>`, border utilities, or `divide-y`. Use spacing to separate individual list items.
+
 ### Use `cn()` for all conditional class expressions
 
 Import from `@/app/lib/cn/cn`. Never use template-literal ternaries for class names — always `cn(...)`.
