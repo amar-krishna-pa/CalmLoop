@@ -11,25 +11,39 @@ type Props = {
 
 export default function SavedFearModal({ fear, onClose }: Props) {
   return (
-    <Modal title={fear.name} onClose={onClose} size="large">
+    <Modal title="Fear details" onClose={onClose} size="large">
       <div className="min-h-0 flex-1 space-y-4 overflow-y-auto">
-        <section className="space-y-2" aria-label="Themes">
-          <h3 className="text-xs font-medium text-primary">Themes</h3>
-          {fear.themes.length === 0 ? (
-            <p className="text-xs text-muted">No themes saved.</p>
-          ) : (
-            <ul className="flex flex-wrap gap-2">
-              {fear.themes.map((theme) => (
-                <li
-                  key={theme}
-                  className="rounded-full border-2 border-accent bg-modal px-3 py-1.5 text-xs text-primary"
-                >
-                  {theme}
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
+        <div className="space-y-2">
+          <section className="flex items-baseline gap-4" aria-label="Fear">
+            <p className="min-w-0 flex-1 wrap-break-words text-sm text-muted">
+              {fear.name}
+            </p>
+            <button
+              type="button"
+              aria-label="Edit fear and themes"
+              className="-my-2 w-8 shrink-0 cursor-pointer rounded-lg py-2 text-center text-sm font-medium text-accent transition-opacity duration-fast hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            >
+              Edit
+            </button>
+          </section>
+
+          <section className="space-y-2" aria-label="Themes">
+            {fear.themes.length === 0 ? (
+              <p className="text-xs text-muted">No themes saved.</p>
+            ) : (
+              <ul className="flex flex-wrap gap-2">
+                {fear.themes.map((theme) => (
+                  <li
+                    key={theme}
+                    className="rounded-full border-2 border-accent bg-modal px-3 py-1.5 text-xs text-primary"
+                  >
+                    {theme}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        </div>
 
         <HorizontalDivider />
 
