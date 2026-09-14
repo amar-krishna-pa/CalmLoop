@@ -6,31 +6,27 @@ import SavedFearsLoader from "@/app/components/loaders/SavedFearsLoader";
 import { THEMES } from "@/app/lib/fears/themes";
 import SavedFearsThemeFilter from "@/app/components/practice/prepare/saved-fears/SavedFearsThemeFilter";
 import { AnimatePresence, motion } from "motion/react";
+import { SavedFearSchema, type SavedFear } from "@/app/lib/fears/saved-schema";
+import SavedFearDialog from "@/app/components/practice/prepare/saved-fears/SavedFearDialog";
 import SavedFearItem from "@/app/components/practice/prepare/saved-fears/SavedFearItem";
 
-const SavedFearsSchema = z.object({
-  fears: z.array(
-    z.object({
-      id: z.string().uuid(),
-      name: z.string(),
-      themes: z.array(z.enum(THEMES)),
-      behaviours: z.array(z.string()),
-    }),
-  ),
-});
-
-type SavedFear = z.infer<typeof SavedFearsSchema>["fears"][number];
+const SavedFearsSchema = z.object({ fears: z.array(SavedFearSchema) });
 
 export default function SavedFearsCard() {
   const [fears, setFears] = useState<SavedFear[] | null>(null);
+  const [openFearId, setOpenFearId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
   const [selectedTheme, setSelectedTheme] = useState<
     (typeof THEMES)[number] | null
   >(null);
 
-  const availableThemes = THEMES.filter((theme) =>
-    fears?.some((fear) => fear.themes.includes(theme)),
+  const openFear = fears?.find((fear) => fear.id === openFearId);
+
+  const availableThemes = THEMES.filter(
+    (theme) =>
+      theme === selectedTheme ||
+      fears?.some((fear) => fear.themes.includes(theme)),
   );
 
   const visibleFears = fears?.filter(
@@ -87,6 +83,7 @@ export default function SavedFearsCard() {
         >
           Saved fears
         </h2>
+
         {fears !== null && (
           <span aria-live="polite" className="text-xs text-muted">
             {selectedTheme !== null ? `${visibleFears?.length ?? 0} of ` : ""}
@@ -111,6 +108,7 @@ export default function SavedFearsCard() {
             <p role="alert" className="text-sm text-muted">
               {error}
             </p>
+
             <button
               type="button"
               className="btn-accent px-4 py-2 cursor-pointer"
@@ -129,6 +127,7 @@ export default function SavedFearsCard() {
             <p className="text-sm font-medium text-primary">
               No saved fears yet
             </p>
+
             <p className="max-w-sm text-xs text-muted">
               Describe what you went through above, then review and save your
               entry.
@@ -146,13 +145,51 @@ export default function SavedFearsCard() {
                   exit={{ opacity: 0 }}
                   className="py-4 first:pt-0 last:pb-0"
                 >
-                  <SavedFearItem fear={fear} />
+                  <SavedFearItem
+                    fear={fear}
+                    onOpen={() => setOpenFearId(fear.id)}
+                  />
                 </motion.li>
               ))}
+
+              {visibleFears?.length === 0 && (
+                <motion.li
+                  key="empty"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="text-sm text-muted"
+                >
+                  No saved fears match this theme. Choose another theme or All
+                  themes.
+                </motion.li>
+              )}
             </AnimatePresence>
           </ul>
         )}
       </div>
+
+      <AnimatePresence initial={false}>
+        {openFear && (
+          <SavedFearDialog
+            key={openFear.id}
+            fear={openFear}
+            onClose={() => setOpenFearId(null)}
+            onSaved={({ fear: updated }) =>
+              setFears(
+                (current) =>
+                  current
+                    ?.map((fear) => (fear.id === updated.id ? updated : fear))
+                    .sort(
+                      (left, right) =>
+                        left.name.localeCompare(right.name) ||
+                        left.id.localeCompare(right.id),
+                    ) ?? null,
+              )
+            }
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }

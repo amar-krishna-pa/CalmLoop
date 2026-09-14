@@ -36,7 +36,7 @@ export default function ThemeSelector({
           <LuChevronDown
             size={13}
             className={cn(
-              "transition-transform duration-200 ease-out",
+              "transition-transform duration-fast ease-out",
               isExpanded && "rotate-180",
             )}
           />
@@ -44,7 +44,7 @@ export default function ThemeSelector({
         </button>
       </div>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="relative flex flex-wrap gap-2">
         <AnimatePresence initial={false} mode="popLayout">
           {selectedThemes.map((theme) => (
             <motion.button
@@ -79,7 +79,7 @@ export default function ThemeSelector({
       <AnimatePresence initial={false}>
         {isExpanded && (
           <motion.div
-            className="mt-2 flex flex-wrap gap-2 p-0.5 overflow-hidden"
+            className="relative mt-2 flex flex-wrap gap-2 p-0.5 overflow-hidden"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}

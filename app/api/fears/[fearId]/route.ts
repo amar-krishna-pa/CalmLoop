@@ -40,7 +40,13 @@ export async function PATCH(
 
   const [updated] = await db
     .update(fears)
-    .set({ name: parsed.data.name, themes: parsed.data.themes })
+    .set({
+      name: parsed.data.name,
+      themes: parsed.data.themes,
+      ...(parsed.data.behaviours !== undefined
+        ? { behaviours: parsed.data.behaviours }
+        : {}),
+    })
     .where(
       and(eq(fears.id, parsedId.data), eq(fears.userId, session.user.id)),
     )

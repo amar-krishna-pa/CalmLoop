@@ -1,23 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence } from "motion/react";
 import { LuChevronRight } from "react-icons/lu";
-import SavedFearModal from "@/app/components/practice/prepare/saved-fears/SavedFearModal";
+import type { SavedFear } from "@/app/lib/fears/saved-schema";
 
 type Props = {
-  fear: { id: string; name: string; themes: string[]; behaviours: string[] };
+  fear: SavedFear;
+  onOpen: () => void;
 };
 
-export default function SavedFearItem({ fear }: Props) {
-  const [isOpen, setIsOpen] = useState(false);
-
+export default function SavedFearItem({ fear, onOpen }: Props) {
   return (
     <div>
       <button
         type="button"
         aria-haspopup="dialog"
-        onClick={() => setIsOpen(true)}
+        onClick={onOpen}
         className="flex w-full flex-col items-start gap-2 rounded-lg p-2 text-left cursor-pointer hover:bg-accent/10 focus-visible:bg-accent/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
       >
         <div className="flex w-full items-center justify-between gap-3">
@@ -40,15 +37,6 @@ export default function SavedFearItem({ fear }: Props) {
         )}
       </button>
 
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <SavedFearModal
-            key={fear.id}
-            fear={fear}
-            onClose={() => setIsOpen(false)}
-          />
-        )}
-      </AnimatePresence>
     </div>
   );
 }
