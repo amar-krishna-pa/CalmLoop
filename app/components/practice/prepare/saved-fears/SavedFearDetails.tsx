@@ -1,14 +1,16 @@
 "use client";
 
+import type { Occurrence } from "@/app/lib/fears/occurrence-schema";
 import HorizontalDivider from "@/app/components/common/HorizontalDivider";
 import FearOccurrences from "@/app/components/practice/prepare/saved-fears/FearOccurrences";
 
 type Props = {
   fear: { id: string; name: string; themes: string[]; behaviours: string[] };
   onEdit: () => void;
+  onEditOccurrence: ({ occurrence }: { occurrence: Occurrence }) => void;
 };
 
-export default function SavedFearDetails({ fear, onEdit }: Props) {
+export default function SavedFearDetails({ fear, onEdit, onEditOccurrence }: Props) {
   return (
     <div className="min-h-0 flex-1 space-y-4 overflow-y-auto">
       <div className="space-y-2">
@@ -67,7 +69,7 @@ export default function SavedFearDetails({ fear, onEdit }: Props) {
 
       <HorizontalDivider />
 
-      <FearOccurrences key={fear.id} fearId={fear.id} />
+      <FearOccurrences key={fear.id} fearId={fear.id} onEdit={onEditOccurrence} />
     </div>
   );
 }

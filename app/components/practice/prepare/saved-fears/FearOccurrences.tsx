@@ -2,24 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { z } from "zod";
+import {
+  OccurrenceSchema,
+  type Occurrence,
+} from "@/app/lib/fears/occurrence-schema";
 import FearOccurrencesLoader from "@/app/components/loaders/FearOccurrencesLoader";
 
-const OccurrencesSchema = z.object({
-  occurrences: z.array(
-    z.object({
-      id: z.string().uuid(),
-      evidence: z.string(),
-      initialSuds: z.number().int().min(0).max(10),
-      currentSuds: z.number().int().min(0).max(10).nullable(),
-      createdAt: z.iso.datetime(),
-    }),
-  ),
-});
+const OccurrencesSchema = z.object({ occurrences: z.array(OccurrenceSchema) });
 
-type Occurrence = z.infer<typeof OccurrencesSchema>["occurrences"][number];
-type Props = { fearId: string };
+type Props = {
+  fearId: string;
+  onEdit: ({ occurrence }: { occurrence: Occurrence }) => void;
+};
 
-export default function FearOccurrences({ fearId }: Props) {
+export default function FearOccurrences({ fearId, onEdit }: Props) {
   const [occurrences, setOccurrences] = useState<Occurrence[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
@@ -89,15 +85,26 @@ export default function FearOccurrences({ fearId }: Props) {
         <ol className="space-y-5">
           {occurrences.map((occurrence) => (
             <li key={occurrence.id} className="space-y-2">
-              <time
-                dateTime={occurrence.createdAt}
-                className="text-xs text-muted"
-              >
-                {new Date(occurrence.createdAt).toLocaleString(undefined, {
-                  dateStyle: "medium",
-                  timeStyle: "short",
-                })}
-              </time>
+              <div className="flex items-center justify-between gap-3">
+                <time
+                  dateTime={occurrence.createdAt}
+                  className="text-xs text-muted"
+                >
+                  {new Date(occurrence.createdAt).toLocaleString(undefined, {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  })}
+                </time>
+
+                <button
+                  type="button"
+                  onClick={() => onEdit({ occurrence })}
+                  aria-label="Edit occurrence"
+                  className="shrink-0 cursor-pointer rounded-lg py-2 text-sm font-medium text-accent transition-opacity duration-fast hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                >
+                  Edit
+                </button>
+              </div>
 
               <p className="whitespace-pre-wrap wrap-break-words text-sm text-primary">
                 {occurrence.evidence}

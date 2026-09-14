@@ -2,6 +2,8 @@
 
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import EditOccurrenceForm from "@/app/components/practice/prepare/saved-fears/EditOccurrenceForm";
+import type { Occurrence } from "@/app/lib/fears/occurrence-schema";
 import Modal from "@/app/components/common/Modal";
 import EditFearForm from "@/app/components/practice/prepare/saved-fears/EditFearForm";
 import SavedFearDetails from "@/app/components/practice/prepare/saved-fears/SavedFearDetails";
@@ -14,17 +16,19 @@ type Props = {
 };
 
 export default function SavedFearDialog({ fear, onClose, onSaved }: Props) {
-  const [view, setView] = useState<"details" | "edit">("details");
+  const [view, setView] = useState<"details" | "edit" | "occurrence">("details");
+
+  const [editingOccurrence, setEditingOccurrence] = useState<Occurrence | null>(null);
 
   const savingRef = useRef(false);
 
   return (
     <Modal
-      title={view === "edit" ? "Edit fear" : "Fear details"}
+      title={view === "occurrence" ? "Edit occurrence" : view === "edit" ? "Edit fear" : "Fear details"}
       onClose={() => {
         if (savingRef.current) return;
 
-        if (view === "edit") setView("details");
+        if (view !== "details") setView("details");
         else onClose();
       }}
       size="large"
@@ -53,8 +57,21 @@ export default function SavedFearDialog({ fear, onClose, onSaved }: Props) {
                   setView("details");
                 }}
               />
+            ) : view === "occurrence" && editingOccurrence ? (
+              <EditOccurrenceForm
+                key={editingOccurrence.id}
+                occurrence={editingOccurrence}
+                onDiscard={() => setView("details")}
+              />
             ) : (
-              <SavedFearDetails fear={fear} onEdit={() => setView("edit")} />
+              <SavedFearDetails
+                fear={fear}
+                onEdit={() => setView("edit")}
+                onEditOccurrence={({ occurrence }) => {
+                  setEditingOccurrence(occurrence);
+                  setView("occurrence");
+                }}
+              />
             )}
           </motion.div>
         </AnimatePresence>
