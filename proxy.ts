@@ -2,25 +2,28 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { auth } from "@/app/lib/auth/auth";
 
+const publicAssets = new Set([
+  "/window.svg",
+  "/globe.svg",
+  "/vercel.svg",
+  "/next.svg",
+  "/file.svg",
+]);
+
 export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
-  // Define route rules
-  const isProtectedRoute =
-    path.startsWith("/today") ||
-    path.startsWith("/treatment") ||
-    path.startsWith("/reflect") ||
-    path.startsWith("/support") ||
-    path.startsWith("/learn") ||
-    path.startsWith("/profile") ||
-    path.startsWith("/chat");
+  if (publicAssets.has(path)) return NextResponse.next();
+
   const isAuthRoute = path === "/login" || path === "/signup";
   const isRootRoute = path === "/";
+  // New and renamed pages require a session unless explicitly made public here.
+  const isProtectedRoute = !isAuthRoute && !isRootRoute;
 
   // Check if session cookie exists before making a DB call
   const cookiesList = request.cookies.getAll();
   const hasSessionToken = cookiesList.some((c) =>
-    c.name.includes("better-auth.session_token")
+    c.name.includes("better-auth.session_token"),
   );
 
   let session = null;
@@ -50,12 +53,13 @@ export async function proxy(request: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
+     * Match pages; API routes enforce their own authentication and ownership.
+     * Exclude:
      * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico, sitemap.xml, robots.txt (metadata files)
      */
-    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    "/((?!api(?:/|$)|_next/|favicon\\.ico$|sitemap\\.xml$|robots\\.txt$).*)",
   ],
 };
