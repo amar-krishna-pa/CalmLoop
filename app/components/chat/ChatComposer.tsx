@@ -1,6 +1,6 @@
 "use client";
 
-import CrisisSupportLink from "@/app/components/support/chat/CrisisSupportLink";
+import CrisisSupportLink from "@/app/components/chat/CrisisSupportLink";
 import HorizontalDivider from "@/app/components/common/HorizontalDivider";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 

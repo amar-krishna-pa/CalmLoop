@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { LuMenu } from "react-icons/lu";
-import ChatSessionsSidebar from "@/app/components/support/chat/sidebar/ChatSessionsSidebar";
+import ChatSessionsSidebar from "@/app/components/chat/sidebar/ChatSessionsSidebar";
 import { cn } from "@/app/lib/cn";
-import { fetchSessions } from "@/app/lib/stores/chat";
+import { fetchSessions } from "@/app/stores/chat";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);

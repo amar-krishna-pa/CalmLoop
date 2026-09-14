@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { Skeleton } from "@/app/components/loaders/LoadingSkeleton";
-import { setStreak, useUserStore } from "@/app/lib/stores/user";
+import { setStreak, useUserStore } from "@/app/stores/user";
 
 type StaticStat = {
   label: string;

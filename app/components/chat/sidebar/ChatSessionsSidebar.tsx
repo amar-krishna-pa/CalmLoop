@@ -10,7 +10,7 @@ import { LuPencil } from "react-icons/lu";
 import ChatSessionItem from "./ChatSessionItem";
 import SidebarDeleteControls from "./SidebarDeleteControls";
 import { cn } from "@/app/lib/cn";
-import { useChatStore,removeSessions } from "@/app/lib/stores/chat";
+import { useChatStore,removeSessions } from "@/app/stores/chat";
 
 type Props={
   currentSessionId: string;

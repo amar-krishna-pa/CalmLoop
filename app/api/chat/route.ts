@@ -6,7 +6,7 @@ import {
   convertToModelMessages,
 } from "ai";
 import { eq } from "drizzle-orm";
-import { SYSTEM_PROMPT } from "@/app/lib/ai/prompts/chat";
+import { SYSTEM_PROMPT } from "@/app/constants/prompts/chat";
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
 import { chatSessions, messages } from "@/app/lib/db/schema";

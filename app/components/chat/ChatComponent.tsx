@@ -3,9 +3,9 @@
 import { useChat } from "@ai-sdk/react";
 import { useEffect, useRef, useState } from "react";
 import type { UIMessage } from "ai";
-import { fetchSessions } from "@/app/lib/stores/chat";
-import ChatMessage from "@/app/components/support/chat/ChatMessage";
-import ChatComposer from "@/app/components/support/chat/ChatComposer";
+import { fetchSessions } from "@/app/stores/chat";
+import ChatMessage from "@/app/components/chat/ChatMessage";
+import ChatComposer from "@/app/components/chat/ChatComposer";
 
 export default function ChatComponent({
   chatSessionId,

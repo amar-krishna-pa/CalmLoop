@@ -3,7 +3,7 @@ import { and, asc, eq } from "drizzle-orm";
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
 import { fearOccurrences, fears } from "@/app/lib/db/schema";
-import { SaveFearsSchema } from "@/app/lib/zod/save-schema";
+import { SaveFearsSchema } from "@/app/lib/zod/save-fears-schema";
 import { maybeUpdateStreak } from "@/app/services/streak/maybe-update-streak";
 
 function mergeBehaviours({

@@ -8,8 +8,8 @@ import Link from "next/link";
 import { useRef,useState } from "react";
 import { LuCheck,LuPencil,LuX } from "react-icons/lu";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
-import type { SessionItem } from "@/app/lib/stores/chat";
-import { updateSessionTitle } from "@/app/lib/stores/chat";
+import type { SessionItem } from "@/app/stores/chat";
+import { updateSessionTitle } from "@/app/stores/chat";
 
 type Props={
   chatSession: SessionItem;

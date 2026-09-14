@@ -6,7 +6,7 @@ import SavedFearsLoader from "@/app/components/loaders/SavedFearsLoader";
 import { THEMES } from "@/app/constants/fears/themes";
 import SavedFearsThemeFilter from "@/app/components/practice/prepare/saved-fears/SavedFearsThemeFilter";
 import { AnimatePresence, motion } from "motion/react";
-import { SavedFearSchema, type SavedFear } from "@/app/lib/zod/saved-schema";
+import { SavedFearSchema, type SavedFear } from "@/app/lib/zod/saved-fear-schema";
 import SavedFearDialog from "@/app/components/practice/prepare/saved-fears/SavedFearDialog";
 import SavedFearItem from "@/app/components/practice/prepare/saved-fears/SavedFearItem";
 

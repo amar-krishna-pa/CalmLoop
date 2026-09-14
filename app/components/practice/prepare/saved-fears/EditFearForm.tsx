@@ -2,10 +2,10 @@
 
 import { useId, useRef, useState } from "react";
 import HorizontalDivider from "@/app/components/common/HorizontalDivider";
-import ThemeSelector from "@/app/components/practice/prepare/fear-extraction/fear-preview/fear-editor/ThemeSelector";
-import SafetyBehavioursEditor from "@/app/components/practice/prepare/fear-extraction/fear-preview/fear-editor/SafetyBehavioursEditor";
-import { SavedFearSchema, type SavedFear } from "@/app/lib/zod/saved-schema";
-import { UpdateFearSchema } from "@/app/lib/zod/update-schema";
+import ThemeSelector from "@/app/components/practice/shared/ThemeSelector";
+import SafetyBehavioursEditor from "@/app/components/practice/shared/SafetyBehavioursEditor";
+import { SavedFearSchema, type SavedFear } from "@/app/lib/zod/saved-fear-schema";
+import { UpdateFearSchema } from "@/app/lib/zod/update-fear-schema";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import type { PreviewBehaviour } from "@/app/types/fears";
 

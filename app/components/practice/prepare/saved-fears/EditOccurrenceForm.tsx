@@ -2,7 +2,7 @@
 
 import { useId, useState } from "react";
 import HorizontalDivider from "@/app/components/common/HorizontalDivider";
-import SudsDropdown from "@/app/components/practice/prepare/fear-extraction/fear-preview/fear-editor/SudsDropdown";
+import SudsDropdown from "@/app/components/practice/shared/SudsDropdown";
 
 type Props = {
   occurrence: { evidence: string; initialSuds: number };

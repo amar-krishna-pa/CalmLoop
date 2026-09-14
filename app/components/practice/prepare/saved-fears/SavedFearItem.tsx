@@ -1,7 +1,7 @@
 "use client";
 
 import { LuChevronRight } from "react-icons/lu";
-import type { SavedFear } from "@/app/lib/zod/saved-schema";
+import type { SavedFear } from "@/app/lib/zod/saved-fear-schema";
 
 type Props = {
   fear: SavedFear;

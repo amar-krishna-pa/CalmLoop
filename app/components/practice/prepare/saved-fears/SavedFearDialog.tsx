@@ -7,7 +7,7 @@ import type { Occurrence } from "@/app/lib/zod/occurrence-schema";
 import Modal from "@/app/components/common/Modal";
 import EditFearForm from "@/app/components/practice/prepare/saved-fears/EditFearForm";
 import SavedFearDetails from "@/app/components/practice/prepare/saved-fears/SavedFearDetails";
-import type { SavedFear } from "@/app/lib/zod/saved-schema";
+import type { SavedFear } from "@/app/lib/zod/saved-fear-schema";
 
 type Props = {
   fear: SavedFear;
