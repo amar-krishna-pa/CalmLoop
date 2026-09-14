@@ -97,7 +97,7 @@ export default function Modal({
         aria-labelledby={titleId}
         onClick={(e) => e.stopPropagation()}
         className={cn(
-          "w-full max-h-[85vh] overflow-hidden bg-modal/70 backdrop-blur-xl border border-subtle/60 rounded-xl p-5 flex flex-col gap-4 shadow-xl",
+          "w-full max-h-[85vh] overflow-hidden bg-modal dark:bg-modal/70 backdrop-blur-xl border border-subtle/60 rounded-xl p-5 flex flex-col gap-4 shadow-xl",
           size === "large" ? "max-w-3xl" : "max-w-md",
           fixedHeight && "h-150 max-h-[85dvh]",
         )}
