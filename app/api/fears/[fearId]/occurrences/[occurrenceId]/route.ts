@@ -4,8 +4,8 @@ import { z } from "zod";
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
 import { fearOccurrences } from "@/app/lib/db/schema";
-import { UpdateOccurrenceSchema } from "@/app/lib/fears/update-occurrence-schema";
-import { maybeUpdateStreak } from "@/app/lib/streak/maybe-update-streak";
+import { UpdateOccurrenceSchema } from "@/app/lib/zod/update-occurrence-schema";
+import { maybeUpdateStreak } from "@/app/services/streak/maybe-update-streak";
 
 const ParamsSchema = z.object({
   fearId: z.string().uuid(),

@@ -244,7 +244,7 @@ See `.env.example`. Required:
 
 ## Streak tracking
 
-Call `updateStreak({ userId })` from `@/app/lib/streak/update-streak` in any POST/PATCH/DELETE route handler that represents a deliberate user action (mood log, todo completion, ERP session, etc.). Do not call it in GET handlers, auth routes, or background/system operations. Always call it after the main DB write succeeds, never before.
+Call `updateStreak({ userId })` from `@/app/services/streak/update-streak` in any POST/PATCH/DELETE route handler that represents a deliberate user action (mood log, todo completion, ERP session, etc.). Do not call it in GET handlers, auth routes, or background/system operations. Always call it after the main DB write succeeds, never before.
 
 Before calling `updateStreak`, check `session.user.lastActivityDate` against today's date and skip if they match — this avoids a redundant DB write when the user has already been active today:
 

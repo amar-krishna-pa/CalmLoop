@@ -3,11 +3,11 @@
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import EditOccurrenceForm from "@/app/components/practice/prepare/saved-fears/EditOccurrenceForm";
-import type { Occurrence } from "@/app/lib/fears/occurrence-schema";
+import type { Occurrence } from "@/app/lib/zod/occurrence-schema";
 import Modal from "@/app/components/common/Modal";
 import EditFearForm from "@/app/components/practice/prepare/saved-fears/EditFearForm";
 import SavedFearDetails from "@/app/components/practice/prepare/saved-fears/SavedFearDetails";
-import type { SavedFear } from "@/app/lib/fears/saved-schema";
+import type { SavedFear } from "@/app/lib/zod/saved-schema";
 
 type Props = {
   fear: SavedFear;

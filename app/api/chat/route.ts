@@ -11,7 +11,7 @@ import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
 import { chatSessions, messages } from "@/app/lib/db/schema";
 import { ChatRequestSchema } from "@/app/lib/zod/chat";
-import { maybeUpdateStreak } from "@/app/lib/streak/maybe-update-streak";
+import { maybeUpdateStreak } from "@/app/services/streak/maybe-update-streak";
 
 const groq = createGroq({ apiKey: process.env.GROQ_API_KEY });
 

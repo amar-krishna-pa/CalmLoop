@@ -1,4 +1,4 @@
-import { updateStreak } from "@/app/lib/streak/update-streak";
+import { updateStreak } from "@/app/services/streak/update-streak";
 
 export async function maybeUpdateStreak({
   user,

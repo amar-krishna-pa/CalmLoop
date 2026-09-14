@@ -4,8 +4,8 @@ import { z } from "zod";
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
 import { fears } from "@/app/lib/db/schema";
-import { UpdateFearSchema } from "@/app/lib/fears/update-schema";
-import { maybeUpdateStreak } from "@/app/lib/streak/maybe-update-streak";
+import { UpdateFearSchema } from "@/app/lib/zod/update-schema";
+import { maybeUpdateStreak } from "@/app/services/streak/maybe-update-streak";
 
 // Next.js requires positional request and context arguments for route handlers.
 export async function PATCH(

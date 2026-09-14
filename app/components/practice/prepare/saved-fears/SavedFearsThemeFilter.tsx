@@ -13,7 +13,7 @@ import {
   ComboboxEmpty,
 } from "@/app/components/ui/combobox";
 import { cn } from "@/app/lib/cn";
-import { THEMES } from "@/app/lib/fears/themes";
+import { THEMES } from "@/app/constants/fears/themes";
 
 type Theme = (typeof THEMES)[number];
 type Props = {

@@ -1,6 +1,6 @@
 "use client";
 
-import type { Occurrence } from "@/app/lib/fears/occurrence-schema";
+import type { Occurrence } from "@/app/lib/zod/occurrence-schema";
 import HorizontalDivider from "@/app/components/common/HorizontalDivider";
 import FearOccurrences from "@/app/components/practice/prepare/saved-fears/FearOccurrences";
 

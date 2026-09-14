@@ -6,8 +6,8 @@ import { toast } from "sonner";
 
 import ExtractionPreviewModal from "@/app/components/practice/prepare/fear-extraction/fear-preview/ExtractionPreviewModal";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
-import type { ExtractedFearPreview } from "@/app/lib/fears/types";
-import type { FearToSave } from "@/app/lib/fears/save-schema";
+import type { ExtractedFearPreview } from "@/app/types/fears";
+import type { FearToSave } from "@/app/lib/zod/save-schema";
 
 type Props = {
   onSaved: () => void;

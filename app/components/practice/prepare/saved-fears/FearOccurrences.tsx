@@ -5,7 +5,7 @@ import { z } from "zod";
 import {
   OccurrenceSchema,
   type Occurrence,
-} from "@/app/lib/fears/occurrence-schema";
+} from "@/app/lib/zod/occurrence-schema";
 import FearOccurrencesLoader from "@/app/components/loaders/FearOccurrencesLoader";
 
 const OccurrencesSchema = z.object({ occurrences: z.array(OccurrenceSchema) });

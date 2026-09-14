@@ -5,8 +5,8 @@ import { eq } from "drizzle-orm";
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
 import { fears } from "@/app/lib/db/schema";
-import type { ExtractedFearPreview } from "@/app/lib/fears/types";
-import { ExtractRequestSchema, ExtractionSchema } from "@/app/lib/fears/extraction-schema";
+import type { ExtractedFearPreview } from "@/app/types/fears";
+import { ExtractRequestSchema, ExtractionSchema } from "@/app/lib/zod/extraction-schema";
 import { EXTRACTION_PROMPT } from "@/app/lib/ai/prompts/extraction";
 
 const groq = createGroq({ apiKey: process.env.GROQ_API_KEY });

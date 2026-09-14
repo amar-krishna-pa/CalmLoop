@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { THEMES } from "@/app/lib/fears/themes";
+import { THEMES } from "@/app/constants/fears/themes";
 
 export const SavedFearSchema = z.object({
   id: z.string().uuid(),
