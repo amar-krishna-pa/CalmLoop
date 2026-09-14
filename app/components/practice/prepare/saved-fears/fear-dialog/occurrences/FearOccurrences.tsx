@@ -84,7 +84,7 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
       ) : (
         <ol className="space-y-5">
           {occurrences.map((occurrence) => (
-            <li key={occurrence.id} className="space-y-2">
+            <li key={occurrence.id} className="space-y-0">
               <div className="flex items-center justify-between gap-3">
                 <time
                   dateTime={occurrence.createdAt}
@@ -100,7 +100,7 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
                   type="button"
                   onClick={() => onEdit({ occurrence })}
                   aria-label="Edit occurrence"
-                  className="shrink-0 cursor-pointer rounded-lg py-2 text-sm font-medium text-accent transition-opacity duration-fast hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                  className="shrink-0 cursor-pointer rounded-lg py-1 text-sm font-medium text-accent transition-opacity duration-fast hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                 >
                   Edit
                 </button>
