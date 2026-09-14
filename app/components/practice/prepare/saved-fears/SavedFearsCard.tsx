@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import { z } from "zod";
 import SavedFearsLoader from "@/app/components/loaders/SavedFearsLoader";
 import { THEMES } from "@/app/constants/fears/themes";
-import SavedFearsThemeFilter from "@/app/components/practice/prepare/saved-fears/SavedFearsThemeFilter";
+import SavedFearsThemeFilter from "@/app/components/practice/prepare/saved-fears/list/SavedFearsThemeFilter";
 import { AnimatePresence, motion } from "motion/react";
 import { SavedFearSchema, type SavedFear } from "@/app/lib/zod/saved-fear-schema";
-import SavedFearDialog from "@/app/components/practice/prepare/saved-fears/SavedFearDialog";
-import SavedFearItem from "@/app/components/practice/prepare/saved-fears/SavedFearItem";
+import SavedFearDialog from "@/app/components/practice/prepare/saved-fears/fear-dialog/SavedFearDialog";
+import SavedFearItem from "@/app/components/practice/prepare/saved-fears/list/SavedFearItem";
 
 const SavedFearsSchema = z.object({ fears: z.array(SavedFearSchema) });
 
