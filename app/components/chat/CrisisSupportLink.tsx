@@ -11,22 +11,16 @@ const HELPLINES = [
     note: "Government of India · free · 24/7 · 20+ languages",
   },
   {
-    name: "KIRAN",
-    number: "1800-599-0019",
-    tel: "18005990019",
-    note: "Government of India · free · 24/7",
-  },
-  {
     name: "Vandrevala Foundation",
-    number: "1860-2662-345",
-    tel: "18602662345",
-    note: "24/7",
+    number: "+91 9999 666 555",
+    tel: "+919999666555",
+    note: "Free counselling · 24/7",
   },
   {
     name: "iCall",
     number: "9152987821",
     tel: "+919152987821",
-    note: "Mon–Sat, 10am–8pm",
+    note: "Mon–Sat, 8am–9pm IST",
   },
 ];
 
@@ -45,15 +39,14 @@ export default function CrisisSupportLink() {
             open ? "text-accent" : "text-muted hover:text-accent"
           )}
         >
-          In crisis or feeling unsafe? Get help now
+          Crisis support in India
         </button>
       </div>
 
       {open && (
         <div className="mt-2 bg-card border border-subtle rounded-xl p-4 text-sm">
           <p className="text-primary font-medium mb-2">
-            You don&apos;t have to go through this alone. These helplines are
-            free to call:
+            You can speak with someone through these helplines in India.
           </p>
           <ul className="space-y-2">
             {HELPLINES.map((h) => (

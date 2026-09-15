@@ -47,7 +47,7 @@ export default function ExtractionPreviewModal({
     try {
       const response = await fetch("/api/fears");
       if (response.status === 401) {
-        setSavedFearsError("Please sign in again to load your saved fears.");
+        setSavedFearsError("Please sign in to view your saved fears.");
         return;
       }
       if (!response.ok) throw new Error("Could not load saved fears");
@@ -56,7 +56,7 @@ export default function ExtractionPreviewModal({
       setSavedFears(data.fears);
       setSavedFearsError(null);
     } catch {
-      setSavedFearsError("Could not load saved fears. Please try again.");
+      setSavedFearsError("We couldn’t load your saved fears. You can try again.");
     } finally {
       setIsLoadingSavedFears(false);
     }
@@ -124,7 +124,7 @@ export default function ExtractionPreviewModal({
         </div>
 
         <div className="flex flex-col gap-3 border-t border-subtle/60 pt-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-2xs text-muted">Only save what feels accurate.</p>
+          <p className="text-2xs text-muted">A brief description is enough. You can edit saved fears later.</p>
 
           <div className="flex w-full flex-col-reverse gap-2 sm:w-auto sm:flex-row">
             <button

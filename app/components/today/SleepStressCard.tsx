@@ -77,7 +77,7 @@ export default function SleepStressCard() {
       </div>
 
       <p className="text-xs text-muted">
-        {isSleep ? "Hours of sleep per night" : "Stress level out of 10"}
+        {isSleep ? "Example week: hours of sleep per night" : "Example week: stress level out of 10"}
       </p>
     </div>
   );

@@ -24,20 +24,20 @@ function renderCatalog({ catalog }: { catalog: CatalogFear[] }): string {
 export async function POST(request: Request) {
   const session = await checkSession();
   if (!session) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
+    return Response.json({ error: "Please sign in to continue." }, { status: 401 });
   }
 
   let body: unknown;
   try {
     body = await request.json();
   } catch {
-    return Response.json({ error: "Invalid JSON body" }, { status: 400 });
+    return Response.json({ error: "We couldn’t read this request. You can try again." }, { status: 400 });
   }
 
   const parsed = ExtractRequestSchema.safeParse(body);
   if (!parsed.success) {
     return Response.json(
-      { error: "Invalid request", details: parsed.error.flatten() },
+      { error: "We couldn’t use these details. Please review your entry.", details: parsed.error.flatten() },
       { status: 400 }
     );
   }
@@ -57,7 +57,7 @@ export async function POST(request: Request) {
     });
     extraction = object;
   } catch {
-    return Response.json({ error: "Extraction failed" }, { status: 502 });
+    return Response.json({ error: "We couldn’t process your entry. You can try again." }, { status: 502 });
   }
 
   const byId = new Map(catalog.map((fear) => [fear.id, fear]));

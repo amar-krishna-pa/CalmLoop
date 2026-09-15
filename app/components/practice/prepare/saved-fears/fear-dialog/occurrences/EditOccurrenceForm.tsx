@@ -55,6 +55,7 @@ export default function EditOccurrenceForm({ occurrence, onDiscard }: Props) {
 
       <div className="shrink-0 space-y-3">
         <HorizontalDivider />
+        <p className="text-xs text-muted">Saving entry changes is not available yet.</p>
 
         <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
           <button

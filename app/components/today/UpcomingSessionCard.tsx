@@ -1,5 +1,6 @@
 import { LuCalendar, LuClock, LuUser } from "react-icons/lu";
 
+      <p className="text-xs text-muted">Example appointment. Session booking is not available yet.</p>
 const PLACEHOLDER_SESSION = {
   therapistName: "Dr. Sarah Okonkwo",
   date: "Tuesday, July 1",

@@ -11,7 +11,7 @@ type StaticStat = {
 };
 
 const STATIC_STATS: StaticStat[] = [
-  { label: "ERP sessions", value: "—", sub: "this month" },
+  { label: "Practice sessions", value: "—", sub: "this month" },
   { label: "Thought records", value: "—", sub: "this month" },
   { label: "Mood logs", value: "—", sub: "this month" },
 ];
@@ -33,7 +33,7 @@ export default function ProgressCard() {
   return (
     <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-primary">Your Progress</h2>
+        <h2 className="text-sm font-semibold text-primary">Your activity</h2>
         <span className="text-xs text-muted">
           {new Date().toLocaleDateString("en-US", {
             month: "long",
@@ -42,10 +42,11 @@ export default function ProgressCard() {
         </span>
       </div>
 
+      <p className="text-xs text-muted">Breaks are part of life. This count does not measure your progress.</p>
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-surface border border-subtle rounded-lg p-3">
           {streak === null && error ? (
-            <p className="h-8 text-2xl leading-8 text-muted" aria-label="Streak unavailable">—</p>
+            <p className="h-8 text-2xl leading-8 text-muted" aria-label="We couldn’t load your activity">—</p>
           ) : streak === null ? (
             <Skeleton className="h-8 w-12" />
           ) : (
@@ -53,7 +54,7 @@ export default function ProgressCard() {
           )}
           <p className="text-xs text-muted mt-0.5">days</p>
           <p className="text-xs text-primary mt-1 font-medium">
-            Current streak
+            Consecutive active days
           </p>
         </div>
 

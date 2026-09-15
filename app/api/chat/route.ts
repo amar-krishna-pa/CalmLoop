@@ -18,7 +18,7 @@ const groq = createGroq({ apiKey: process.env.GROQ_API_KEY });
 async function generateSessionTitle(firstMessage: string): Promise<string> {
   const { text } = await generateText({
     model: groq("llama-3.1-8b-instant"),
-    prompt: `Generate a short title (3-5 words) for a supportive chat about OCD and anxiety based on this opening message. Return only the title text, nothing else.\n\nMessage: ${firstMessage}`,
+    prompt: `Generate a short title (3-5 words) for a chat about OCD and anxiety based on this opening message. Use plain, neutral language and sentence case. Do not diagnose, judge, reassure, use alarming labels, or add exclamation points. Return only the title text.\n\nMessage: ${firstMessage}`,
     maxOutputTokens: 20,
   });
   return text.trim();
@@ -27,7 +27,7 @@ async function generateSessionTitle(firstMessage: string): Promise<string> {
 export async function POST(request: Request) {
   const session = await checkSession();
   if (!session) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
+    return Response.json({ error: "Please sign in to continue." }, { status: 401 });
   }
 
   const userId = session.user.id;
@@ -36,13 +36,13 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return Response.json({ error: "Invalid JSON body" }, { status: 400 });
+    return Response.json({ error: "We couldn’t read this request. You can try again." }, { status: 400 });
   }
 
   const parsed = ChatRequestSchema.safeParse(body);
   if (!parsed.success) {
     return Response.json(
-      { error: "Invalid request", details: parsed.error.flatten() },
+      { error: "We couldn’t use these details. Please review your entry.", details: parsed.error.flatten() },
       { status: 400 }
     );
   }
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
 
     if (existing) {
       if (existing.userId !== userId) {
-        return Response.json({ error: "Forbidden" }, { status: 403 });
+        return Response.json({ error: "This chat isn’t available." }, { status: 403 });
       }
     } else {
       const title = await generateSessionTitle(latestUserMessageContent).catch(
@@ -80,7 +80,7 @@ export async function POST(request: Request) {
     }
   } catch (err) {
     console.error("Failed to resolve chat session:", err);
-    return Response.json({ error: "Internal server error" }, { status: 500 });
+    return Response.json({ error: "We couldn’t process your message. You can try again." }, { status: 500 });
   }
 
   try {
@@ -91,7 +91,7 @@ export async function POST(request: Request) {
     });
   } catch (err) {
     console.error("Failed to save user message:", err);
-    return Response.json({ error: "Internal server error" }, { status: 500 });
+    return Response.json({ error: "We couldn’t process your message. You can try again." }, { status: 500 });
   }
 
   await maybeUpdateStreak({ user: session.user });
@@ -117,7 +117,7 @@ export async function POST(request: Request) {
   } catch (err) {
     console.error("Groq streaming failed:", err);
     return Response.json(
-      { error: "Failed to generate response" },
+      { error: "We couldn’t generate a response. You can try again." },
       { status: 502 }
     );
   }

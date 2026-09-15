@@ -10,7 +10,7 @@ export default function ChatDemoSection() {
             <span className="w-3 h-3 rounded-full bg-[#28c840]" />
           </div>
           <div className="text-xs text-muted font-medium">
-            CalmLoop Reflection Assistant
+            Example conversation
           </div>
           <div className="w-10" /> {/* Spacer */}
         </div>
@@ -25,10 +25,10 @@ export default function ChatDemoSection() {
             <div className="bg-surface/50 border border-subtle rounded-xl rounded-tl-none p-5 flex-1">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-xs font-semibold text-muted">
-                  Intrusive Thought & Compulsion
+                  What someone might share
                 </span>
                 <span className="text-2xs bg-warning-bg text-warning-text px-2 py-0.5 rounded-full font-medium">
-                  Spike
+                  Doubt
                 </span>
               </div>
               <p className="text-sm md:text-base leading-relaxed">
@@ -48,27 +48,21 @@ export default function ChatDemoSection() {
             <div className="bg-accent/5 dark:bg-accent/10 border border-accent/20 rounded-xl rounded-tr-none p-5 flex-1">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-xs font-semibold text-accent">
-                  CalmLoop ERP Response
+                  CalmLoop response
                 </span>
                 <span className="text-2xs bg-accent/20 text-accent dark:text-accent px-2 py-0.5 rounded-full font-medium">
-                  Exposure
+                  Reflection
                 </span>
               </div>
               <p className="text-sm md:text-base leading-relaxed mb-4">
-                It sounds like the anxiety is urging you to seek 100% certainty.
-                Checking the door again might make the anxiety drop temporarily,
-                but it keeps the checking loop alive.
+                That doubt sounds hard to leave unresolved. Checking again may bring brief relief, while leaving you wanting another check.
               </p>
               <div className="border-t border-accent/20 pt-3">
                 <p className="text-xs font-semibold text-accent uppercase tracking-wider mb-1">
-                  Recommended Response Action:
+                  One possible next step
                 </p>
                 <p className="text-sm italic text-muted">
-                  &quot;Can you try to move forward with your day while letting
-                  the feeling of uncertainty ride along in the passenger seat?
-                  State to yourself: &apos;Maybe the door is unlocked, maybe it
-                  isn&apos;t. I am going to choose to trust my memory and let
-                  the anxiety sit.&apos;&quot;
+                  You could return to one part of your day while leaving the doubt unanswered. You do not need to feel certain first.
                 </p>
               </div>
             </div>

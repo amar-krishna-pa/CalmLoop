@@ -4,12 +4,12 @@ type Exercise = {
 };
 
 const EXERCISES: Exercise[] = [
-  { name: "5-4-3-2-1", desc: "Ground yourself using your 5 senses" },
+  { name: "5-4-3-2-1", desc: "Notice what you can see, hear, feel, smell or taste" },
   { name: "Box Breathing", desc: "Inhale, hold, exhale, hold — 4 counts each" },
-  { name: "Body Scan", desc: "Slowly scan tension from head to toe" },
+  { name: "Body Scan", desc: "Notice how your body feels, without needing to change it" },
   { name: "Cold Water", desc: "Splash cold water on your face or wrists" },
-  { name: "Safe Place", desc: "Visualize a calm, safe environment" },
-  { name: "Muscle Relax", desc: "Tense and release each muscle group" },
+  { name: "Imagining a place", desc: "Picture a familiar place and notice its details" },
+  { name: "Muscle relaxation", desc: "Tense and release each muscle group" },
 ];
 
 export default function GroundingExercisesCard() {

@@ -48,6 +48,10 @@ export default function SafetyBehavioursEditor({
         </button>
       </div>
 
+      <p className="mb-2 text-xs text-muted">
+        Things you do to feel more certain or reduce anxiety, such as repeated
+        checking. You can leave this blank if none came up.
+      </p>
       <div className="relative">
         <AnimatePresence initial={false} mode="popLayout">
           {behaviours.length === 0 ? (
@@ -58,7 +62,7 @@ export default function SafetyBehavioursEditor({
               exit={{ opacity: 0 }}
             >
               <p className="mb-2 flex h-10 items-center text-xs text-muted">
-                No safety behaviours added
+                No safety behaviours added yet
               </p>
             </motion.div>
           ) : (

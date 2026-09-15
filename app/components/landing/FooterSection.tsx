@@ -5,8 +5,7 @@ export default function FooterSection() {
         <div>
           <p className="font-bold text-sm text-primary mb-1">CalmLoop</p>
           <p>
-            © {new Date().getFullYear()} CalmLoop. Grounded in ERP & ACT
-            principles.
+            © {new Date().getFullYear()} CalmLoop. Reflection and practice at your pace.
           </p>
         </div>
 

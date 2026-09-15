@@ -93,13 +93,13 @@ export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad
               {isLoading ? "Loading saved fears…" : error}
             </ComboboxStatus>
             {error && (
-              <button type="button" onClick={onLoad} disabled={isLoading} aria-label="Retry loading saved fears" className="flex min-h-8 w-full items-center justify-center text-2xs text-accent disabled:opacity-60">
-                {isLoading ? <LoadingSpinner /> : "Retry loading saved fears"}
+              <button type="button" onClick={onLoad} disabled={isLoading} aria-label="Try loading saved fears again" className="flex min-h-8 w-full items-center justify-center text-2xs text-accent disabled:opacity-60">
+                {isLoading ? <LoadingSpinner /> : "Try again"}
               </button>
             )}
             {!isLoading && !error && savedFears !== null && (
               <ComboboxEmpty className="py-2 text-xs font-normal text-muted">
-                {savedFears.length === 0 ? "No saved fears yet." : "No fears match your search."}
+                {savedFears.length === 0 ? "No saved fears yet." : "No matching fears. You can try another word."}
               </ComboboxEmpty>
             )}
             <ComboboxList>

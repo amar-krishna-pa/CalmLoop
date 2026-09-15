@@ -19,25 +19,25 @@ export async function PATCH(
 ) {
   const session = await checkSession();
   if (!session) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
+    return Response.json({ error: "Please sign in to continue." }, { status: 401 });
   }
 
   const parsedParams = ParamsSchema.safeParse(await params);
   if (!parsedParams.success) {
-    return Response.json({ error: "Occurrence not found" }, { status: 404 });
+    return Response.json({ error: "This entry isn’t available." }, { status: 404 });
   }
 
   let body: unknown;
   try {
     body = await request.json();
   } catch {
-    return Response.json({ error: "Invalid JSON body" }, { status: 400 });
+    return Response.json({ error: "We couldn’t read this request. You can try again." }, { status: 400 });
   }
 
   const parsed = UpdateOccurrenceSchema.safeParse(body);
   if (!parsed.success) {
     return Response.json(
-      { error: "Invalid request", details: parsed.error.flatten() },
+      { error: "We couldn’t use these details. Please review your entry.", details: parsed.error.flatten() },
       { status: 400 },
     );
   }
@@ -65,7 +65,7 @@ export async function PATCH(
     });
 
   if (!updated) {
-    return Response.json({ error: "Occurrence not found" }, { status: 404 });
+    return Response.json({ error: "This entry isn’t available." }, { status: 404 });
   }
 
   await maybeUpdateStreak({ user: session.user });

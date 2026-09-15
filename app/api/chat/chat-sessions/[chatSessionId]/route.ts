@@ -9,14 +9,14 @@ export async function PATCH(
 ) {
   const session = await checkSession();
   if (!session) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
+    return Response.json({ error: "Please sign in to continue." }, { status: 401 });
   }
 
   const { chatSessionId } = await params;
   const { title } = await request.json();
 
   if (typeof title !== "string" || title.trim().length === 0) {
-    return Response.json({ error: "Invalid title" }, { status: 400 });
+    return Response.json({ error: "A chat title needs at least one character." }, { status: 400 });
   }
 
   const [updated] = await db
@@ -31,7 +31,7 @@ export async function PATCH(
     .returning({ id: chatSessions.id, title: chatSessions.title });
 
   if (!updated) {
-    return Response.json({ error: "Not found" }, { status: 404 });
+    return Response.json({ error: "This chat isn’t available." }, { status: 404 });
   }
 
   return Response.json({ session: updated });

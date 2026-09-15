@@ -47,7 +47,7 @@ export default function MoodTrackerCard() {
       </div>
 
       <div>
-        <p className="text-xs text-muted mb-2">This week</p>
+        <p className="text-xs text-muted mb-2">Example week. Mood selections are not saved yet.</p>
         <div className="flex items-end gap-1.5 h-10">
           {RECENT.map((r) => (
             <div key={r.day} className="flex-1 flex flex-col items-center gap-1">

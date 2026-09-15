@@ -11,23 +11,23 @@ const features: Feature[] = [
   {
     icon: LuSunMedium,
     label: "Today",
-    title: "Daily Check-in",
+    title: "A place to check in",
     description:
-      "Track your mood, sleep, stress, and medication each day. A consistent check-in builds the self-awareness that makes ERP work.",
+      "A view of mood, sleep, stress and medication. These tools are being developed; some cards show examples.",
   },
   {
     icon: LuClipboardList,
     label: "Practice",
-    title: "Structured ERP Tools",
+    title: "Tools for practice",
     description:
-      "Map your fear hierarchy, log exposures, challenge intrusive thoughts, and plan for setbacks — all grounded in ERP and ACT.",
+      "Describe situations that bring up anxiety and save them for practice. You can begin with one.",
   },
   {
     icon: LuMessageSquare,
     label: "Chat",
-    title: "AI Reflection Assistant",
+    title: "AI reflection",
     description:
-      "An AI companion that responds with ERP and ACT-grounded guidance whenever anxiety spikes — not reassurance, but honest support.",
+      "Space to talk about what is coming up and consider a next step. AI responses can make mistakes.",
   },
 ];
 
@@ -36,14 +36,13 @@ export default function FeaturesSection() {
     <section id="how-it-works" className="mx-auto max-w-7xl px-6 py-24">
       <div className="mb-16 text-center max-w-3xl mx-auto">
         <span className="text-xs font-semibold uppercase tracking-widest text-accent">
-          Built for growth
+          At your pace
         </span>
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight mt-3">
-          Designed for reflection, not reassurance
+          Space to reflect
         </h2>
         <p className="mt-4 text-muted text-base">
-          Compulsions seek certainty, which feeds the loop. CalmLoop helps you
-          lean into uncertainty and build lasting resilience.
+          You can explore what matters to you without needing to settle every doubt.
         </p>
       </div>
 

@@ -59,12 +59,12 @@ export default function EditFearForm({
       if (!response.ok) {
         setError(
           response.status === 401
-            ? "Please sign in again, then retry saving."
+            ? "Please sign in to save your changes."
             : response.status === 404
-              ? "This fear is no longer available. Copy your changes, then close and refresh the page."
+              ? "This fear isn’t available. You can copy your draft before closing this window."
               : response.status === 400
-                ? "Check the name and safety behaviours are 1–120 characters, then save again."
-                : "Could not save your changes. Please try Save changes again.",
+                ? "The name and each safety behaviour need 1–120 characters."
+                : "We couldn’t save your changes. Your draft is still here.",
         );
         return;
       }
@@ -76,7 +76,7 @@ export default function EditFearForm({
       onSaved({ fear: updated });
     } catch {
       setError(
-        "Could not confirm the save. Your draft is still here; please try Save changes again.",
+        "We couldn’t confirm whether your changes were saved. Your draft is still here.",
       );
     } finally {
       savingRef.current = false;
@@ -149,8 +149,7 @@ export default function EditFearForm({
 
           {!savePayload.success && (
             <p className="text-xs text-muted">
-              Use 1–120 characters for the name and each safety behaviour. Remove
-              any empty behaviours.
+              The name and each safety behaviour need 1–120 characters. You can remove unused rows.
             </p>
           )}
         </div>

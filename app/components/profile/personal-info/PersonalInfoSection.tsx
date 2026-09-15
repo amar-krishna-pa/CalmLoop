@@ -10,7 +10,7 @@ export default function PersonalInfoSection({ name, email }: Props) {
   return (
     <section className="mb-10">
       <h2 className="text-base font-semibold text-primary mb-4">
-        Personal Info
+        Personal information
       </h2>
       <div className="rounded-xl border border-subtle">
         <EditNameField initialName={name} />

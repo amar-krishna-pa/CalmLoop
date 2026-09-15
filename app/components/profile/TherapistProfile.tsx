@@ -21,7 +21,7 @@ export default function TherapistProfile({ user }: Props) {
 
       <section className="mb-10">
         <h2 className="text-base font-semibold text-primary mb-4">
-          Professional Info
+          Professional information
         </h2>
         <div className="rounded-xl border border-subtle">
           {/* therapist-specific fields (bio, specialties, license) go here */}

@@ -4,17 +4,17 @@ export default function HeroSection() {
       {/* Shimmer Badge */}
       <div className="mb-6 rounded-full border border-subtle bg-surface px-4 py-1.5 text-xs font-semibold text-muted tracking-wide flex items-center gap-2 hover:scale-[1.02] transition-transform duration-300">
         <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-        AI-powered companion for OCD & Anxiety
+        AI-supported reflection for OCD and anxiety
       </div>
 
       <h1 className="max-w-4xl text-5xl font-extrabold tracking-tight md:text-7xl lg:text-8xl leading-tight">
-        Break the loop.
+        Room for uncertainty.
         <br />
-        <span className="text-accent">Respond differently.</span>
+        <span className="text-accent">Space for your life.</span>
       </h1>
 
       <p className="mt-8 max-w-2xl text-base md:text-lg text-muted font-normal leading-relaxed">
-        CalmLoop helps you recognize OCD and anxiety patterns, reflect on them through guided AI conversations, and practise response prevention using ERP and ACT guidelines.
+        CalmLoop offers a place to describe what comes up, notice patterns and explore ways to respond. A short entry is enough to begin.
       </p>
 
       <div className="mt-10 flex flex-col gap-4 sm:flex-row items-center justify-center w-full">
@@ -22,7 +22,7 @@ export default function HeroSection() {
           href="/signup"
           className="btn-accent flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg shadow-md hover:shadow-lg transition-all"
         >
-          Start Reflecting — Free
+          Create a free account
           <svg
             className="w-4 h-4"
             fill="none"
@@ -48,7 +48,7 @@ export default function HeroSection() {
       </div>
 
       <p className="text-xs text-muted mt-5">
-        No credit card required. Fully encrypted & secure.
+        You can explore at your own pace.
       </p>
     </section>
   );

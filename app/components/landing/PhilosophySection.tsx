@@ -5,16 +5,13 @@ export default function PhilosophySection() {
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <div>
             <span className="text-xs font-semibold uppercase tracking-widest text-accent">
-              The Philosophy
+              Our approach
             </span>
             <h2 className="text-3xl font-bold tracking-tight mt-3">
-              Understanding the Loop
+              Understanding the loop
             </h2>
             <p className="mt-4 text-muted text-sm leading-relaxed">
-              Traditional venting-style approaches often encourage reassurance-seeking, which can lead to
-              reassurance-seeking or over-analyzing intrusive thoughts. CalmLoop
-              teaches your brain to treat thoughts as just thoughts, allowing you
-              to focus your energy back on your life values.
+              OCD can bring a strong urge to resolve a doubt. CalmLoop offers space to notice that urge and consider what you want to do next.
             </p>
           </div>
 
@@ -24,10 +21,9 @@ export default function PhilosophySection() {
                 ✕
               </div>
               <div>
-                <h4 className="font-bold text-sm">Reassurance & Checking</h4>
+                <h4 className="font-bold text-sm">Repeated checking</h4>
                 <p className="text-xs text-muted mt-1">
-                  Gives temporary safety but feeds the anxiety loop, causing
-                  spikes to return faster and more intensely.
+                  Checking or asking for reassurance may bring brief relief. The doubt can return.
                 </p>
               </div>
             </div>
@@ -38,11 +34,10 @@ export default function PhilosophySection() {
               </div>
               <div>
                 <h4 className="font-bold text-sm text-accent">
-                  Uncertainty Tolerance
+                  Making room for uncertainty
                 </h4>
                 <p className="text-xs text-muted mt-1">
-                  Accepting uncertainty allows the anxious spike to peak and
-                  naturally decay, desensitizing your brain.
+                  Practice can involve leaving a doubt unresolved while doing something that matters to you.
                 </p>
               </div>
             </div>

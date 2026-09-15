@@ -17,6 +17,41 @@ pnpm drizzle-kit studio     # Open Drizzle Studio (DB browser)
 
 No test suite exists yet. There is no `pnpm test` command.
 
+## User-facing copy
+
+Apply this tone to all new or edited text: empty states, errors, validation,
+buttons, loading labels, accessibility labels, notifications, onboarding,
+marketing, educational content and AI-generated responses.
+
+- Use plain language, short sentences and sentence case. Explain therapy terms
+  where they first appear in a flow; do not assume the user visited Learn.
+- Be warm and steady. Avoid slogans, exaggerated praise, exclamation points,
+  urgency, commands to act now, and promises of relief or recovery.
+- Lower the effort to begin where useful: one entry can be enough. Do not imply
+  someone must finish a list, feel ready, or record everything. Do not add
+  permission-giving filler to every label.
+- Empty states describe what will appear: “No entries yet. Saved entries will
+  appear here.” Avoid judgmental headlines such as “Incomplete” or “Missing”.
+- Errors state what happened and one available next step: “We couldn’t load your
+  saved fears. You can try again.” Keep validation specific to the field.
+  Do not claim a session expired or data was saved, retained or lost without evidence.
+- Avoid reassurance about feared outcomes, safety, character or certainty. Do
+  not invite repeated checking, require perfect accuracy or promise anxiety will fade.
+- Keep action labels brief and literal: “Save entry”, “Try again”, “Cancel”.
+  Navigation must name the actual destination in a link or bold text and explain
+  its purpose. Do not imply a navigation link saves or transfers data.
+- Match accessible names, loading states and visible labels to the same vocabulary.
+- Keep urgent emergency instructions direct. Check contact details against the
+  provider before changing them. Do not soften essential safety information.
+- Describe only implemented behavior. Identify example data and unfinished tools;
+  do not promise privacy, availability or treatment outcomes without evidence.
+- Do not rewrite user-authored entries or stored enum values to enforce tone.
+  Use original reflections rather than altering quotations attributed to others.
+- AI prompt instructions and examples must follow these rules too. Updating a
+  prompt does not guarantee every generated response will follow the standard.
+
+See `docs/copy-review.md` for the review, examples and remaining functional gaps.
+
 ## Architecture
 
 ### Route groups

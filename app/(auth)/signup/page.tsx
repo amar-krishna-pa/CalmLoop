@@ -16,11 +16,11 @@ export default function SignUpPage() {
     try {
       const { error } = await authClient.signIn.social({ provider: "google" });
       if (error) {
-        toast.error("Failed to sign up with Google");
+        toast.error("We couldn’t create your account with Google. You can try again.");
       }
     } catch (err) {
       console.error(err);
-      toast.error("Failed to sign up with Google");
+      toast.error("We couldn’t create your account with Google. You can try again.");
     } finally {
       setLoading(null);
     }
@@ -37,7 +37,7 @@ export default function SignUpPage() {
           </h1>
 
           <p className="text-sm text-muted mb-8 text-center">
-            Start your practice for free. No credit card required.
+            Create a free account. You can explore at your own pace.
           </p>
 
           <div className="flex flex-col gap-3 mb-6 items-center justify-center">

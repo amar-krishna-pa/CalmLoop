@@ -48,8 +48,8 @@ export default function SavedFearsCard() {
         if (!response.ok) {
           throw new Error(
             response.status === 401
-              ? "Please sign in again to load your saved fears."
-              : "Could not load your saved fears. Please try again.",
+              ? "Please sign in to view your saved fears."
+              : "We couldn’t load your saved fears. You can try again.",
           );
         }
 
@@ -64,7 +64,7 @@ export default function SavedFearsCard() {
           setError(
             error instanceof Error && error.message.startsWith("Please sign in")
               ? error.message
-              : "Could not load your saved fears. Please try again.",
+              : "We couldn’t load your saved fears. You can try again.",
           );
         }
       }
@@ -140,8 +140,8 @@ export default function SavedFearsCard() {
             </p>
 
             <p className="max-w-sm text-xs text-muted">
-              Describe what you went through above, then review and save your
-              entry.
+              You can describe a situation above and save your entry. Even one is
+              enough to get started.
             </p>
           </div>
         ) : (
@@ -171,8 +171,8 @@ export default function SavedFearsCard() {
                   exit={{ opacity: 0 }}
                   className="text-sm text-muted"
                 >
-                  No saved fears match this theme. Choose another theme or All
-                  themes.
+                  Nothing to show for this theme yet. You can choose another
+                  theme or All themes.
                 </motion.li>
               )}
             </AnimatePresence>

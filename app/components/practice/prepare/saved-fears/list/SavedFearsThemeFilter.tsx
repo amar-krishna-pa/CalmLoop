@@ -69,7 +69,7 @@ export default function SavedFearsThemeFilter({
           </ComboboxTrigger>
         </div>
         <ComboboxContent anchor={anchorRef}>
-          <ComboboxEmpty>No themes match your search.</ComboboxEmpty>
+          <ComboboxEmpty>No matching themes. You can try another word.</ComboboxEmpty>
           <ComboboxList className="max-h-48 overflow-y-auto">
             {(theme: string) => (
               <Fragment key={theme}>

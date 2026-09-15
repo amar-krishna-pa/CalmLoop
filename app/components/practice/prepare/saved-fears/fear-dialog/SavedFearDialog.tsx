@@ -24,7 +24,7 @@ export default function SavedFearDialog({ fear, onClose, onSaved }: Props) {
 
   return (
     <Modal
-      title={view === "occurrence" ? "Edit occurrence" : view === "edit" ? "Edit fear" : "Fear details"}
+      title={view === "occurrence" ? "Edit entry" : view === "edit" ? "Edit fear" : "Fear details"}
       onClose={() => {
         if (savingRef.current) return;
 

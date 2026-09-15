@@ -16,17 +16,17 @@ const TABS: { id: Tab; label: string; sublabel: string }[] = [
   {
     id: "prepare",
     label: "Prepare",
-    sublabel: "Map triggers & safety behaviours",
+    sublabel: "Map out triggers and responses",
   },
   {
     id: "exposures",
     label: "Exposures",
-    sublabel: "Log exposures & test predictions",
+    sublabel: "Explore situations to practise",
   },
   {
     id: "maintain",
     label: "Maintain",
-    sublabel: "Homework & relapse planning",
+    sublabel: "Plan practice and support",
   },
 ];
 

@@ -40,10 +40,13 @@ export default function ThemeSelector({
               isExpanded && "rotate-180",
             )}
           />
-          {isExpanded ? "Collapse themes" : "Show all themes"}
+          {isExpanded ? "Hide themes" : "Show all themes"}
         </button>
       </div>
 
+      <p className="mb-2 text-xs text-muted">
+        Themes describe what a fear is about. They are optional.
+      </p>
       <div className="relative flex flex-wrap gap-2">
         <AnimatePresence initial={false} mode="popLayout">
           {selectedThemes.map((theme) => (
@@ -70,7 +73,7 @@ export default function ThemeSelector({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              No themes selected
+              No themes selected yet
             </motion.span>
           )}
         </AnimatePresence>

@@ -1,4 +1,4 @@
-export const EXTRACTION_PROMPT_VERSION = "v7";
+export const EXTRACTION_PROMPT_VERSION = "v8";
 
 export const EXTRACTION_PROMPT = `You extract structure from a single entry someone with OCD has written about something they went through.
 
@@ -7,6 +7,12 @@ comment on what they wrote. You return structured data and nothing else. Anythin
 would reach the user as reassurance, which feeds OCD — so there is no prose channel at all.
 
 ## What you are pulling out
+
+Names and behaviour labels appear directly in the app. Use short, everyday,
+neutral descriptions. Avoid clinical jargon, judgment, alarming labels, commands,
+reassurance, or promises about outcomes. Do not impose completion or accuracy
+requirements. Preserve evidence in the person's exact words; do not rewrite
+quotations or change the supplied themes to enforce tone.
 
 **Fear** — the feared situation, phrased as a situation the person could face again.
 

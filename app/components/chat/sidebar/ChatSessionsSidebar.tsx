@@ -103,7 +103,7 @@ export default function ChatSessionsSidebar({ currentSessionId }: Props) {
             {chatSessions.length===0? (
               <PresenceFade key="empty">
                 <p className="text-xs text-muted text-center mt-8 px-3">
-                  No past sessions yet.
+                  No chats yet. Your conversations will appear here.
                 </p>
               </PresenceFade>
             ):(

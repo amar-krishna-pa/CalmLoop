@@ -6,11 +6,10 @@ export default function AuthHeroPanel() {
       <div className="absolute inset-0 flex items-center justify-center px-12 z-10">
         <div className="max-w-md">
           <blockquote className="text-2xl font-bold tracking-tight leading-snug mb-4">
-            "You don't need certainty to move forward."
+            A small step can leave room for uncertainty.
           </blockquote>
           <p className="text-sm text-muted">
-            — Grounded in Exposure & Response Prevention (ERP) and Acceptance &
-            Commitment Therapy (ACT).
+            A space to reflect on what comes up and explore ways to respond.
           </p>
         </div>
       </div>

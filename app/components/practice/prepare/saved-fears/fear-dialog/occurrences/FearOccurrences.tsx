@@ -35,8 +35,8 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
         if (!response.ok) {
           throw new Error(
             response.status === 401
-              ? "Please sign in again to load occurrences."
-              : "Could not load occurrences. Please try again.",
+              ? "Please sign in to view past entries."
+              : "We couldn’t load past entries. You can try again.",
           );
         }
 
@@ -50,7 +50,7 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
           setError(
             error instanceof Error && error.message.startsWith("Please sign in")
               ? error.message
-              : "Could not load occurrences. Please try again.",
+              : "We couldn’t load past entries. You can try again.",
           );
         }
       }
@@ -64,8 +64,8 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
   }, [fearId, attempt]);
 
   return (
-    <section className="space-y-1" aria-label="Occurrences">
-      <h3 className="text-xs font-medium text-primary">Occurrences</h3>
+    <section className="space-y-1" aria-label="Past entries">
+      <h3 className="text-xs font-medium text-primary">Past entries</h3>
       <div className="min-h-52">
       {error ? (
         <div className="space-y-2">
@@ -76,7 +76,7 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
             type="button"
             className="btn-accent flex h-8 min-w-24 items-center justify-center cursor-pointer px-3 py-0"
             disabled={isRetrying}
-            aria-label="Retry loading occurrences"
+            aria-label="Try loading past entries again"
             onClick={() => {
               setIsRetrying(true);
               setAttempt((current) => current + 1);
@@ -88,7 +88,9 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
       ) : occurrences === null ? (
         <FearOccurrencesLoader />
       ) : occurrences.length === 0 ? (
-        <p className="text-sm text-muted">No occurrences found.</p>
+        <p className="text-sm text-muted">
+          No past entries yet. Entries connected to this fear will appear here.
+        </p>
       ) : (
         <ol className="space-y-5">
           {occurrences.map((occurrence) => (
@@ -108,7 +110,7 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
                   <button
                     type="button"
                     onClick={() => onEdit({ occurrence })}
-                    aria-label="Edit occurrence"
+                    aria-label="Edit entry"
                     className="cursor-pointer rounded-lg py-1 text-sm font-medium text-accent transition-opacity duration-fast hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   >
                     Edit
@@ -118,10 +120,10 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
 
                   <Link
                     href="/practice?tab=exposures"
-                    aria-label="Practise occurrence"
+                    aria-label="Go to Exposures to view practice situations"
                     className="cursor-pointer rounded-lg py-1 text-sm font-medium text-accent transition-opacity duration-fast hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   >
-                    Practise
+                    View Exposures
                   </Link>
                 </div>
               </div>

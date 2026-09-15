@@ -5,6 +5,7 @@ type MedicationLog = {
   note: string | null;
 };
 
+      <p className="text-xs text-muted">Example log. Medication logging is not available yet.</p>
 type Medication = {
   name: string;
   dose: string;
@@ -40,7 +41,7 @@ export default function MedicationTrackerCard() {
         </div>
         <div className="text-right">
           <p className="text-lg font-bold text-accent">{adherencePercent}%</p>
-          <p className="text-2xs text-muted">adherence</p>
+          <p className="text-2xs text-muted">recorded as taken</p>
         </div>
       </div>
 
@@ -68,7 +69,7 @@ export default function MedicationTrackerCard() {
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between gap-2">
                 <p className={`text-sm ${log.taken ? "text-primary" : "text-muted"}`}>
-                  {log.taken ? "Taken" : "Missed"}
+                  {log.taken ? "Taken" : "Not taken"}
                 </p>
                 <span className="text-xs text-muted shrink-0">{log.date}</span>
               </div>

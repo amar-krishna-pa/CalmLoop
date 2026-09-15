@@ -6,8 +6,8 @@ type Subtype = {
 const SUBTYPES: Subtype[] = [
   { label: "Contamination", value: 72 },
   { label: "Checking", value: 58 },
-  { label: "Harm OCD", value: 45 },
-  { label: "Pure O", value: 38 },
+  { label: "Harm-related fears", value: 45 },
+  { label: "Mental rituals", value: 38 },
   { label: "Symmetry", value: 30 },
   { label: "Religious", value: 22 },
 ];
@@ -18,8 +18,8 @@ export default function OcdSubtypesCard() {
   return (
     <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-primary">OCD Subtypes</h2>
-        <span className="text-xs text-muted">Last 30 days</span>
+        <h2 className="text-sm font-semibold text-primary">OCD themes</h2>
+        <span className="text-xs text-muted">Example data</span>
       </div>
 
       <div className="space-y-3">

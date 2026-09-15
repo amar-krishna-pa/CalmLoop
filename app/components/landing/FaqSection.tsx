@@ -50,17 +50,17 @@ export default function FaqSection() {
     {
       question: "Is CalmLoop a replacement for professional therapy?",
       answer:
-        "No. CalmLoop is a self-reflection tool meant to support guided self-reflection and cognitive awareness. It is built on therapeutic models like ERP and ACT but does not provide clinical diagnosis, medical advice, or replacement for real human therapists.",
+        "No. CalmLoop offers reflection and practice tools. It does not diagnose conditions or replace care from a qualified professional.",
     },
     {
       question: "What are ERP and ACT?",
       answer:
-        "ERP (Exposure and Response Prevention) is the gold standard for OCD, focusing on facing anxiety triggers without performing safety behaviors (compulsions). ACT (Acceptance and Commitment Therapy) helps you accept uncomfortable feelings while taking action aligned with what you value most.",
+        "Exposure and response prevention (ERP) involves gradually facing feared situations while practising without compulsions, the actions you feel driven to repeat. Acceptance and commitment therapy (ACT) focuses on making room for difficult thoughts and feelings while acting on what matters to you.",
     },
     {
-      question: "How is my conversation data protected?",
+      question: "How are my entries used?",
       answer:
-        "We take data security very seriously. Your entries are stored securely and are never sold, shared with third parties, or used to train AI models. Your mental health thoughts are private, personal, and strictly yours.",
+        "Your chats and saved fears are stored with your account. Chat messages and entries submitted for fear extraction are sent to Groq to generate responses. Share only the details you want processed.",
     },
   ];
 
@@ -68,7 +68,7 @@ export default function FaqSection() {
     <section className="w-full mx-auto max-w-4xl px-6 py-24">
       <div className="text-center mb-12">
         <h2 className="text-3xl font-bold tracking-tight">
-          Frequently Asked Questions
+          Common questions
         </h2>
       </div>
 

@@ -14,53 +14,53 @@ const phases: Phase[] = [
   {
     number: "01",
     name: "Prepare",
-    tagline: "Map your triggers, fears & safety behaviours",
+    tagline: "Describe situations and how you respond",
     tools: [
       {
-        name: "Fear Hierarchy",
-        detail: "Rank feared situations by SUDS score (0–10 anxiety scale)",
+        name: "Saved fears",
+        detail: "Keep a list of situations you want to explore. One is enough to begin.",
       },
       {
-        name: "Trigger Log",
-        detail: "Record intrusive thoughts with situational context and anxiety level",
+        name: "Your entry",
+        detail: "Describe what happened and how distressing it felt.",
       },
       {
-        name: "Safety Behaviours",
-        detail: "Identify compulsions by category (reassurance, avoidance, checking) and frequency",
+        name: "Safety behaviours",
+        detail: "Note actions used to seek certainty or relief, such as repeated checking.",
       },
     ],
   },
   {
     number: "02",
-    name: "Practice",
-    tagline: "Log exposures, challenge thoughts & test predictions",
+    name: "Exposures",
+    tagline: "View situations you have saved for practice",
     tools: [
       {
-        name: "ERP Tracker",
-        detail: "Compare before vs. after anxiety across each exposure session",
+        name: "Practice situations",
+        detail: "See entries connected to your saved fears.",
       },
       {
-        name: "Thought Records",
-        detail: "Document intrusive thoughts, emotions, cognitive distortions & reframes",
+        name: "Your descriptions",
+        detail: "Read what you wrote about each situation.",
       },
       {
-        name: "Behavioural Experiments",
-        detail: "Test catastrophic predictions against what actually happens",
+        name: "Distress ratings",
+        detail: "See how distressing a situation felt on a scale from 0 to 10.",
       },
     ],
   },
   {
     number: "03",
-    name: "Plan",
-    tagline: "Structure homework & prepare for setbacks",
+    name: "Maintain",
+    tagline: "Explore examples of practice and support plans",
     tools: [
       {
-        name: "Therapist Homework",
-        detail: "Track assigned tasks with due dates and a completion checklist",
+        name: "Practice with your therapist",
+        detail: "Preview a list of practice tasks to discuss with a therapist.",
       },
       {
-        name: "Relapse Prevention",
-        detail: "Define your early warning signs and a personalised coping action plan",
+        name: "Planning for harder days",
+        detail: "Explore an example plan for changes you might notice and support you could use.",
       },
     ],
   },
@@ -71,15 +71,13 @@ export default function PracticeSection() {
     <section className="mx-auto max-w-7xl px-6 py-24">
       <div className="mb-16 text-center max-w-3xl mx-auto">
         <span className="text-xs font-semibold uppercase tracking-widest text-accent">
-          Your Practice Journey
+          Practice at your pace
         </span>
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight mt-3">
-          Eight practical tools, three phases
+          Three spaces to explore
         </h2>
         <p className="mt-4 text-muted text-base">
-          The Practice section walks you through building awareness first,
-          applying it in practice, then locking in long-term resilience — in
-          that order.
+          In <strong>Practice</strong>, you can map out situations, view saved entries and explore support plans. You can move between these spaces as needed.
         </p>
       </div>
 

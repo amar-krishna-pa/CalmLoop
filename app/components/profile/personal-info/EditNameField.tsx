@@ -39,14 +39,14 @@ export default function EditNameField({ initialName }: Props) {
     try {
       const { error }=await authClient.updateUser({ name: trimmed });
       if(error) {
-        toast.error("Failed to update name");
+        toast.error("We couldn’t update your name. You can try again.");
       } else {
         setName(trimmed);
         setEditing(false);
         toast.success("Name updated");
       }
     } catch {
-      toast.error("Failed to update name");
+      toast.error("We couldn’t update your name. You can try again.");
     } finally {
       setSaving(false);
     }

@@ -1,5 +1,6 @@
 "use client";
 
+      <p className="text-xs text-muted">Example conversations. <strong>New chat</strong> opens a space to talk about what is on your mind.</p>
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LuMessageSquare, LuPlus } from "react-icons/lu";

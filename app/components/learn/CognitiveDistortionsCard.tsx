@@ -14,7 +14,7 @@ const DISTORTIONS: Distortion[] = [
   },
   {
     name: "Overestimating threat",
-    desc: "Treating unlikely dangers as highly probable",
+    desc: "Feeling that a feared outcome is very likely",
   },
   {
     name: "All-or-nothing",
@@ -26,14 +26,14 @@ const DISTORTIONS: Distortion[] = [
   },
   {
     name: "Intolerance of uncertainty",
-    desc: "Needing to be 100% certain before feeling safe",
+    desc: "Feeling a need for certainty before moving on",
   },
 ];
 
 export default function CognitiveDistortionsCard() {
   return (
     <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4">
-      <h2 className="text-sm font-semibold text-primary">Cognitive Distortions</h2>
+      <h2 className="text-sm font-semibold text-primary">Thinking patterns</h2>
 
       <ul className="space-y-2">
         {DISTORTIONS.map((d) => (

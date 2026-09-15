@@ -28,16 +28,16 @@ export default function PasskeySection() {
       const { data: passkeys, error } =
         await authClient.passkey.listUserPasskeys();
       if (error) {
-        setLoadError("Could not load passkeys. Please try again.");
-        toast.error("Failed to load passkeys");
+        setLoadError("We couldn’t load your passkeys. You can try again.");
+        toast.error("We couldn’t load your passkeys. You can try again.");
       } else {
         setPasskeys(passkeys ?? []);
         setLoadError(null);
       }
     } catch (error) {
-      setLoadError("Could not load passkeys. Please try again.");
+      setLoadError("We couldn’t load your passkeys. You can try again.");
       console.log(error);
-      toast.error("Failed to load passkeys");
+      toast.error("We couldn’t load your passkeys. You can try again.");
     } finally {
       setLoadingPasskeys(false);
     }
@@ -48,11 +48,11 @@ export default function PasskeySection() {
     authClient.passkey.listUserPasskeys()
       .then(({ data, error }) => {
         if (!active) return;
-        if (error) setLoadError("Could not load passkeys. Please try again.");
+        if (error) setLoadError("We couldn’t load your passkeys. You can try again.");
         else setPasskeys(data ?? []);
       })
       .catch(() => {
-        if (active) setLoadError("Could not load passkeys. Please try again.");
+        if (active) setLoadError("We couldn’t load your passkeys. You can try again.");
       })
       .finally(() => {
         if (active) setLoadingPasskeys(false);
@@ -63,7 +63,7 @@ export default function PasskeySection() {
   async function handleAddPasskey() {
     if (!passkeyName.trim()) {
       setNameError(
-        "Please give this passkey a name so you can recognise it later."
+        "A name helps you recognise this passkey later. For example, My phone."
       );
       return;
     }
@@ -81,7 +81,7 @@ export default function PasskeySection() {
         ) {
           toast.error("This device is already registered as a passkey");
         } else {
-          toast.error("Failed to add passkey");
+          toast.error("We couldn’t add your passkey. You can try again.");
         }
       } else {
         toast.success("Passkey added");
@@ -90,7 +90,7 @@ export default function PasskeySection() {
       }
     } catch (err) {
       console.error(err);
-      toast.error("Failed to add passkey");
+      toast.error("We couldn’t add your passkey. You can try again.");
     } finally {
       setAddingPasskey(false);
     }
@@ -101,14 +101,14 @@ export default function PasskeySection() {
     try {
       const { error } = await authClient.passkey.deletePasskey({ id });
       if (error) {
-        toast.error("Failed to delete passkey");
+        toast.error("We couldn’t remove your passkey. You can try again.");
       } else {
         toast.success("Passkey removed");
         setPasskeys((prev) => prev?.filter((p) => p.id !== id) ?? null);
       }
     } catch (error) {
       console.log(error);
-      toast.error("Failed to delete passkey");
+      toast.error("We couldn’t remove your passkey. You can try again.");
     } finally {
       setDeletingId(null);
     }
@@ -119,7 +119,7 @@ export default function PasskeySection() {
       <div className="mb-3">
         <h2 className="text-base font-semibold text-primary">Passkeys</h2>
         <p className="text-xs text-muted mt-0.5">
-          Sign in using only your device.
+          A passkey lets you sign in with your fingerprint, face or device PIN.
         </p>
       </div>
 
@@ -206,7 +206,7 @@ export default function PasskeySection() {
                 onClick={() => handleDeletePasskey(pk.id)}
                 disabled={deletingId === pk.id}
                 className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-muted hover:text-danger hover:bg-danger/10 transition-colors disabled:opacity-40"
-                aria-label="Delete passkey"
+                aria-label="Remove passkey"
               >
                 {deletingId === pk.id ? <LoadingSpinner /> : <LuTrash2 />}
               </button>

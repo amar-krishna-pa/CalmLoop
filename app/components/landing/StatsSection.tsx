@@ -1,19 +1,19 @@
 const stats = [
   {
-    value: "ERP + ACT",
-    detail: "built strictly on the two evidence-based frameworks for OCD and anxiety",
+    value: "Practice",
+    detail: "tools for exploring your responses to uncertainty",
   },
   {
-    value: "100%",
-    detail: "yours — your entries are never sold, shared, or used to train AI models",
+    value: "Reflection",
+    detail: "space to describe what comes up in your own words",
   },
   {
-    value: "0",
-    detail: "reassurance given — every response is designed to build tolerance, not reduce it",
+    value: "Small steps",
+    detail: "one entry can be a starting point",
   },
   {
-    value: "24/7",
-    detail: "available whenever a spike hits, not just during office hours",
+    value: "Your pace",
+    detail: "you can return when it is useful to you",
   },
 ];
 

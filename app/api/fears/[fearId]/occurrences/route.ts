@@ -12,13 +12,13 @@ export async function GET(
 ) {
   const session = await checkSession();
   if (!session) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
+    return Response.json({ error: "Please sign in to continue." }, { status: 401 });
   }
 
   const { fearId } = await params;
   const parsedId = z.string().uuid().safeParse(fearId);
   if (!parsedId.success) {
-    return Response.json({ error: "Fear not found" }, { status: 404 });
+    return Response.json({ error: "This fear isn’t available." }, { status: 404 });
   }
 
   const userId = session.user.id;

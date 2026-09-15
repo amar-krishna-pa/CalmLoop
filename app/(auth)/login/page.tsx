@@ -20,10 +20,10 @@ export default function LoginPage() {
 
     try {
       const { error } = await authClient.signIn.social({ provider: "google" });
-      if (error) toast.error("Failed to sign in with Google");
+      if (error) toast.error("We couldn’t sign you in with Google. You can try again.");
     } catch (err) {
       console.error(err);
-      toast.error("Failed to sign in with Google");
+      toast.error("We couldn’t sign you in with Google. You can try again.");
     } finally {
       setLoading(null);
     }
@@ -35,7 +35,7 @@ export default function LoginPage() {
     try {
       const { error } = await authClient.signIn.passkey();
       if (error) {
-        toast.error("Failed to sign in with Passkey");
+        toast.error("We couldn’t sign you in with a passkey. You can try again or use Google.");
       } else {
         router.push("/today");
         router.refresh();
@@ -43,7 +43,7 @@ export default function LoginPage() {
     } catch (err) {
       if (err instanceof Error && err.name === "NotAllowedError") return;
       console.error(err);
-      toast.error("Failed to sign in with Passkey");
+      toast.error("We couldn’t sign you in with a passkey. You can try again or use Google.");
     } finally {
       setLoading(null);
     }
@@ -76,7 +76,7 @@ export default function LoginPage() {
               loading={loading}
               method="passkey"
               icon={<GoPasskeyFill />}
-              text="Sign in with Passkey"
+              text="Sign in with a passkey"
             />
           </div>
 

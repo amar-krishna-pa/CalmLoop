@@ -128,7 +128,7 @@ export default function ChatSessionItem({
             isSelected? "text-danger font-medium":"text-primary"
           )}
         >
-          {chatSession.title??"Unnamed session"}
+          {chatSession.title??"Untitled chat"}
         </p>
       </div>
     </div>
@@ -153,7 +153,7 @@ export default function ChatSessionItem({
             isActive? "text-accent font-medium":"text-primary"
           )}
         >
-          {chatSession.title??"Unnamed chatSession"}
+          {chatSession.title??"Untitled chat"}
         </p>
 
         <button

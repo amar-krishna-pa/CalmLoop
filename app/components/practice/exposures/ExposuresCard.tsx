@@ -27,8 +27,8 @@ export default function ExposuresCard() {
         if (!response.ok) {
           throw new Error(
             response.status === 401
-              ? "Please sign in again to load your exposure items."
-              : "Could not load your exposure items. Please try again.",
+              ? "Please sign in to view your practice situations."
+              : "We couldn’t load your practice situations. You can try again.",
           );
         }
 
@@ -43,7 +43,7 @@ export default function ExposuresCard() {
           setError(
             error instanceof Error && error.message.startsWith("Please sign in")
               ? error.message
-              : "Could not load your exposure items. Please try again.",
+              : "We couldn’t load your practice situations. You can try again.",
           );
         }
       } finally {
@@ -72,7 +72,7 @@ export default function ExposuresCard() {
             Exposure practice
           </h2>
           <p className="mt-1 text-xs text-muted">
-            Choose something you are ready to practise.
+            Exposures are situations you practise facing while leaving room for uncertainty.
           </p>
         </div>
 
@@ -104,11 +104,11 @@ export default function ExposuresCard() {
         ) : exposures.length === 0 ? (
           <div className="flex h-full flex-col items-center justify-center gap-1 text-center">
             <p className="text-sm font-medium text-primary">
-              No exposure items yet
+              No practice situations yet
             </p>
             <p className="max-w-sm text-xs text-muted">
-              Your exposure list is empty. Go to Prepare to map out your
-              triggers — even one or two items is enough to get started.
+              In <strong>Prepare</strong>, you can map out your triggers.
+              Saved entries will appear here. One is enough to begin.
             </p>
           </div>
         ) : (

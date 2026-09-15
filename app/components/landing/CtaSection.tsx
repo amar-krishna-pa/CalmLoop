@@ -6,12 +6,11 @@ export default function CtaSection() {
         <div className="absolute -bottom-10 -right-10 w-48 h-48 rounded-full bg-accent/10 blur-2xl pointer-events-none" />
 
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
-          Start building a healthier relationship with uncertainty.
+          A place to begin, or come back to.
         </h2>
 
         <p className="mt-4 text-muted text-base max-w-xl mx-auto">
-          Break the cycle of checking, seeking reassurance, and avoiding. Build
-          tools to live a values-aligned life today.
+          You can write a short entry or explore the practice tools. There is no need to do everything at once.
         </p>
 
         <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -19,13 +18,13 @@ export default function CtaSection() {
             href="/signup"
             className="btn-accent px-8 py-3 text-sm font-semibold rounded-lg"
           >
-            Create Free Account
+            Create a free account
           </a>
           <a
             href="/login"
             className="border border-subtle hover:bg-surface px-8 py-3 rounded-lg text-sm font-semibold text-primary transition-colors"
           >
-            Sign In
+            Sign in
           </a>
         </div>
       </div>

@@ -31,7 +31,7 @@ export default function FearInputCard({ onSaved }: Props) {
       });
 
       if (!response.ok) {
-        toast.error("Could not read that entry. Try again.");
+        toast.error("We couldn’t process your entry. You can try again.");
         return;
       }
 
@@ -40,14 +40,14 @@ export default function FearInputCard({ onSaved }: Props) {
 
       // An entry with no OCD content in it is a correct result, not a failure.
       if (fears.length === 0) {
-        toast.success("Nothing to add from that one.");
+        toast.info("We couldn’t identify a fear in this entry. You can add a little context or leave it here.");
         setPreviewFears(null);
         return;
       }
 
       setPreviewFears(fears);
     } catch {
-      toast.error("Could not read that entry. Try again.");
+      toast.error("We couldn’t process your entry. You can try again.");
     } finally {
       setIsExtracting(false);
     }
@@ -65,7 +65,7 @@ export default function FearInputCard({ onSaved }: Props) {
       });
 
       if (!response.ok) {
-        toast.error("Could not save your entry. Please try again.");
+        toast.error("We couldn’t save your entry. You can try again.");
         return;
       }
 
@@ -76,7 +76,7 @@ export default function FearInputCard({ onSaved }: Props) {
 
       onSaved();
     } catch {
-      toast.error("Could not save your entry. Please try again.");
+      toast.error("We couldn’t save your entry. You can try again.");
     } finally {
       setIsSaving(false);
     }
@@ -88,7 +88,7 @@ export default function FearInputCard({ onSaved }: Props) {
         <div className="flex items-center gap-2">
           <LuPencilLine size={15} className="text-muted" />
           <h2 className="text-sm font-semibold text-primary">
-            Describe what you went through
+            Describe a situation
           </h2>
         </div>
 
@@ -96,7 +96,7 @@ export default function FearInputCard({ onSaved }: Props) {
           <textarea
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="What happened, and what did you do about it?"
+            placeholder="What happened? You can include how you responded."
             disabled={isExtracting}
             maxLength={5000}
             className="min-h-0 flex-1 w-full resize-none rounded-xl border border-subtle bg-primary px-3 py-2 text-sm text-primary placeholder:text-muted transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/10 disabled:cursor-not-allowed disabled:opacity-60"
@@ -104,7 +104,7 @@ export default function FearInputCard({ onSaved }: Props) {
 
           <div className="flex items-center justify-between gap-3 px-1">
             <span className="text-caption text-muted">
-              A few sentences is enough
+              One sentence is enough to begin
             </span>
             <button
               type="button"

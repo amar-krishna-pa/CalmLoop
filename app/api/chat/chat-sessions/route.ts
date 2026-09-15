@@ -6,7 +6,7 @@ import { and, desc, eq, inArray } from "drizzle-orm";
 export async function GET() {
   const session = await checkSession();
   if (!session) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
+    return Response.json({ error: "Please sign in to continue." }, { status: 401 });
   }
 
   const rows = await db
@@ -26,12 +26,12 @@ export async function GET() {
 export async function DELETE(request: Request) {
   const session = await checkSession();
   if (!session) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
+    return Response.json({ error: "Please sign in to continue." }, { status: 401 });
   }
 
   const { ids } = await request.json();
   if (!Array.isArray(ids) || ids.length === 0) {
-    return Response.json({ error: "Invalid ids" }, { status: 400 });
+    return Response.json({ error: "Select the chats you want to delete." }, { status: 400 });
   }
 
   await db

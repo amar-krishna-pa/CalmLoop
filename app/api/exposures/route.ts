@@ -7,7 +7,7 @@ import { fearOccurrences, fears } from "@/app/lib/db/schema";
 export async function GET() {
   const session = await checkSession();
   if (!session) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
+    return Response.json({ error: "Please sign in to continue." }, { status: 401 });
   }
 
   const exposures = await db

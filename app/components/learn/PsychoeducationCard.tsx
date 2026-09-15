@@ -12,27 +12,27 @@ const OCD_CYCLE: Step[] = [
   },
   {
     label: "Intrusive thought",
-    desc: "An unwanted thought your brain labels as dangerous",
+    desc: "An unwanted thought that feels troubling",
     accent: "bg-warning-text/70",
   },
   {
     label: "Anxiety",
-    desc: "Distress spikes — your brain sends an alarm signal",
+    desc: "You may feel anxious or uncomfortable",
     accent: "bg-danger/60",
   },
   {
     label: "Compulsion",
-    desc: "You act to neutralise the anxiety (checking, reassurance, avoidance)",
+    desc: "An action you feel driven to repeat for relief, such as checking or asking for reassurance",
     accent: "bg-accent/60",
   },
   {
     label: "Short-term relief",
-    desc: "Anxiety drops — but the compulsion teaches your brain the threat was real",
+    desc: "The action may bring brief relief",
     accent: "bg-success/60",
   },
   {
-    label: "Reinforcement",
-    desc: "The cycle strengthens. OCD learns it can trigger you again",
+    label: "The loop repeats",
+    desc: "The urge to repeat the action may return",
     accent: "bg-danger/40",
   },
 ];
@@ -42,7 +42,7 @@ export default function PsychoeducationCard() {
     <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4">
       <div>
         <h2 className="text-sm font-semibold text-primary">Understanding OCD</h2>
-        <p className="text-xs text-muted mt-0.5">The OCD cycle — why compulsions make it worse</p>
+        <p className="text-xs text-muted mt-0.5">How thoughts, feelings and repeated actions can form a loop</p>
       </div>
 
       <div className="space-y-2">
@@ -65,7 +65,7 @@ export default function PsychoeducationCard() {
       </div>
 
       <p className="text-xs text-muted border-l-2 border-accent/40 pl-3 leading-relaxed">
-        ERP works by breaking the cycle at step 4 — sitting with the anxiety without performing the compulsion, so your brain learns the threat was never real.
+        Exposure and response prevention (ERP) involves gradually facing feared situations while practising without compulsions. A therapist can help you choose manageable steps.
       </p>
     </div>
   );

@@ -5,17 +5,18 @@ type HomeworkItem = {
   completed: boolean;
 };
 
+      <p className="text-xs text-muted">Example tasks to discuss with a therapist. Your own plan can begin with one.</p>
 const PLACEHOLDER_HOMEWORK: HomeworkItem[] = [
-  { id: "1", title: "Practise ERP exercise for 10 mins", dueDate: "Today", completed: false },
-  { id: "2", title: "Write down 3 anxiety triggers", dueDate: "Tomorrow", completed: false },
-  { id: "3", title: "Complete breathing log", dueDate: "Jul 2", completed: true },
+  { id: "1", title: "Try a short practice exercise", dueDate: "Today", completed: false },
+  { id: "2", title: "Note a situation that brought up anxiety", dueDate: "Tomorrow", completed: false },
+  { id: "3", title: "Note a breathing exercise", dueDate: "Jul 2", completed: true },
 ];
 
 export default function HomeworkCard() {
   return (
     <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4 card-medium">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-primary">Therapist Homework</h2>
+        <h2 className="text-sm font-semibold text-primary">Practice with your therapist</h2>
         <span className="text-xs text-muted">
           {PLACEHOLDER_HOMEWORK.filter((h) => !h.completed).length} remaining
         </span>

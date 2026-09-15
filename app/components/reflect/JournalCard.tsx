@@ -1,5 +1,6 @@
 "use client";
 
+      <p className="text-xs text-muted">Journal preview. Entries are not saved yet.</p>
 import { useState } from "react";
 import { LuBookOpen } from "react-icons/lu";
 

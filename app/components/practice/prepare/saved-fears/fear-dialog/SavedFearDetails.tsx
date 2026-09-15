@@ -31,7 +31,9 @@ export default function SavedFearDetails({ fear, onEdit, onEditOccurrence }: Pro
 
         <section className="space-y-2" aria-label="Themes">
           {fear.themes.length === 0 ? (
-            <p className="text-xs text-muted">No themes saved.</p>
+            <p className="text-xs text-muted">
+              No themes added yet. These are optional.
+            </p>
           ) : (
             <ul className="flex flex-wrap gap-2">
               {fear.themes.map((theme) => (
@@ -53,9 +55,14 @@ export default function SavedFearDetails({ fear, onEdit, onEditOccurrence }: Pro
         <h3 className="text-xs font-medium text-primary">
           Safety behaviours
         </h3>
+        <p className="text-xs text-muted">
+          Things you do to feel more certain or reduce anxiety, such as repeated checking.
+        </p>
 
         {fear.behaviours.length === 0 ? (
-          <p className="text-xs text-muted">No safety behaviours saved.</p>
+          <p className="text-xs text-muted">
+            No safety behaviours added yet. You can leave this as it is.
+          </p>
         ) : (
           <ul className="list-disc space-y-2 pl-4 text-sm text-muted">
             {Array.from(new Set(fear.behaviours)).map((behaviour) => (

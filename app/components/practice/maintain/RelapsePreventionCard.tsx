@@ -9,17 +9,17 @@ type CopingStep = {
 };
 
 const WARNING_SIGNS: WarningSign[] = [
-  { id: "1", sign: "Checking behaviours creeping back in" },
+  { id: "1", sign: "Noticing more checking" },
   { id: "2", sign: "Avoiding situations I had been facing" },
-  { id: "3", sign: "Seeking reassurance from family again" },
+  { id: "3", sign: "Asking family for reassurance more often" },
   { id: "4", sign: "Sleeping poorly for more than 3 nights" },
 ];
 
 const COPING_STEPS: CopingStep[] = [
-  { id: "1", step: "Re-read my fear hierarchy and pick one item to face today" },
-  { id: "2", step: "Log a thought record for the intrusive thought" },
-  { id: "3", step: "Contact my therapist and flag the spike" },
-  { id: "4", step: "Return to ERP basics — short exposures, no compulsions" },
+  { id: "1", step: "Choose a small situation from my saved fears to practise" },
+  { id: "2", step: "Write a brief note about what came up" },
+  { id: "3", step: "Talk with my therapist about what has changed" },
+  { id: "4", step: "Discuss a manageable practice step with my therapist" },
 ];
 
 export default function RelapsePreventionCard() {
@@ -27,8 +27,8 @@ export default function RelapsePreventionCard() {
     <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4 card-medium">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-sm font-semibold text-primary">Relapse Prevention</h2>
-          <p className="text-xs text-muted mt-0.5">Your plan for when symptoms spike</p>
+          <h2 className="text-sm font-semibold text-primary">Planning for harder days</h2>
+          <p className="text-xs text-muted mt-0.5">Example plan for harder days. Editing is not available yet.</p>
         </div>
         <button className="btn-accent">Edit plan</button>
       </div>
@@ -36,7 +36,7 @@ export default function RelapsePreventionCard() {
       <div className="min-h-0 flex-1 overflow-y-auto space-y-4">
         <div>
           <p className="text-xs font-semibold text-muted uppercase tracking-wide mb-2">
-            My early warning signs
+            Changes I might notice
           </p>
           <ul className="space-y-1.5">
             {WARNING_SIGNS.map((w) => (
@@ -50,7 +50,7 @@ export default function RelapsePreventionCard() {
 
         <div className="border-t border-subtle pt-4">
           <p className="text-xs font-semibold text-muted uppercase tracking-wide mb-2">
-            What I will do
+            What I can try
           </p>
           <ol className="space-y-1.5">
             {COPING_STEPS.map((s, i) => (
