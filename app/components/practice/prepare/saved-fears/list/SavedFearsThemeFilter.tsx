@@ -54,7 +54,7 @@ export default function SavedFearsThemeFilter({
           <ComboboxInput
             id={inputId}
             placeholder="Search themes…"
-            className="w-56 max-w-full focus:shadow-none"
+            className="h-10 w-56 max-w-full py-0 focus:shadow-none"
           />
           <ComboboxTrigger
             aria-label="Show themes"

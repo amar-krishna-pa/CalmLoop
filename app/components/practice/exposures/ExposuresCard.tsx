@@ -76,11 +76,9 @@ export default function ExposuresCard() {
           </p>
         </div>
 
-        {exposures !== null && (
-          <span aria-live="polite" className="shrink-0 text-xs text-muted">
-            {exposures.length} {exposures.length === 1 ? "item" : "items"}
+          <span aria-live="polite" className="w-20 shrink-0 text-right text-xs text-muted">
+            {exposures !== null ? `${exposures.length} ${exposures.length === 1 ? "item" : "items"}` : null}
           </span>
-        )}
       </div>
 
       <div className="flex-1 min-h-0 overflow-y-auto">

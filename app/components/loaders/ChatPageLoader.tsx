@@ -1,4 +1,7 @@
+"use client";
+
 import { Skeleton } from "./LoadingSkeleton";
+import ChatComposer from "@/app/components/chat/ChatComposer";
 
 export default function ChatPageLoader() {
   return (
@@ -41,12 +44,7 @@ export default function ChatPageLoader() {
         </div>
       </div>
 
-      <div className="border-t border-subtle px-4 py-3">
-        <div className="flex gap-2 items-center max-w-2xl mx-auto">
-          <Skeleton className="h-9 flex-1 rounded-lg" />
-          <Skeleton className="h-9 w-16 rounded-lg shrink-0" />
-        </div>
-      </div>
+      <ChatComposer input="" isBusy onInputChange={() => {}} onSubmit={() => {}} />
     </div>
   );
 }

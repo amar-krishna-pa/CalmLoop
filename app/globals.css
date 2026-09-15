@@ -150,6 +150,10 @@
 
 /* ─── 4. BASE STYLES ────────────────────────────────────────────────────────── */
 
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
@@ -161,6 +165,10 @@ body {
    @layer components registers these inside Tailwind's component layer, so
    Tailwind utilities (e.g. bg-red-500) can still override them if needed.    */
 @layer components {
+  /* Reserve scrollbar space when async content begins or stops overflowing. */
+  .overflow-y-auto {
+    scrollbar-gutter: stable;
+  }
   /* ── Token helpers — apply a themed color to any element ────────────────── */
 
   /* Backgrounds */

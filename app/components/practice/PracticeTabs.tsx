@@ -48,7 +48,7 @@ export default function PracticeTabs() {
 
   return (
     <>
-      <div className="bg-surface border border-subtle rounded-xl p-1 grid grid-cols-3 gap-1 mb-6">
+      <div className="bg-surface border border-subtle rounded-xl p-1 grid grid-cols-3 gap-1 mb-6 min-h-16 sm:min-h-20">
         {TABS.map((tab) => (
           <button
             key={tab.id}

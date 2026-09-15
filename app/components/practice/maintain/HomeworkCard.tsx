@@ -13,7 +13,7 @@ const PLACEHOLDER_HOMEWORK: HomeworkItem[] = [
 
 export default function HomeworkCard() {
   return (
-    <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4">
+    <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4 card-medium">
       <div className="flex items-center justify-between">
         <h2 className="text-sm font-semibold text-primary">Therapist Homework</h2>
         <span className="text-xs text-muted">
@@ -21,7 +21,7 @@ export default function HomeworkCard() {
         </span>
       </div>
 
-      <ul className="space-y-2">
+      <ul className="min-h-0 flex-1 overflow-y-auto space-y-2">
         {PLACEHOLDER_HOMEWORK.map((h) => (
           <li
             key={h.id}

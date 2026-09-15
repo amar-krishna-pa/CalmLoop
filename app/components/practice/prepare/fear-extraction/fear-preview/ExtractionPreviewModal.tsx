@@ -44,7 +44,6 @@ export default function ExtractionPreviewModal({
     if (savedFears !== null || isLoadingSavedFears) return;
 
     setIsLoadingSavedFears(true);
-    setSavedFearsError(null);
     try {
       const response = await fetch("/api/fears");
       if (response.status === 401) {
@@ -55,6 +54,7 @@ export default function ExtractionPreviewModal({
 
       const data = SavedFearsResponseSchema.parse(await response.json());
       setSavedFears(data.fears);
+      setSavedFearsError(null);
     } catch {
       setSavedFearsError("Could not load saved fears. Please try again.");
     } finally {
@@ -144,7 +144,7 @@ export default function ExtractionPreviewModal({
               }}
               disabled={!savePayload.success || isSaving}
               aria-label={isSaving ? "Saving entry" : "Save entry"}
-              className="btn-accent min-h-11 w-full cursor-pointer px-5 duration-fast disabled:cursor-not-allowed disabled:opacity-50 sm:min-w-32 sm:w-auto flex justify-center items-center"
+              className="btn-accent min-h-11 w-full cursor-pointer px-5 duration-fast disabled:cursor-not-allowed disabled:opacity-50 sm:w-40 flex justify-center items-center"
             >
               {isSaving ? <LoadingSpinner /> : "Save entry"}
             </button>

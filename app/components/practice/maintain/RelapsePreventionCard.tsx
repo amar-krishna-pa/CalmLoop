@@ -24,7 +24,7 @@ const COPING_STEPS: CopingStep[] = [
 
 export default function RelapsePreventionCard() {
   return (
-    <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4">
+    <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4 card-medium">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-sm font-semibold text-primary">Relapse Prevention</h2>
@@ -33,7 +33,7 @@ export default function RelapsePreventionCard() {
         <button className="btn-accent">Edit plan</button>
       </div>
 
-      <div className="space-y-4">
+      <div className="min-h-0 flex-1 overflow-y-auto space-y-4">
         <div>
           <p className="text-xs font-semibold text-muted uppercase tracking-wide mb-2">
             My early warning signs

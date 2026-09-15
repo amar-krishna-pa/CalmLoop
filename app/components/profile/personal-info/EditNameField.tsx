@@ -74,7 +74,7 @@ export default function EditNameField({ initialName }: Props) {
               <button
                 onClick={save}
                 disabled={saving||!draft.trim()}
-                className="cursor-pointer p-1.5 rounded-lg text-muted hover:text-success hover:bg-success/10 transition-colors disabled:opacity-40"
+                className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-muted hover:text-success hover:bg-success/10 transition-colors disabled:opacity-40"
                 aria-label="Save name"
               >
                 {saving? <LoadingSpinner />:<LuCheck size={15} />}

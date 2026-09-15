@@ -88,11 +88,12 @@ export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad
           )}
         </AnimatePresence>
         <ComboboxContent anchor={inputGroupRef} container={containerRef}>
+          <div className="h-48 overflow-y-auto">
             <ComboboxStatus className="text-2xs text-muted empty:hidden">
               {isLoading ? "Loading saved fears…" : error}
             </ComboboxStatus>
             {error && (
-              <button type="button" onClick={onLoad} disabled={isLoading} className="text-2xs text-accent disabled:opacity-60">
+              <button type="button" onClick={onLoad} disabled={isLoading} aria-label="Retry loading saved fears" className="flex min-h-8 w-full items-center justify-center text-2xs text-accent disabled:opacity-60">
                 {isLoading ? <LoadingSpinner /> : "Retry loading saved fears"}
               </button>
             )}
@@ -101,13 +102,14 @@ export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad
                 {savedFears.length === 0 ? "No saved fears yet." : "No fears match your search."}
               </ComboboxEmpty>
             )}
-            <ComboboxList className="max-h-48 overflow-y-auto">
+            <ComboboxList>
               {(fear: { id: string; name: string }) => (
                 <ComboboxItem key={fear.id} value={fear} className="cursor-pointer rounded-md px-3 py-2 text-xs font-normal text-primary data-highlighted:bg-accent/10 data-highlighted:text-accent">
                   {fear.name}
                 </ComboboxItem>
               )}
             </ComboboxList>
+          </div>
         </ComboboxContent>
       </Combobox>
     </div>

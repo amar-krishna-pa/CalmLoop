@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Skeleton } from "@/app/components/loaders/LoadingSkeleton";
 import { setStreak, useUserStore } from "@/app/stores/user";
 
@@ -18,11 +18,16 @@ const STATIC_STATS: StaticStat[] = [
 
 export default function ProgressCard() {
   const streak = useUserStore((s) => s.streak);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     fetch("/api/streak")
-      .then((r) => r.json())
-      .then((data) => setStreak(data.currentStreak));
+      .then((r) => {
+        if (!r.ok) throw new Error("Could not load streak");
+        return r.json();
+      })
+      .then((data) => setStreak(data.currentStreak))
+      .catch(() => setError(true));
   }, []);
 
   return (
@@ -39,10 +44,12 @@ export default function ProgressCard() {
 
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-surface border border-subtle rounded-lg p-3">
-          {streak === null ? (
-            <Skeleton className="h-8 w-12 mb-1" />
+          {streak === null && error ? (
+            <p className="h-8 text-2xl leading-8 text-muted" aria-label="Streak unavailable">—</p>
+          ) : streak === null ? (
+            <Skeleton className="h-8 w-12" />
           ) : (
-            <p className="text-2xl font-bold text-accent">{streak}</p>
+            <p className="h-8 text-2xl leading-8 font-bold text-accent">{streak}</p>
           )}
           <p className="text-xs text-muted mt-0.5">days</p>
           <p className="text-xs text-primary mt-1 font-medium">

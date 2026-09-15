@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import { z } from "zod";
 import SavedFearsLoader from "@/app/components/loaders/SavedFearsLoader";
+import SavedFearsThemeFilterLoader from "@/app/components/loaders/SavedFearsThemeFilterLoader";
 import { THEMES } from "@/app/constants/fears/themes";
 import SavedFearsThemeFilter from "@/app/components/practice/prepare/saved-fears/list/SavedFearsThemeFilter";
 import { AnimatePresence, motion } from "motion/react";
@@ -17,6 +19,7 @@ export default function SavedFearsCard() {
   const [openFearId, setOpenFearId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
+  const [isRetrying, setIsRetrying] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState<
     (typeof THEMES)[number] | null
   >(null);
@@ -54,6 +57,7 @@ export default function SavedFearsCard() {
 
         if (!controller.signal.aborted) {
           setFears(data.fears);
+          setError(null);
         }
       } catch (error) {
         if (!controller.signal.aborted) {
@@ -66,7 +70,9 @@ export default function SavedFearsCard() {
       }
     }
 
-    void loadFears();
+    void loadFears().finally(() => {
+      if (!controller.signal.aborted) setIsRetrying(false);
+    });
 
     return () => controller.abort();
   }, [attempt]);
@@ -84,23 +90,26 @@ export default function SavedFearsCard() {
           Saved fears
         </h2>
 
-        {fears !== null && (
-          <span aria-live="polite" className="text-xs text-muted">
+          <span aria-live="polite" className="w-28 shrink-0 text-right text-xs text-muted">
+        {fears !== null && (<>
             {selectedTheme !== null ? `${visibleFears?.length ?? 0} of ` : ""}
             {fears.length} {fears.length === 1 ? "fear" : "fears"}
+        </>)}
           </span>
-        )}
       </div>
 
-      {!error && fears !== null && fears.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2">
+      <div className="flex min-h-10 flex-wrap items-center gap-2">
+        {fears === null && (!error || isRetrying) && (
+          <SavedFearsThemeFilterLoader />
+        )}
+        {!error && fears !== null && fears.length > 0 && (
           <SavedFearsThemeFilter
             themes={availableThemes}
             value={selectedTheme}
             onChange={({ theme }) => setSelectedTheme(theme)}
           />
-        </div>
-      )}
+        )}
+      </div>
 
       <div className="flex-1 min-h-0 overflow-y-auto">
         {error ? (
@@ -111,13 +120,15 @@ export default function SavedFearsCard() {
 
             <button
               type="button"
-              className="btn-accent px-4 py-2 cursor-pointer"
+              className="btn-accent flex h-8 min-w-24 items-center justify-center px-4 py-0 cursor-pointer"
+              disabled={isRetrying}
+              aria-label="Retry loading saved fears"
               onClick={() => {
-                setError(null);
+                setIsRetrying(true);
                 setAttempt((current) => current + 1);
               }}
             >
-              Try again
+              {isRetrying ? <LoadingSpinner /> : "Try again"}
             </button>
           </div>
         ) : fears === null ? (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import Link from "next/link";
 import { z } from "zod";
 import {
@@ -20,6 +21,7 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
   const [occurrences, setOccurrences] = useState<Occurrence[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
+  const [isRetrying, setIsRetrying] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -41,6 +43,7 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
         const data = OccurrencesSchema.parse(await response.json());
         if (!controller.signal.aborted) {
           setOccurrences(data.occurrences);
+          setError(null);
         }
       } catch (error) {
         if (!controller.signal.aborted) {
@@ -53,7 +56,9 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
       }
     }
 
-    void loadOccurrences();
+    void loadOccurrences().finally(() => {
+      if (!controller.signal.aborted) setIsRetrying(false);
+    });
 
     return () => controller.abort();
   }, [fearId, attempt]);
@@ -61,7 +66,7 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
   return (
     <section className="space-y-1" aria-label="Occurrences">
       <h3 className="text-xs font-medium text-primary">Occurrences</h3>
-
+      <div className="min-h-52">
       {error ? (
         <div className="space-y-2">
           <p role="alert" className="text-sm text-muted">
@@ -69,13 +74,15 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
           </p>
           <button
             type="button"
-            className="btn-accent cursor-pointer px-3 py-2"
+            className="btn-accent flex h-8 min-w-24 items-center justify-center cursor-pointer px-3 py-0"
+            disabled={isRetrying}
+            aria-label="Retry loading occurrences"
             onClick={() => {
-              setError(null);
+              setIsRetrying(true);
               setAttempt((current) => current + 1);
             }}
           >
-            Try again
+            {isRetrying ? <LoadingSpinner /> : "Try again"}
           </button>
         </div>
       ) : occurrences === null ? (
@@ -144,6 +151,7 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
           ))}
         </ol>
       )}
+      </div>
     </section>
   );
 }

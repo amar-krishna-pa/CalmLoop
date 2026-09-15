@@ -42,7 +42,7 @@ export default function ChatComposer({ input, isBusy, onInputChange, onSubmit }:
             type="submit"
             aria-label={isBusy ? "Sending message" : "Send message"}
             disabled={isBusy || !input.trim()}
-            className="btn-accent disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
+            className="btn-accent flex h-8 min-w-16 shrink-0 items-center justify-center py-0 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isBusy ? <LoadingSpinner /> : "Send"}
           </button>

@@ -140,18 +140,20 @@ export default function EditFearForm({
       <div className="shrink-0 space-y-3">
         <HorizontalDivider />
 
-        {error && (
-          <p role="alert" className="text-sm text-danger">
-            {error}
-          </p>
-        )}
+        <div className="h-20 overflow-y-auto" aria-live="polite">
+          {error && (
+            <p role="alert" className="text-sm text-danger">
+              {error}
+            </p>
+          )}
 
-        {!savePayload.success && (
-          <p className="text-xs text-muted">
-            Use 1–120 characters for the name and each safety behaviour. Remove
-            any empty behaviours.
-          </p>
-        )}
+          {!savePayload.success && (
+            <p className="text-xs text-muted">
+              Use 1–120 characters for the name and each safety behaviour. Remove
+              any empty behaviours.
+            </p>
+          )}
+        </div>
 
         <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
           <button
@@ -169,7 +171,7 @@ export default function EditFearForm({
             type="submit"
             disabled={isSaving || !savePayload.success}
             aria-label={isSaving ? "Saving fear" : "Save changes"}
-            className="btn-accent flex min-h-11 w-full items-center justify-center px-5 disabled:cursor-not-allowed disabled:opacity-50 sm:min-w-32 sm:w-auto"
+            className="btn-accent flex min-h-11 w-full items-center justify-center px-5 disabled:cursor-not-allowed disabled:opacity-50 sm:w-40"
           >
             {isSaving ? <LoadingSpinner /> : "Save changes"}
           </button>

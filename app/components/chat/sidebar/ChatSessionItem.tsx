@@ -84,7 +84,7 @@ export default function ChatSessionItem({
       <button
         onClick={commitEdit}
         disabled={isSaving}
-        className="shrink-0 text-muted hover:text-accent transition-colors cursor-pointer disabled:cursor-default"
+        className="flex h-5 w-5 shrink-0 items-center justify-center text-muted hover:text-accent transition-colors cursor-pointer disabled:cursor-default"
       >
         {isSaving? <LoadingSpinner size={14} />:<LuCheck size={14} />}
       </button>

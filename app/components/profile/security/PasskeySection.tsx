@@ -6,6 +6,7 @@ import { authClient } from "@/app/lib/auth/auth-client";
 import { toast } from "sonner";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import PasskeyTableSkeleton from "@/app/components/loaders/PasskeyTableSkeleton";
+import { cn } from "@/app/lib/cn";
 
 type Passkey = {
   id: string;
@@ -14,7 +15,8 @@ type Passkey = {
 };
 
 export default function PasskeySection() {
-  const [passkeys, setPasskeys] = useState<Passkey[]>([]);
+  const [passkeys, setPasskeys] = useState<Passkey[] | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [loadingPasskeys, setLoadingPasskeys] = useState(true);
   const [addingPasskey, setAddingPasskey] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -22,16 +24,18 @@ export default function PasskeySection() {
   const [nameError, setNameError] = useState("");
 
   async function fetchPasskeys() {
-    setLoadingPasskeys(true);
     try {
       const { data: passkeys, error } =
         await authClient.passkey.listUserPasskeys();
       if (error) {
+        setLoadError("Could not load passkeys. Please try again.");
         toast.error("Failed to load passkeys");
       } else {
         setPasskeys(passkeys ?? []);
+        setLoadError(null);
       }
     } catch (error) {
+      setLoadError("Could not load passkeys. Please try again.");
       console.log(error);
       toast.error("Failed to load passkeys");
     } finally {
@@ -40,7 +44,20 @@ export default function PasskeySection() {
   }
 
   useEffect(() => {
-    fetchPasskeys();
+    let active = true;
+    authClient.passkey.listUserPasskeys()
+      .then(({ data, error }) => {
+        if (!active) return;
+        if (error) setLoadError("Could not load passkeys. Please try again.");
+        else setPasskeys(data ?? []);
+      })
+      .catch(() => {
+        if (active) setLoadError("Could not load passkeys. Please try again.");
+      })
+      .finally(() => {
+        if (active) setLoadingPasskeys(false);
+      });
+    return () => { active = false; };
   }, []);
 
   async function handleAddPasskey() {
@@ -87,7 +104,7 @@ export default function PasskeySection() {
         toast.error("Failed to delete passkey");
       } else {
         toast.success("Passkey removed");
-        setPasskeys((prev) => prev.filter((p) => p.id !== id));
+        setPasskeys((prev) => prev?.filter((p) => p.id !== id) ?? null);
       }
     } catch (error) {
       console.log(error);
@@ -118,14 +135,14 @@ export default function PasskeySection() {
             onKeyDown={(e) => e.key === "Enter" && handleAddPasskey()}
             placeholder="e.g. My iPhone"
             disabled={addingPasskey}
-            className={`flex-1 px-3 py-2 rounded-lg text-sm border bg-transparent text-primary placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-accent disabled:opacity-60 ${
+            className={cn("min-w-0 flex-1 px-3 py-2 rounded-lg text-sm border bg-transparent text-primary placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-accent disabled:opacity-60",
               nameError ? "border-danger focus:ring-danger" : "border-subtle"
-            }`}
+            )}
           />
           <button
             onClick={handleAddPasskey}
             disabled={addingPasskey}
-            className="cursor-pointer flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium btn-accent disabled:opacity-60 transition-all shrink-0"
+            className="cursor-pointer flex h-10 sm:w-44 items-center justify-center gap-2 px-4 py-0 rounded-lg text-sm font-medium btn-accent disabled:opacity-60 shrink-0"
           >
             {addingPasskey ? (
               <>
@@ -141,19 +158,25 @@ export default function PasskeySection() {
           </button>
         </div>
         <p
-          className={`text-xs text-danger mt-1 mb-2 ${
-            nameError ? "visible" : "invisible"
-          }`}
+          aria-live="polite"
+          className="h-12 overflow-y-auto text-xs text-danger mt-1 mb-2"
         >
-          {nameError || "placeholder"}
+          {nameError}
         </p>
       </div>
 
-      <div className="rounded-xl border border-subtle divide-y divide-subtle">
-        {loadingPasskeys ? (
+      <div className="h-60 overflow-y-auto rounded-xl border border-subtle space-y-2">
+        {loadError && passkeys === null ? (
+          <div className="flex h-full flex-col items-center justify-center gap-3 p-4 text-center">
+            <p role="alert" className="text-sm text-muted">{loadError}</p>
+            <button type="button" disabled={loadingPasskeys} aria-label="Retry loading passkeys" className="btn-accent flex h-8 w-24 items-center justify-center py-0" onClick={() => { setLoadingPasskeys(true); void fetchPasskeys(); }}>
+              {loadingPasskeys ? <LoadingSpinner /> : "Try again"}
+            </button>
+          </div>
+        ) : passkeys === null ? (
           <PasskeyTableSkeleton />
         ) : passkeys.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-10 gap-2 text-muted">
+          <div className="flex h-full flex-col items-center justify-center gap-2 text-muted">
             <GoPasskeyFill size={28} className="opacity-30" />
             <p className="text-sm">No passkeys added yet.</p>
           </div>
@@ -182,7 +205,7 @@ export default function PasskeySection() {
               <button
                 onClick={() => handleDeletePasskey(pk.id)}
                 disabled={deletingId === pk.id}
-                className="cursor-pointer p-1.5 rounded-lg text-muted hover:text-danger hover:bg-danger/10 transition-colors disabled:opacity-40"
+                className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-muted hover:text-danger hover:bg-danger/10 transition-colors disabled:opacity-40"
                 aria-label="Delete passkey"
               >
                 {deletingId === pk.id ? <LoadingSpinner /> : <LuTrash2 />}

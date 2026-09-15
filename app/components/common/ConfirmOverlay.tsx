@@ -31,8 +31,10 @@ export default function ConfirmOverlay({
           disabled={loading}
           className="cursor-pointer px-2.5 py-1 rounded-lg text-xs text-on-accent bg-danger hover:opacity-90 transition-opacity flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading && <LoadingSpinner size={12} />}
-          Delete
+          <span className="grid">
+            <span className="col-start-1 row-start-1" style={{ visibility: loading ? "hidden" : "visible" }}>Delete</span>
+            {loading && <span className="col-start-1 row-start-1 flex items-center justify-center"><LoadingSpinner size={12} /></span>}
+          </span>
         </button>
       </div>
     </div>
