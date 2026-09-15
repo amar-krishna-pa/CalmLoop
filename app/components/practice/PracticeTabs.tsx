@@ -8,6 +8,7 @@ import FearInputCard from "@/app/components/practice/prepare/fear-extraction/Fea
 import SavedFearsCard from "@/app/components/practice/prepare/saved-fears/SavedFearsCard";
 import HomeworkCard from "@/app/components/practice/maintain/HomeworkCard";
 import RelapsePreventionCard from "@/app/components/practice/maintain/RelapsePreventionCard";
+import ExposuresCard from "@/app/components/practice/exposures/ExposuresCard";
 
 type Tab = "prepare" | "exposures" | "maintain";
 
@@ -101,14 +102,7 @@ export default function PracticeTabs() {
             )}
 
             {activeTab === "exposures" && (
-              <div className="bg-card border border-subtle rounded-xl p-8 flex flex-col items-center justify-center text-center card-medium">
-                <p className="text-sm font-medium text-primary">
-                  Nothing here yet
-                </p>
-                <p className="text-xs text-muted mt-1 max-w-sm">
-                  Exposure practice will return once the new Prepare flow lands.
-                </p>
-              </div>
+              <ExposuresCard />
             )}
 
             {activeTab === "maintain" && (
