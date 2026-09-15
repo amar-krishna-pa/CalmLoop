@@ -14,7 +14,7 @@ export default function HeroSection() {
       </h1>
 
       <p className="mt-8 max-w-2xl text-base md:text-lg text-muted font-normal leading-relaxed">
-        CalmLoop helps you recognize OCD and anxiety patterns, reflect on them through guided AI conversations, and practice response prevention using ERP and ACT guidelines.
+        CalmLoop helps you recognize OCD and anxiety patterns, reflect on them through guided AI conversations, and practise response prevention using ERP and ACT guidelines.
       </p>
 
       <div className="mt-10 flex flex-col gap-4 sm:flex-row items-center justify-center w-full">

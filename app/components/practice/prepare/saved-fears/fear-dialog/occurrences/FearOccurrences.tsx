@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { z } from "zod";
 import {
   OccurrenceSchema,
@@ -96,14 +97,26 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
                   })}
                 </time>
 
-                <button
-                  type="button"
-                  onClick={() => onEdit({ occurrence })}
-                  aria-label="Edit occurrence"
-                  className="shrink-0 cursor-pointer rounded-lg py-1 text-sm font-medium text-accent transition-opacity duration-fast hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-                >
-                  Edit
-                </button>
+                <div className="flex shrink-0 items-center gap-3 justify-between">
+                  <button
+                    type="button"
+                    onClick={() => onEdit({ occurrence })}
+                    aria-label="Edit occurrence"
+                    className="cursor-pointer rounded-lg py-1 text-sm font-medium text-accent transition-opacity duration-fast hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                  >
+                    Edit
+                  </button>
+
+                  <span aria-hidden="true" className="h-4 w-px bg-subtle" />
+
+                  <Link
+                    href="/practice?tab=exposures"
+                    aria-label="Practise occurrence"
+                    className="cursor-pointer rounded-lg py-1 text-sm font-medium text-accent transition-opacity duration-fast hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                  >
+                    Practise
+                  </Link>
+                </div>
               </div>
 
               <p className="whitespace-pre-wrap wrap-break-words text-sm text-primary">

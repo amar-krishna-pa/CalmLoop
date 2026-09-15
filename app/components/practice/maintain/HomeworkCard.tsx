@@ -6,7 +6,7 @@ type HomeworkItem = {
 };
 
 const PLACEHOLDER_HOMEWORK: HomeworkItem[] = [
-  { id: "1", title: "Practice ERP exercise for 10 mins", dueDate: "Today", completed: false },
+  { id: "1", title: "Practise ERP exercise for 10 mins", dueDate: "Today", completed: false },
   { id: "2", title: "Write down 3 anxiety triggers", dueDate: "Tomorrow", completed: false },
   { id: "3", title: "Complete breathing log", dueDate: "Jul 2", completed: true },
 ];
