@@ -85,7 +85,7 @@ export default function ExposuresCard() {
         </span>
       </div>
 
-      <div className="flex-1 min-h-0 overflow-y-auto pr-1">
+      <div className="flex-1 min-h-0 snap-y snap-mandatory scroll-py-2 overflow-y-auto pr-1">
         {error ? (
           <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
             <p role="alert" className="text-sm text-muted">
@@ -117,7 +117,7 @@ export default function ExposuresCard() {
         ) : (
           <ul className="space-y-3">
             {exposures.map((exposure) => (
-              <li key={exposure.id}>
+              <li key={exposure.id} className="snap-start">
                 <ExposureListItem exposure={exposure} />
               </li>
             ))}
