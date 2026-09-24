@@ -2,15 +2,12 @@ import { LuChartLine } from "react-icons/lu";
 import type { Exposure } from "@/app/lib/zod/exposure-schema";
 import { cn } from "@/app/lib/cn";
 
-type ExposureStatus = "available" | "inProgress";
-
 type Props = {
   exposure: Exposure;
-  status: ExposureStatus;
 };
 
-export default function ExposureListItem({ exposure, status }: Props) {
-  const isInProgress = status === "inProgress";
+export default function ExposureListItem({ exposure }: Props) {
+  const isInProgress = exposure.practiceStatus === "in_progress";
 
   return (
     <article className="flex flex-col gap-3 rounded-xl bg-surface p-4 sm:flex-row sm:items-stretch">
@@ -23,7 +20,7 @@ export default function ExposureListItem({ exposure, status }: Props) {
               : "border-subtle bg-card text-muted",
           )}
         >
-          {isInProgress ? "In progress · Example" : "Available"}
+          {isInProgress ? "In progress" : "Available"}
         </span>
 
         <div className="min-w-0 flex flex-col">

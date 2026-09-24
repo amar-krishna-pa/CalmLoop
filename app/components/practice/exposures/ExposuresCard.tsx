@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "motion/react";
 import ExposuresCardLoader from "@/app/components/loaders/ExposuresCardLoader";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import ExposureListItem from "@/app/components/practice/exposures/ExposureListItem";
-import { IN_PROGRESS_EXAMPLES } from "@/app/components/practice/exposures/in-progress-examples";
 import { cn } from "@/app/lib/cn";
 import {
   ExposuresResponseSchema,
@@ -72,19 +71,58 @@ export default function ExposuresCard() {
     return () => controller.abort();
   }, [attempt]);
 
-  const availableCount = exposures?.length ?? 0;
-  const inProgressCount = IN_PROGRESS_EXAMPLES.length;
+  const availableExposures: Exposure[] = [];
+  const inProgressExposures: Exposure[] = [];
+
+  for (const exposure of exposures ?? []) {
+    if (exposure.practiceStatus === "in_progress") {
+      inProgressExposures.push(exposure);
+    } else {
+      availableExposures.push(exposure);
+    }
+  }
+
+  const availableCount = availableExposures.length;
+  const inProgressCount = inProgressExposures.length;
+  const totalCount = exposures?.length ?? 0;
   const filterCounts: Record<ExposureFilter, number> = {
-    all: availableCount + inProgressCount,
+    all: totalCount,
     inProgress: inProgressCount,
     available: availableCount,
   };
+
   const situationCountLabel = exposures
-    ? `${availableCount} saved · ${inProgressCount} example${inProgressCount === 1 ? "" : "s"}`
+    ? `${totalCount} ${totalCount === 1 ? "situation" : "situations"} · ${inProgressCount} in progress`
     : null;
+
   const showInProgress = selectedFilter !== "available";
   const showAvailable = selectedFilter !== "inProgress";
+
   const visibleSituationCount = filterCounts[selectedFilter];
+
+  const emptyState =
+    selectedFilter === "inProgress"
+      ? {
+          title: "No situations in progress",
+          description: "No situations are currently marked in progress.",
+        }
+      : selectedFilter === "available"
+        ? {
+            title: "No available situations",
+            description: (
+              <>
+                Situations saved in <strong>Prepare</strong> will appear here.
+              </>
+            ),
+          }
+        : {
+            title: "No practice situations yet",
+            description: (
+              <>
+                Situations saved in <strong>Prepare</strong> will appear here.
+              </>
+            ),
+          };
 
   function selectFilter({ filter }: { filter: ExposureFilter }) {
     setSelectedFilter(filter);
@@ -175,24 +213,17 @@ export default function ExposuresCard() {
         ) : visibleSituationCount === 0 ? (
           <div className="flex h-full flex-col items-center justify-center gap-1 text-center">
             <p className="text-sm font-medium text-primary">
-              No {selectedFilter === "available" ? "available" : "practice"}{" "}
-              situations yet
+              {emptyState.title}
             </p>
             <p className="max-w-sm text-xs text-muted">
-              {selectedFilter === "available" ? (
-                <>
-                  Situations saved in <strong>Prepare</strong> will appear here.
-                </>
-              ) : (
-                "No situations match this filter."
-              )}
+              {emptyState.description}
             </p>
           </div>
         ) : (
           <ul className="relative space-y-3">
             <AnimatePresence initial={false} mode="popLayout">
               {showInProgress &&
-                IN_PROGRESS_EXAMPLES.map((exposure) => (
+                inProgressExposures.map((exposure) => (
                   <motion.li
                     layout="position"
                     initial={{ opacity: 0 }}
@@ -201,11 +232,12 @@ export default function ExposuresCard() {
                     key={exposure.id}
                     className="snap-start"
                   >
-                    <ExposureListItem exposure={exposure} status="inProgress" />
+                    <ExposureListItem exposure={exposure} />
                   </motion.li>
                 ))}
+
               {showAvailable &&
-                exposures.map((exposure) => (
+                availableExposures.map((exposure) => (
                   <motion.li
                     layout="position"
                     initial={{ opacity: 0 }}
@@ -214,7 +246,7 @@ export default function ExposuresCard() {
                     key={exposure.id}
                     className="snap-start"
                   >
-                    <ExposureListItem exposure={exposure} status="available" />
+                    <ExposureListItem exposure={exposure} />
                   </motion.li>
                 ))}
             </AnimatePresence>
