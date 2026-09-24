@@ -1,3 +1,4 @@
+import { LuChartLine } from "react-icons/lu";
 import type { Exposure } from "@/app/lib/zod/exposure-schema";
 import { cn } from "@/app/lib/cn";
 
@@ -51,24 +52,40 @@ export default function ExposureListItem({ exposure, status }: Props) {
         </div>
       </div>
 
-      <div className="flex flex-col justify-end gap-2 sm:w-44 sm:shrink-0">
+      <div
+        className={cn(
+          "flex flex-col gap-2 sm:w-44 sm:shrink-0",
+          isInProgress ? "justify-between" : "justify-end",
+        )}
+      >
         {isInProgress ? (
-          <div className="flex flex-col gap-2">
+          <>
             <button
               type="button"
-              className="btn-accent w-full px-3 py-1.5 text-xs disabled:cursor-not-allowed disabled:opacity-50"
               disabled
+              className="flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-subtle px-3 py-1.5 text-xs font-medium text-muted transition-colors duration-fast hover:bg-card hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Add check-in
+              <LuChartLine aria-hidden="true" size={14} />
+              View progress
             </button>
-            <button
-              type="button"
-              className="w-full rounded-lg border border-subtle px-3 py-1.5 text-xs font-medium text-muted disabled:cursor-not-allowed disabled:opacity-50"
-              disabled
-            >
-              Move to available
-            </button>
-          </div>
+
+            <div className="flex flex-col gap-2">
+              <button
+                type="button"
+                className="btn-accent w-full px-3 py-1.5 text-xs disabled:cursor-not-allowed disabled:opacity-50"
+                disabled
+              >
+                Add check-in
+              </button>
+              <button
+                type="button"
+                className="w-full rounded-lg border border-subtle px-3 py-1.5 text-xs font-medium text-muted disabled:cursor-not-allowed disabled:opacity-50"
+                disabled
+              >
+                Move to available
+              </button>
+            </div>
+          </>
         ) : (
           <button
             type="button"
