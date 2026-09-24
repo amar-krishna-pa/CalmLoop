@@ -54,7 +54,7 @@ export default function PracticeTabs() {
             key={tab.id}
             onClick={() => selectTab(tab.id)}
             className={cn(
-              "relative isolate flex flex-col items-center py-2.5 px-3 rounded-lg cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
+              "relative isolate flex min-w-0 flex-col items-center justify-center rounded-lg px-3 py-2.5 text-center cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
               activeTab !== tab.id && "hover:bg-accent/5",
             )}
           >
@@ -76,7 +76,7 @@ export default function PracticeTabs() {
               {tab.label}
             </span>
 
-            <span className="text-2xs text-muted mt-0.5 hidden sm:block">
+            <span className="mt-0.5 hidden text-2xs leading-tight text-muted sm:block">
               {tab.sublabel}
             </span>
           </button>
