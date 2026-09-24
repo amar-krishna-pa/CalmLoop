@@ -2,14 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { toast } from "sonner";
 import ExposuresCardLoader from "@/app/components/loaders/ExposuresCardLoader";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import ExposureListItem from "@/app/components/practice/exposures/ExposureListItem";
+import type { ExposurePracticeStatus } from "@/app/constants/exposures/practice-statuses";
 import { cn } from "@/app/lib/cn";
 import {
   ExposuresResponseSchema,
   type Exposure,
 } from "@/app/lib/zod/exposure-schema";
+import { UpdateExposurePracticeStatusResponseSchema } from "@/app/lib/zod/update-exposure-practice-status-schema";
 
 const FILTERS = [
   { value: "all", label: "All" },
@@ -25,6 +28,9 @@ export default function ExposuresCard() {
   const [attempt, setAttempt] = useState(0);
   const [isRetrying, setIsRetrying] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState<ExposureFilter>("all");
+  const [updatingExposureId, setUpdatingExposureId] = useState<string | null>(
+    null,
+  );
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -127,6 +133,48 @@ export default function ExposuresCard() {
   function selectFilter({ filter }: { filter: ExposureFilter }) {
     setSelectedFilter(filter);
     scrollContainerRef.current?.scrollTo({ top: 0 });
+  }
+
+  async function updatePracticeStatus({
+    exposureId,
+    practiceStatus,
+  }: {
+    exposureId: string;
+    practiceStatus: ExposurePracticeStatus;
+  }) {
+    if (updatingExposureId !== null) return;
+
+    setUpdatingExposureId(exposureId);
+
+    try {
+      const response = await fetch(`/api/exposures/${exposureId}/status`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ practiceStatus }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Status update failed");
+      }
+
+      const data = UpdateExposurePracticeStatusResponseSchema.parse(
+        await response.json(),
+      );
+
+      setExposures((currentExposures) =>
+        currentExposures?.map((exposure) =>
+          exposure.id === data.exposure.id
+            ? { ...exposure, practiceStatus: data.exposure.practiceStatus }
+            : exposure,
+        ) ?? null,
+      );
+    } catch {
+      toast.error(
+        "We couldn’t update this practice situation. You can try again.",
+      );
+    } finally {
+      setUpdatingExposureId(null);
+    }
   }
 
   return (
@@ -232,7 +280,12 @@ export default function ExposuresCard() {
                     key={exposure.id}
                     className="snap-start"
                   >
-                    <ExposureListItem exposure={exposure} />
+                    <ExposureListItem
+                      exposure={exposure}
+                      isUpdatingStatus={updatingExposureId === exposure.id}
+                      isStatusUpdatePending={updatingExposureId !== null}
+                      onStatusChange={updatePracticeStatus}
+                    />
                   </motion.li>
                 ))}
 
@@ -246,7 +299,12 @@ export default function ExposuresCard() {
                     key={exposure.id}
                     className="snap-start"
                   >
-                    <ExposureListItem exposure={exposure} />
+                    <ExposureListItem
+                      exposure={exposure}
+                      isUpdatingStatus={updatingExposureId === exposure.id}
+                      isStatusUpdatePending={updatingExposureId !== null}
+                      onStatusChange={updatePracticeStatus}
+                    />
                   </motion.li>
                 ))}
             </AnimatePresence>

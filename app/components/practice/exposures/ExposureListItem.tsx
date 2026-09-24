@@ -1,12 +1,28 @@
 import { LuChartLine } from "react-icons/lu";
+import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
+import type { ExposurePracticeStatus } from "@/app/constants/exposures/practice-statuses";
 import type { Exposure } from "@/app/lib/zod/exposure-schema";
 import { cn } from "@/app/lib/cn";
 
 type Props = {
   exposure: Exposure;
+  isUpdatingStatus: boolean;
+  isStatusUpdatePending: boolean;
+  onStatusChange: ({
+    exposureId,
+    practiceStatus,
+  }: {
+    exposureId: string;
+    practiceStatus: ExposurePracticeStatus;
+  }) => void;
 };
 
-export default function ExposureListItem({ exposure }: Props) {
+export default function ExposureListItem({
+  exposure,
+  isUpdatingStatus,
+  isStatusUpdatePending,
+  onStatusChange,
+}: Props) {
   const isInProgress = exposure.practiceStatus === "in_progress";
 
   return (
@@ -76,20 +92,48 @@ export default function ExposureListItem({ exposure }: Props) {
               </button>
               <button
                 type="button"
-                className="w-full rounded-lg border border-subtle px-3 py-1.5 text-xs font-medium text-muted disabled:cursor-not-allowed disabled:opacity-50"
-                disabled
+                aria-label={
+                  isUpdatingStatus
+                    ? "Moving situation to available"
+                    : undefined
+                }
+                className="flex h-8 w-full cursor-pointer items-center justify-center rounded-lg border border-subtle px-3 text-xs font-medium text-muted transition-colors duration-fast hover:bg-card hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
+                disabled={isStatusUpdatePending}
+                onClick={() =>
+                  onStatusChange({
+                    exposureId: exposure.id,
+                    practiceStatus: "available",
+                  })
+                }
               >
-                Move to available
+                {isUpdatingStatus ? (
+                  <LoadingSpinner size={14} />
+                ) : (
+                  "Move to available"
+                )}
               </button>
             </div>
           </>
         ) : (
           <button
             type="button"
-            className="btn-accent w-full px-3 py-1.5 text-xs disabled:cursor-not-allowed disabled:opacity-50"
-            disabled
+            aria-label={
+              isUpdatingStatus ? "Moving situation to in progress" : undefined
+            }
+            className="btn-accent flex h-8 w-full cursor-pointer items-center justify-center px-3 py-0 text-xs disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={isStatusUpdatePending}
+            onClick={() =>
+              onStatusChange({
+                exposureId: exposure.id,
+                practiceStatus: "in_progress",
+              })
+            }
           >
-            Work on this
+            {isUpdatingStatus ? (
+              <LoadingSpinner size={14} />
+            ) : (
+              "Work on this"
+            )}
           </button>
         )}
       </div>
