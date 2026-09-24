@@ -84,6 +84,7 @@ export default function ExposuresCard() {
     : null;
   const showInProgress = selectedFilter !== "available";
   const showAvailable = selectedFilter !== "inProgress";
+  const visibleSituationCount = filterCounts[selectedFilter];
 
   function selectFilter({ filter }: { filter: ExposureFilter }) {
     setSelectedFilter(filter);
@@ -95,7 +96,7 @@ export default function ExposuresCard() {
       aria-labelledby="exposures-heading"
       className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4 card-medium"
     >
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
         <div className="min-w-0">
           <h2
             id="exposures-heading"
@@ -108,12 +109,15 @@ export default function ExposuresCard() {
           </p>
         </div>
 
-        <span aria-live="polite" className="shrink-0 text-xs text-muted">
+        <span
+          aria-live="polite"
+          className="text-xs text-muted sm:shrink-0 sm:text-right"
+        >
           {!error && situationCountLabel}
         </span>
       </div>
 
-      {!error && exposures !== null && exposures.length > 0 && (
+      {!error && exposures !== null && filterCounts.all > 0 && (
         <div
           role="group"
           aria-label="Filter exposure situations"
@@ -129,7 +133,7 @@ export default function ExposuresCard() {
                 aria-pressed={isSelected}
                 onClick={() => selectFilter({ filter: filter.value })}
                 className={cn(
-                  "cursor-pointer rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors duration-fast",
+                  "cursor-pointer rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors duration-fast focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
                   isSelected
                     ? "border-subtle bg-surface text-primary shadow-sm"
                     : "border-subtle text-muted hover:bg-surface hover:text-primary",
@@ -144,7 +148,10 @@ export default function ExposuresCard() {
 
       <div
         ref={scrollContainerRef}
-        className="flex-1 min-h-0 snap-y snap-mandatory scroll-py-2 overflow-y-auto pr-1"
+        aria-label="Exposure situations"
+        role="region"
+        tabIndex={exposures !== null && !error ? 0 : -1}
+        className="flex-1 min-h-0 snap-y snap-mandatory scroll-py-2 overflow-y-auto pr-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
       >
         {error ? (
           <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
@@ -165,13 +172,20 @@ export default function ExposuresCard() {
           </div>
         ) : exposures === null ? (
           <ExposuresCardLoader />
-        ) : exposures.length === 0 ? (
+        ) : visibleSituationCount === 0 ? (
           <div className="flex h-full flex-col items-center justify-center gap-1 text-center">
             <p className="text-sm font-medium text-primary">
-              No practice situations yet
+              No {selectedFilter === "available" ? "available" : "practice"}{" "}
+              situations yet
             </p>
             <p className="max-w-sm text-xs text-muted">
-              Situations saved in <strong>Prepare</strong> will appear here.
+              {selectedFilter === "available" ? (
+                <>
+                  Situations saved in <strong>Prepare</strong> will appear here.
+                </>
+              ) : (
+                "No situations match this filter."
+              )}
             </p>
           </div>
         ) : (
