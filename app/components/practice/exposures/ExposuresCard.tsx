@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ExposuresCardLoader from "@/app/components/loaders/ExposuresCardLoader";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import ExposureListItem from "@/app/components/practice/exposures/ExposureListItem";
+import { IN_PROGRESS_EXAMPLES } from "@/app/components/practice/exposures/in-progress-examples";
 import {
   ExposuresResponseSchema,
   type Exposure,
@@ -59,7 +60,7 @@ export default function ExposuresCard() {
   }, [attempt]);
 
   const situationCountLabel = exposures
-    ? `${exposures.length} situation${exposures.length === 1 ? "" : "s"}`
+    ? `${exposures.length} saved situation${exposures.length === 1 ? "" : "s"}`
     : null;
 
   return (
@@ -116,9 +117,14 @@ export default function ExposuresCard() {
           </div>
         ) : (
           <ul className="space-y-3">
+            {IN_PROGRESS_EXAMPLES.map((exposure) => (
+              <li key={exposure.id} className="snap-start">
+                <ExposureListItem exposure={exposure} status="inProgress" />
+              </li>
+            ))}
             {exposures.map((exposure) => (
               <li key={exposure.id} className="snap-start">
-                <ExposureListItem exposure={exposure} />
+                <ExposureListItem exposure={exposure} status="available" />
               </li>
             ))}
           </ul>
