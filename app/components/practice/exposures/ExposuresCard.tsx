@@ -1,20 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import ExposuresCardLoader from "@/app/components/loaders/ExposuresCardLoader";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import ExposureListItem from "@/app/components/practice/exposures/ExposureListItem";
 import { IN_PROGRESS_EXAMPLES } from "@/app/components/practice/exposures/in-progress-examples";
+import { cn } from "@/app/lib/cn";
 import {
   ExposuresResponseSchema,
   type Exposure,
 } from "@/app/lib/zod/exposure-schema";
+
+const FILTERS = [
+  { value: "all", label: "All" },
+  { value: "inProgress", label: "In progress" },
+  { value: "available", label: "Available" },
+] as const;
+
+type ExposureFilter = (typeof FILTERS)[number]["value"];
 
 export default function ExposuresCard() {
   const [exposures, setExposures] = useState<Exposure[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
   const [isRetrying, setIsRetrying] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState<ExposureFilter>("all");
+
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -59,9 +72,23 @@ export default function ExposuresCard() {
     return () => controller.abort();
   }, [attempt]);
 
+  const availableCount = exposures?.length ?? 0;
+  const inProgressCount = IN_PROGRESS_EXAMPLES.length;
+  const filterCounts: Record<ExposureFilter, number> = {
+    all: availableCount + inProgressCount,
+    inProgress: inProgressCount,
+    available: availableCount,
+  };
   const situationCountLabel = exposures
-    ? `${exposures.length} saved situation${exposures.length === 1 ? "" : "s"}`
+    ? `${availableCount} saved · ${inProgressCount} example${inProgressCount === 1 ? "" : "s"}`
     : null;
+  const showInProgress = selectedFilter !== "available";
+  const showAvailable = selectedFilter !== "inProgress";
+
+  function selectFilter({ filter }: { filter: ExposureFilter }) {
+    setSelectedFilter(filter);
+    scrollContainerRef.current?.scrollTo({ top: 0 });
+  }
 
   return (
     <section
@@ -86,7 +113,39 @@ export default function ExposuresCard() {
         </span>
       </div>
 
-      <div className="flex-1 min-h-0 snap-y snap-mandatory scroll-py-2 overflow-y-auto pr-1">
+      {!error && exposures !== null && exposures.length > 0 && (
+        <div
+          role="group"
+          aria-label="Filter exposure situations"
+          className="flex flex-wrap gap-2"
+        >
+          {FILTERS.map((filter) => {
+            const isSelected = selectedFilter === filter.value;
+
+            return (
+              <button
+                key={filter.value}
+                type="button"
+                aria-pressed={isSelected}
+                onClick={() => selectFilter({ filter: filter.value })}
+                className={cn(
+                  "cursor-pointer rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors duration-fast",
+                  isSelected
+                    ? "border-subtle bg-surface text-primary shadow-sm"
+                    : "border-subtle text-muted hover:bg-surface hover:text-primary",
+                )}
+              >
+                {filter.label} ({filterCounts[filter.value]})
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      <div
+        ref={scrollContainerRef}
+        className="flex-1 min-h-0 snap-y snap-mandatory scroll-py-2 overflow-y-auto pr-1"
+      >
         {error ? (
           <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
             <p role="alert" className="text-sm text-muted">
@@ -116,17 +175,35 @@ export default function ExposuresCard() {
             </p>
           </div>
         ) : (
-          <ul className="space-y-3">
-            {IN_PROGRESS_EXAMPLES.map((exposure) => (
-              <li key={exposure.id} className="snap-start">
-                <ExposureListItem exposure={exposure} status="inProgress" />
-              </li>
-            ))}
-            {exposures.map((exposure) => (
-              <li key={exposure.id} className="snap-start">
-                <ExposureListItem exposure={exposure} status="available" />
-              </li>
-            ))}
+          <ul className="relative space-y-3">
+            <AnimatePresence initial={false} mode="popLayout">
+              {showInProgress &&
+                IN_PROGRESS_EXAMPLES.map((exposure) => (
+                  <motion.li
+                    layout="position"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    key={exposure.id}
+                    className="snap-start"
+                  >
+                    <ExposureListItem exposure={exposure} status="inProgress" />
+                  </motion.li>
+                ))}
+              {showAvailable &&
+                exposures.map((exposure) => (
+                  <motion.li
+                    layout="position"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    key={exposure.id}
+                    className="snap-start"
+                  >
+                    <ExposureListItem exposure={exposure} status="available" />
+                  </motion.li>
+                ))}
+            </AnimatePresence>
           </ul>
         )}
       </div>
