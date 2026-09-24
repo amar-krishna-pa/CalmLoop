@@ -20,6 +20,7 @@ export async function GET() {
       evidence: fearOccurrences.evidence,
       initialSuds: fearOccurrences.initialSuds,
       currentSuds: fearOccurrences.currentSuds,
+      practiceStatus: fearOccurrences.practiceStatus,
       createdAt: fearOccurrences.createdAt,
     })
     .from(fearOccurrences)

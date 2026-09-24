@@ -11,11 +11,12 @@ import {
   date,
   pgEnum,
 } from "drizzle-orm/pg-core";
+import { EXPOSURE_PRACTICE_STATUSES } from "@/app/constants/exposures/practice-statuses";
 
-export const exposurePracticeStatus = pgEnum("exposure_practice_status", [
-  "available",
-  "in_progress",
-]);
+export const exposurePracticeStatus = pgEnum(
+  "exposure_practice_status",
+  EXPOSURE_PRACTICE_STATUSES,
+);
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),

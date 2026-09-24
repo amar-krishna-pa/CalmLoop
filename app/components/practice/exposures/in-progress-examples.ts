@@ -10,6 +10,7 @@ export const IN_PROGRESS_EXAMPLES: Exposure[] = [
     evidence: "Sending an email without rereading it",
     initialSuds: 6,
     currentSuds: 4,
+    practiceStatus: "in_progress",
     createdAt: "2026-09-20T09:00:00.000Z",
   },
   {
@@ -21,6 +22,7 @@ export const IN_PROGRESS_EXAMPLES: Exposure[] = [
     evidence: "Using a shared door handle",
     initialSuds: 7,
     currentSuds: 5,
+    practiceStatus: "in_progress",
     createdAt: "2026-09-19T09:00:00.000Z",
   },
   {
@@ -32,6 +34,7 @@ export const IN_PROGRESS_EXAMPLES: Exposure[] = [
     evidence: "Leaving an appliance without checking again",
     initialSuds: 8,
     currentSuds: 6,
+    practiceStatus: "in_progress",
     createdAt: "2026-09-18T09:00:00.000Z",
   },
 ];

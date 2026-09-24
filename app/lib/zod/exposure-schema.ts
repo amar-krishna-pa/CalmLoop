@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { EXPOSURE_PRACTICE_STATUSES } from "@/app/constants/exposures/practice-statuses";
 import { THEMES } from "@/app/constants/fears/themes";
 
 export const ExposureSchema = z.object({
@@ -11,6 +12,7 @@ export const ExposureSchema = z.object({
   evidence: z.string(),
   initialSuds: z.number().int().min(0).max(10),
   currentSuds: z.number().int().min(0).max(10).nullable(),
+  practiceStatus: z.enum(EXPOSURE_PRACTICE_STATUSES),
   createdAt: z.iso.datetime(),
 });
 
