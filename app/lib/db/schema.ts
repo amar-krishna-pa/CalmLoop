@@ -200,6 +200,7 @@ export const erpSessions = pgTable(
       .notNull()
       .references(() => fearOccurrences.id, { onDelete: "cascade" }),
     suds: integer("suds").notNull(),
+    notes: text("notes"),
     completedAt: timestamp("completed_at").defaultNow().notNull(),
   },
   (table) => [
