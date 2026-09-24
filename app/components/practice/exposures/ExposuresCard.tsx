@@ -273,7 +273,7 @@ export default function ExposuresCard() {
               {showInProgress &&
                 inProgressExposures.map((exposure) => (
                   <motion.li
-                    layout="position"
+                    layout
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -292,7 +292,7 @@ export default function ExposuresCard() {
               {showAvailable &&
                 availableExposures.map((exposure) => (
                   <motion.li
-                    layout="position"
+                    layout
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
