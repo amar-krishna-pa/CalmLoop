@@ -9,7 +9,13 @@ import {
   uuid,
   jsonb,
   date,
+  pgEnum,
 } from "drizzle-orm/pg-core";
+
+export const exposurePracticeStatus = pgEnum("exposure_practice_status", [
+  "available",
+  "in_progress",
+]);
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -166,6 +172,9 @@ export const fearOccurrences = pgTable(
     initialSuds: integer("initial_suds").notNull(),
     // Remains null until the person records a rating after an ERP session.
     currentSuds: integer("current_suds"),
+    practiceStatus: exposurePracticeStatus("practice_status")
+      .notNull()
+      .default("available"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
       .defaultNow()
