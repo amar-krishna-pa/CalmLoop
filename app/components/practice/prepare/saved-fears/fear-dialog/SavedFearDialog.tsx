@@ -17,8 +17,9 @@ type Props = {
 
 export default function SavedFearDialog({ fear, onClose, onSaved }: Props) {
   const [view, setView] = useState<"details" | "edit" | "occurrence">("details");
-
-  const [editingOccurrence, setEditingOccurrence] = useState<Occurrence | null>(null);
+  const [occurrences, setOccurrences] = useState<Occurrence[] | null>(null);
+  const [editingOccurrence, setEditingOccurrence] =
+    useState<Occurrence | null>(null);
 
   const savingRef = useRef(false);
 
@@ -66,6 +67,8 @@ export default function SavedFearDialog({ fear, onClose, onSaved }: Props) {
             ) : (
               <SavedFearDetails
                 fear={fear}
+                occurrences={occurrences}
+                onOccurrencesLoaded={setOccurrences}
                 onEdit={() => setView("edit")}
                 onEditOccurrence={({ occurrence }) => {
                   setEditingOccurrence(occurrence);

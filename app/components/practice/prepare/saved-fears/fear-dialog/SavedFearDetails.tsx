@@ -6,11 +6,19 @@ import FearOccurrences from "@/app/components/practice/prepare/saved-fears/fear-
 
 type Props = {
   fear: { id: string; name: string; themes: string[]; behaviours: string[] };
+  occurrences: Occurrence[] | null;
   onEdit: () => void;
   onEditOccurrence: ({ occurrence }: { occurrence: Occurrence }) => void;
+  onOccurrencesLoaded: (occurrences: Occurrence[]) => void;
 };
 
-export default function SavedFearDetails({ fear, onEdit, onEditOccurrence }: Props) {
+export default function SavedFearDetails({
+  fear,
+  occurrences,
+  onEdit,
+  onEditOccurrence,
+  onOccurrencesLoaded,
+}: Props) {
   return (
     <div className="min-h-0 flex-1 space-y-4 overflow-y-auto">
       <div className="space-y-2">
@@ -76,7 +84,12 @@ export default function SavedFearDetails({ fear, onEdit, onEditOccurrence }: Pro
 
       <HorizontalDivider />
 
-      <FearOccurrences key={fear.id} fearId={fear.id} onEdit={onEditOccurrence} />
+      <FearOccurrences
+        fearId={fear.id}
+        occurrences={occurrences}
+        onEdit={onEditOccurrence}
+        onOccurrencesLoaded={onOccurrencesLoaded}
+      />
     </div>
   );
 }

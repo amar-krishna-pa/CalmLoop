@@ -14,16 +14,24 @@ const OccurrencesSchema = z.object({ occurrences: z.array(OccurrenceSchema) });
 
 type Props = {
   fearId: string;
+  occurrences: Occurrence[] | null;
   onEdit: ({ occurrence }: { occurrence: Occurrence }) => void;
+  onOccurrencesLoaded: (occurrences: Occurrence[]) => void;
 };
 
-export default function FearOccurrences({ fearId, onEdit }: Props) {
-  const [occurrences, setOccurrences] = useState<Occurrence[] | null>(null);
+export default function FearOccurrences({
+  fearId,
+  occurrences,
+  onEdit,
+  onOccurrencesLoaded,
+}: Props) {
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
   const [isRetrying, setIsRetrying] = useState(false);
 
   useEffect(() => {
+    if (occurrences !== null) return;
+
     const controller = new AbortController();
 
     async function loadOccurrences() {
@@ -42,7 +50,7 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
 
         const data = OccurrencesSchema.parse(await response.json());
         if (!controller.signal.aborted) {
-          setOccurrences(data.occurrences);
+          onOccurrencesLoaded(data.occurrences);
           setError(null);
         }
       } catch (error) {
@@ -61,7 +69,7 @@ export default function FearOccurrences({ fearId, onEdit }: Props) {
     });
 
     return () => controller.abort();
-  }, [fearId, attempt]);
+  }, [fearId, attempt, occurrences, onOccurrencesLoaded]);
 
   return (
     <section className="space-y-1" aria-label="Past entries">
