@@ -279,6 +279,10 @@ body {
     height: var(--card-tall);
   }
 
+  .exposures-card-height {
+    height: 100%;
+  }
+
   /* ── Range slider ───────────────────────────────────────────────────────────
      Deliberately avoids `accent-color`: the browser derives the *unfilled*
      track from the accent's luminance and flips to a near-black companion when

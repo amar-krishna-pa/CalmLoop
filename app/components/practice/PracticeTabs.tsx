@@ -47,8 +47,13 @@ export default function PracticeTabs() {
   }
 
   return (
-    <>
-      <div className="bg-surface border border-subtle rounded-xl p-1 grid grid-cols-3 gap-1 mb-6 min-h-16 sm:min-h-20">
+    <div
+      className={cn(
+        activeTab === "exposures" &&
+          "flex min-h-0 flex-1 flex-col overflow-hidden",
+      )}
+    >
+      <div className="mb-6 grid min-h-16 shrink-0 grid-cols-3 gap-1 rounded-xl border border-subtle bg-surface p-1 sm:min-h-20">
         {TABS.map((tab) => (
           <button
             key={tab.id}
@@ -83,13 +88,19 @@ export default function PracticeTabs() {
         ))}
       </div>
 
-      <div className="relative">
+      <div
+        className={cn(
+          "relative",
+          activeTab === "exposures" && "min-h-0 flex-1",
+        )}
+      >
         <AnimatePresence initial={false} mode="popLayout">
           <motion.div
             key={activeTab}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, pointerEvents: "none" }}
+            className={cn(activeTab === "exposures" && "h-full")}
           >
             {activeTab === "prepare" && (
               <div className="flex flex-col gap-4">
@@ -114,6 +125,6 @@ export default function PracticeTabs() {
           </motion.div>
         </AnimatePresence>
       </div>
-    </>
+    </div>
   );
 }

@@ -204,7 +204,7 @@ export default function ExposuresCard() {
   return (
     <section
       aria-labelledby="exposures-heading"
-      className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4 card-medium"
+      className="card-medium exposures-card-height flex flex-col gap-4 rounded-xl border border-subtle bg-card p-4"
     >
       <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
         <div className="min-w-0">
