@@ -87,7 +87,7 @@ export default function ExposureListItem({
             <div className="flex flex-col gap-2">
               <button
                 type="button"
-                className="btn-accent w-full px-3 py-1.5 text-xs disabled:cursor-not-allowed disabled:opacity-50"
+                className="btn-accent w-full px-3 py-1.5 text-xs disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
                 onClick={onAddCheckIn}
               >
                 Add check-in
@@ -95,9 +95,7 @@ export default function ExposureListItem({
               <button
                 type="button"
                 aria-label={
-                  isUpdatingStatus
-                    ? "Moving situation to available"
-                    : undefined
+                  isUpdatingStatus ? "Moving situation to available" : undefined
                 }
                 className="flex h-8 w-full cursor-pointer items-center justify-center rounded-lg border border-subtle px-3 text-xs font-medium text-muted transition-colors duration-fast hover:bg-card hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
                 disabled={isStatusUpdatePending}
@@ -131,11 +129,7 @@ export default function ExposureListItem({
               })
             }
           >
-            {isUpdatingStatus ? (
-              <LoadingSpinner size={14} />
-            ) : (
-              "Work on this"
-            )}
+            {isUpdatingStatus ? <LoadingSpinner size={14} /> : "Work on this"}
           </button>
         )}
       </div>

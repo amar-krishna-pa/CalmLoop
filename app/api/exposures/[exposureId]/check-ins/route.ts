@@ -28,7 +28,10 @@ export async function POST(
     );
   }
 
-  const parsedId = z.string().uuid().safeParse((await params).exposureId);
+  const parsedId = z
+    .string()
+    .uuid()
+    .safeParse((await params).exposureId);
   if (!parsedId.success) {
     return Response.json(
       { error: "This practice situation isn’t available for a check-in." },
@@ -115,7 +118,7 @@ export async function POST(
         exposureId: checkInResult.exposureId,
         suds: checkInResult.suds,
         notes: checkInResult.notes,
-        completedAt: checkInResult.completedAt,
+        completedAt: new Date(checkInResult.completedAt).toISOString(),
       },
       exposure: {
         id: checkInResult.exposureId,

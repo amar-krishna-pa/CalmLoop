@@ -183,6 +183,24 @@ export default function ExposuresCard() {
     }
   }
 
+  function applySavedCheckIn({
+    exposureId,
+    currentSuds,
+  }: {
+    exposureId: string;
+    currentSuds: number;
+  }) {
+    setExposures(
+      (currentExposures) =>
+        currentExposures?.map((exposure) =>
+          exposure.id === exposureId
+            ? { ...exposure, currentSuds }
+            : exposure,
+        ) ?? null,
+    );
+    setCheckInExposureId(null);
+  }
+
   return (
     <section
       aria-labelledby="exposures-heading"
@@ -326,6 +344,7 @@ export default function ExposuresCard() {
             key={checkInExposure.id}
             exposure={checkInExposure}
             onClose={() => setCheckInExposureId(null)}
+            onSaved={applySavedCheckIn}
           />
         )}
       </AnimatePresence>
