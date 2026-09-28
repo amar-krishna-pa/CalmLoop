@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { toast } from "sonner";
 import ExposuresCardLoader from "@/app/components/loaders/ExposuresCardLoader";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
+import ExposureCheckInModal from "@/app/components/practice/exposures/ExposureCheckInModal";
 import ExposureListItem from "@/app/components/practice/exposures/ExposureListItem";
 import type { ExposurePracticeStatus } from "@/app/constants/exposures/practice-statuses";
 import { cn } from "@/app/lib/cn";
@@ -28,6 +29,9 @@ export default function ExposuresCard() {
   const [attempt, setAttempt] = useState(0);
   const [isRetrying, setIsRetrying] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState<ExposureFilter>("all");
+  const [checkInExposureId, setCheckInExposureId] = useState<string | null>(
+    null,
+  );
   const [updatingExposureId, setUpdatingExposureId] = useState<string | null>(
     null,
   );
@@ -105,6 +109,8 @@ export default function ExposuresCard() {
   const showAvailable = selectedFilter !== "inProgress";
 
   const visibleSituationCount = filterCounts[selectedFilter];
+  const checkInExposure =
+    exposures?.find((exposure) => exposure.id === checkInExposureId) ?? null;
 
   const emptyState =
     selectedFilter === "inProgress"
@@ -284,6 +290,7 @@ export default function ExposuresCard() {
                       exposure={exposure}
                       isUpdatingStatus={updatingExposureId === exposure.id}
                       isStatusUpdatePending={updatingExposureId !== null}
+                      onAddCheckIn={() => setCheckInExposureId(exposure.id)}
                       onStatusChange={updatePracticeStatus}
                     />
                   </motion.li>
@@ -303,6 +310,7 @@ export default function ExposuresCard() {
                       exposure={exposure}
                       isUpdatingStatus={updatingExposureId === exposure.id}
                       isStatusUpdatePending={updatingExposureId !== null}
+                      onAddCheckIn={() => setCheckInExposureId(exposure.id)}
                       onStatusChange={updatePracticeStatus}
                     />
                   </motion.li>
@@ -311,6 +319,16 @@ export default function ExposuresCard() {
           </ul>
         )}
       </div>
+
+      <AnimatePresence initial={false}>
+        {checkInExposure && (
+          <ExposureCheckInModal
+            key={checkInExposure.id}
+            exposure={checkInExposure}
+            onClose={() => setCheckInExposureId(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }

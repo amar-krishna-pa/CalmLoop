@@ -8,6 +8,7 @@ type Props = {
   exposure: Exposure;
   isUpdatingStatus: boolean;
   isStatusUpdatePending: boolean;
+  onAddCheckIn: () => void;
   onStatusChange: ({
     exposureId,
     practiceStatus,
@@ -21,6 +22,7 @@ export default function ExposureListItem({
   exposure,
   isUpdatingStatus,
   isStatusUpdatePending,
+  onAddCheckIn,
   onStatusChange,
 }: Props) {
   const isInProgress = exposure.practiceStatus === "in_progress";
@@ -86,7 +88,7 @@ export default function ExposureListItem({
               <button
                 type="button"
                 className="btn-accent w-full px-3 py-1.5 text-xs disabled:cursor-not-allowed disabled:opacity-50"
-                disabled
+                onClick={onAddCheckIn}
               >
                 Add check-in
               </button>
