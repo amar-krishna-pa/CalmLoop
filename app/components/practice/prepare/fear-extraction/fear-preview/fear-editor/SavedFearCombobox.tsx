@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { Fragment, useRef, useState, type ReactNode } from "react";
 import {
   Combobox,
   ComboboxInput,
@@ -12,6 +12,7 @@ import {
   ComboboxStatus,
 } from "@/app/components/ui/combobox";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
+import HorizontalDivider from "@/app/components/common/HorizontalDivider";
 import { AnimatePresence, motion } from "motion/react";
 import { LuChevronDown } from "react-icons/lu";
 import { cn } from "@/app/lib/cn";
@@ -65,13 +66,25 @@ export default function SavedFearCombobox({
           if (nextOpen) onLoad();
         }}
       >
-        {leadingAction}
-        {leadingAction && (
-          <span aria-hidden="true" className="text-2xs text-muted">
-            ·
-          </span>
-        )}
-        <button
+        <AnimatePresence initial={false} mode="popLayout">
+          {leadingAction && (
+            <motion.div
+              key="leading-action"
+              layout
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex items-center gap-2"
+            >
+              {leadingAction}
+              <span aria-hidden="true" className="text-2xs text-muted">
+                ·
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <motion.button
+          layout="position"
           type="button"
           aria-expanded={isExpanded}
           onClick={() => {
@@ -81,8 +94,17 @@ export default function SavedFearCombobox({
           }}
           className="flex min-h-5 items-center text-left text-2xs font-medium text-accent cursor-pointer transition-opacity duration-fast hover:opacity-80"
         >
-          {isExpanded ? "Hide saved fears" : triggerLabel}
-        </button>
+          <AnimatePresence initial={false} mode="wait">
+            <motion.span
+              key={isExpanded ? "hide" : triggerLabel}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              {isExpanded ? "Hide saved fears" : triggerLabel}
+            </motion.span>
+          </AnimatePresence>
+        </motion.button>
         <AnimatePresence initial={false}>
           {isExpanded && (
             <motion.div
@@ -95,9 +117,10 @@ export default function SavedFearCombobox({
               <div className="pt-2">
                 <div ref={inputGroupRef} className="relative w-full">
                   <ComboboxInput
+                    autoFocus
                     aria-label="Search saved fears"
                     placeholder="Search saved fears…"
-                    className="input-base w-full border-subtle/60 bg-modal/70 pr-9"
+                    className="input-base w-full border-subtle/60 bg-modal/70 pr-9 focus:shadow-[inset_0_0_0_2px_var(--accent)]"
                   />
                   <ComboboxTrigger
                     aria-label={
@@ -122,7 +145,7 @@ export default function SavedFearCombobox({
           )}
         </AnimatePresence>
         <ComboboxContent anchor={inputGroupRef} container={containerRef}>
-          <div className="h-48 overflow-y-auto">
+          <div className="modal-scrollbar relative h-48 overflow-y-auto">
             <ComboboxStatus className="text-2xs text-muted empty:hidden">
               {isLoading ? "Loading saved fears…" : error}
             </ComboboxStatus>
@@ -137,7 +160,7 @@ export default function SavedFearCombobox({
               </button>
             )}
             {!isLoading && !error && savedFears !== null && (
-              <ComboboxEmpty className="py-2 text-xs font-normal text-muted">
+              <ComboboxEmpty className="absolute inset-0 flex items-center justify-center px-4 text-center text-xs font-normal text-muted">
                 {savedFears.length === 0
                   ? "No saved fears yet."
                   : "No matching fears. You can try another word."}
@@ -145,13 +168,15 @@ export default function SavedFearCombobox({
             )}
             <ComboboxList>
               {(fear: { id: string; name: string }) => (
-                <ComboboxItem
-                  key={fear.id}
-                  value={fear}
-                  className="cursor-pointer rounded-md px-3 py-2 text-xs font-normal text-primary data-highlighted:bg-accent/10 data-highlighted:text-accent"
-                >
-                  {fear.name}
-                </ComboboxItem>
+                <Fragment key={fear.id}>
+                  <ComboboxItem
+                    value={fear}
+                    className="cursor-pointer rounded-md px-3 py-2 text-xs font-normal text-primary data-highlighted:bg-accent/10 data-highlighted:text-accent"
+                  >
+                    {fear.name}
+                  </ComboboxItem>
+                  <HorizontalDivider />
+                </Fragment>
               )}
             </ComboboxList>
           </div>

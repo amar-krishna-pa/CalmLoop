@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import SavedFearCombobox from "@/app/components/practice/prepare/fear-extraction/fear-preview/fear-editor/SavedFearCombobox";
 import { LuTrash2 } from "react-icons/lu";
+import { AnimatePresence, motion } from "motion/react";
 
 import SafetyBehaviorsEditor from "@/app/components/practice/shared/SafetyBehaviorsEditor";
 import SudsDropdown from "@/app/components/practice/shared/SudsDropdown";
@@ -42,9 +43,18 @@ export default function ExtractedFearEditor({
         <div className="flex flex-col gap-1.5 text-xs font-medium text-primary">
           <div className="flex items-center gap-2">
             <label htmlFor={situationId}>Fear</label>
-            <span className="inline-flex items-center rounded bg-accent/20 px-1.5 py-0.5 text-2xs font-semibold text-accent">
-              {fear.fearId ? "Matched" : "New"}
-            </span>
+            <AnimatePresence initial={false} mode="popLayout">
+              <motion.span
+                key={fear.fearId ? "matched" : "new"}
+                layout
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                className="inline-flex items-center rounded bg-accent/20 px-1.5 py-0.5 text-2xs font-semibold text-accent"
+              >
+                {fear.fearId ? "Matched" : "New"}
+              </motion.span>
+            </AnimatePresence>
 
             {fearCount > 1 && (
               <button
@@ -66,7 +76,7 @@ export default function ExtractedFearEditor({
             }
             disabled={fear.fearId !== null}
             maxLength={120}
-            className="input-base border-subtle/60 bg-modal/70 disabled:cursor-not-allowed disabled:opacity-60"
+            className="input-base border-subtle/60 bg-modal/70 transition-opacity duration-fast disabled:cursor-not-allowed disabled:opacity-60"
           />
 
           <SavedFearCombobox
