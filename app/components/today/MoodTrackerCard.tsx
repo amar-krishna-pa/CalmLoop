@@ -27,7 +27,7 @@ export default function MoodTrackerCard() {
 
   return (
     <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4">
-      <h2 className="text-sm font-semibold text-primary">Mood Tracker</h2>
+      <h2 className="text-sm font-semibold text-primary">Mood tracker</h2>
 
       <div className="flex justify-between">
         {MOODS.map((m, i) => (

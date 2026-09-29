@@ -1,6 +1,5 @@
 import { LuCalendar, LuClock, LuUser } from "react-icons/lu";
 
-      <p className="text-xs text-muted">Example appointment. Session booking is not available yet.</p>
 const PLACEHOLDER_SESSION = {
   therapistName: "Dr. Sarah Okonkwo",
   date: "Tuesday, July 1",
@@ -11,7 +10,14 @@ const PLACEHOLDER_SESSION = {
 export default function UpcomingSessionCard() {
   return (
     <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4">
-      <h2 className="text-sm font-semibold text-primary">Upcoming Session</h2>
+      <div>
+        <h2 className="text-sm font-semibold text-primary">
+          Upcoming session
+        </h2>
+        <p className="mt-0.5 text-xs text-muted">
+          Example appointment. Session booking is not available yet.
+        </p>
+      </div>
 
       <div className="bg-accent/5 border border-accent/20 rounded-lg p-4 space-y-3">
         <div className="flex items-center gap-2">

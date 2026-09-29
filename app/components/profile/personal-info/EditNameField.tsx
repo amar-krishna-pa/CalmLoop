@@ -43,7 +43,7 @@ export default function EditNameField({ initialName }: Props) {
       } else {
         setName(trimmed);
         setEditing(false);
-        toast.success("Name updated");
+        toast.success("Name updated.");
       }
     } catch {
       toast.error("We couldn’t update your name. You can try again.");

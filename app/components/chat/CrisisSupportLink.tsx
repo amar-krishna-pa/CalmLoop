@@ -65,8 +65,8 @@ export default function CrisisSupportLink() {
             ))}
           </ul>
           <p className="text-muted text-xs mt-3">
-            In immediate danger? Call 112, India&apos;s national emergency
-            number.
+            If you are in immediate danger, call 112, India&apos;s national
+            emergency number.
           </p>
         </div>
       )}

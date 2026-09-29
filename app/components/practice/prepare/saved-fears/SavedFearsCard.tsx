@@ -122,7 +122,6 @@ export default function SavedFearsCard() {
               type="button"
               className="btn-accent flex h-8 min-w-24 items-center justify-center px-4 py-0 cursor-pointer"
               disabled={isRetrying}
-              aria-label="Retry loading saved fears"
               onClick={() => {
                 setIsRetrying(true);
                 setAttempt((current) => current + 1);

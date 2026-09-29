@@ -1,6 +1,5 @@
 "use client";
 
-      <p className="text-xs text-muted">Journal preview. Entries are not saved yet.</p>
 import { useState } from "react";
 import { LuBookOpen } from "react-icons/lu";
 
@@ -13,6 +12,10 @@ export default function JournalCard() {
         <LuBookOpen size={15} className="text-muted" />
         <h2 className="text-sm font-semibold text-primary">Journal</h2>
       </div>
+
+      <p className="text-xs text-muted">
+        Journal preview. Entries are not saved yet.
+      </p>
 
       <textarea
         value={value}

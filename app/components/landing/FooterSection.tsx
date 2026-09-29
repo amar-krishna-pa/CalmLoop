@@ -11,13 +11,13 @@ export default function FooterSection() {
 
         <div className="flex gap-6">
           <a href="#" className="hover:text-primary transition-colors">
-            Privacy Policy
+            Privacy policy
           </a>
           <a href="#" className="hover:text-primary transition-colors">
-            Terms of Service
+            Terms of service
           </a>
           <a href="#" className="hover:text-primary transition-colors">
-            Support Contact
+            Support contact
           </a>
         </div>
       </div>

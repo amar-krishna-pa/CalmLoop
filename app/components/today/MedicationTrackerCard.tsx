@@ -5,7 +5,6 @@ type MedicationLog = {
   note: string | null;
 };
 
-      <p className="text-xs text-muted">Example log. Medication logging is not available yet.</p>
 type Medication = {
   name: string;
   dose: string;
@@ -44,6 +43,10 @@ export default function MedicationTrackerCard() {
           <p className="text-2xs text-muted">recorded as taken</p>
         </div>
       </div>
+
+      <p className="text-xs text-muted">
+        Example log. Medication logging is not available yet.
+      </p>
 
       <ul className="space-y-1.5">
         {PLACEHOLDER_LOG.map((log) => (

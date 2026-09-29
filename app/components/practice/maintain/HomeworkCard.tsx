@@ -1,15 +1,13 @@
 type HomeworkItem = {
   id: string;
   title: string;
-  dueDate: string;
   completed: boolean;
 };
 
-      <p className="text-xs text-muted">Example tasks to discuss with a therapist. Your own plan can begin with one.</p>
 const PLACEHOLDER_HOMEWORK: HomeworkItem[] = [
-  { id: "1", title: "Try a short practice exercise", dueDate: "Today", completed: false },
-  { id: "2", title: "Note a situation that brought up anxiety", dueDate: "Tomorrow", completed: false },
-  { id: "3", title: "Note a breathing exercise", dueDate: "Jul 2", completed: true },
+  { id: "1", title: "Try a short practice exercise", completed: false },
+  { id: "2", title: "Note a situation that brought up anxiety", completed: false },
+  { id: "3", title: "Note a breathing exercise", completed: true },
 ];
 
 export default function HomeworkCard() {
@@ -17,10 +15,12 @@ export default function HomeworkCard() {
     <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4 card-medium">
       <div className="flex items-center justify-between">
         <h2 className="text-sm font-semibold text-primary">Practice with your therapist</h2>
-        <span className="text-xs text-muted">
-          {PLACEHOLDER_HOMEWORK.filter((h) => !h.completed).length} remaining
-        </span>
+        <span className="text-xs text-muted">Example tasks</span>
       </div>
+
+      <p className="text-xs text-muted">
+        Tasks to discuss with a therapist. Your own plan can begin with one.
+      </p>
 
       <ul className="min-h-0 flex-1 overflow-y-auto space-y-2">
         {PLACEHOLDER_HOMEWORK.map((h) => (
@@ -46,7 +46,6 @@ export default function HomeworkCard() {
               <p className={`text-sm ${h.completed ? "line-through text-muted" : "text-primary"}`}>
                 {h.title}
               </p>
-              <p className="text-xs text-muted mt-0.5">Due: {h.dueDate}</p>
             </div>
           </li>
         ))}

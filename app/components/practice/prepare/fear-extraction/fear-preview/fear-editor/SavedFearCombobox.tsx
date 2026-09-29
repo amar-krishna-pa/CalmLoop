@@ -93,7 +93,7 @@ export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad
               {isLoading ? "Loading saved fears…" : error}
             </ComboboxStatus>
             {error && (
-              <button type="button" onClick={onLoad} disabled={isLoading} aria-label="Try loading saved fears again" className="flex min-h-8 w-full items-center justify-center text-2xs text-accent disabled:opacity-60">
+              <button type="button" onClick={onLoad} disabled={isLoading} className="flex min-h-8 w-full items-center justify-center text-2xs text-accent disabled:opacity-60">
                 {isLoading ? <LoadingSpinner /> : "Try again"}
               </button>
             )}

@@ -79,12 +79,12 @@ export default function PasskeySection() {
           "code" in error &&
           error.code === "ERROR_AUTHENTICATOR_PREVIOUSLY_REGISTERED"
         ) {
-          toast.error("This device is already registered as a passkey");
+          toast.error("This device is already registered as a passkey.");
         } else {
           toast.error("We couldn’t add your passkey. You can try again.");
         }
       } else {
-        toast.success("Passkey added");
+        toast.success("Passkey added.");
         setPasskeyName("");
         await fetchPasskeys();
       }
@@ -103,7 +103,7 @@ export default function PasskeySection() {
       if (error) {
         toast.error("We couldn’t remove your passkey. You can try again.");
       } else {
-        toast.success("Passkey removed");
+        toast.success("Passkey removed.");
         setPasskeys((prev) => prev?.filter((p) => p.id !== id) ?? null);
       }
     } catch (error) {
@@ -133,7 +133,7 @@ export default function PasskeySection() {
               if (nameError) setNameError("");
             }}
             onKeyDown={(e) => e.key === "Enter" && handleAddPasskey()}
-            placeholder="e.g. My iPhone"
+            placeholder="For example, My phone"
             disabled={addingPasskey}
             className={cn("min-w-0 flex-1 px-3 py-2 rounded-lg text-sm border bg-transparent text-primary placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-accent disabled:opacity-60",
               nameError ? "border-danger focus:ring-danger" : "border-subtle"
@@ -169,7 +169,7 @@ export default function PasskeySection() {
         {loadError && passkeys === null ? (
           <div className="flex h-full flex-col items-center justify-center gap-3 p-4 text-center">
             <p role="alert" className="text-sm text-muted">{loadError}</p>
-            <button type="button" disabled={loadingPasskeys} aria-label="Retry loading passkeys" className="btn-accent flex h-8 w-24 items-center justify-center py-0" onClick={() => { setLoadingPasskeys(true); void fetchPasskeys(); }}>
+            <button type="button" disabled={loadingPasskeys} className="btn-accent flex h-8 w-24 items-center justify-center py-0" onClick={() => { setLoadingPasskeys(true); void fetchPasskeys(); }}>
               {loadingPasskeys ? <LoadingSpinner /> : "Try again"}
             </button>
           </div>
@@ -178,7 +178,9 @@ export default function PasskeySection() {
         ) : passkeys.length === 0 ? (
           <div className="flex h-full flex-col items-center justify-center gap-2 text-muted">
             <GoPasskeyFill size={28} className="opacity-30" />
-            <p className="text-sm">No passkeys added yet.</p>
+            <p className="text-sm">
+              No passkeys yet. Added passkeys will appear here.
+            </p>
           </div>
         ) : (
           passkeys.map((pk) => (

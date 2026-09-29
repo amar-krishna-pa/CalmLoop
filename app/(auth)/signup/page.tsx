@@ -63,11 +63,11 @@ export default function SignUpPage() {
           <p className="text-caption text-muted text-center mt-4 leading-relaxed">
             By creating an account you agree to our &nbsp;
             <Link href="#" className="underline hover:text-primary">
-              Terms of Service
+              Terms of service
             </Link>
             &nbsp; and &nbsp;
             <Link href="#" className="underline hover:text-primary">
-              Privacy Policy
+              Privacy policy
             </Link>
             .
           </p>

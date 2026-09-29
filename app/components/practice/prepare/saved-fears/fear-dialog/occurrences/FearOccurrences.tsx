@@ -84,7 +84,6 @@ export default function FearOccurrences({
             type="button"
             className="btn-accent flex h-8 min-w-24 items-center justify-center cursor-pointer px-3 py-0"
             disabled={isRetrying}
-            aria-label="Try loading past entries again"
             onClick={() => {
               setIsRetrying(true);
               setAttempt((current) => current + 1);
@@ -134,7 +133,6 @@ export default function FearOccurrences({
                         exposureId: occurrence.id,
                       },
                     }}
-                    aria-label="View this situation in Exposures"
                     className="cursor-pointer rounded-lg py-1 text-sm font-medium text-accent transition-opacity duration-fast hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   >
                     View exposure

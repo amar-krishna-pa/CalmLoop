@@ -78,7 +78,7 @@ export default function ExposureCheckInModal({
   return (
     <Modal
       title="Add check-in"
-      description="Record how this situation feels now."
+      description="How distressing does this situation feel now?"
       onClose={() => {
         if (!isSaving) onClose();
       }}

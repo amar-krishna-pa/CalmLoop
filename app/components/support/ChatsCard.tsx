@@ -1,12 +1,11 @@
 "use client";
 
-      <p className="text-xs text-muted">Example conversations. <strong>New chat</strong> opens a space to talk about what is on your mind.</p>
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LuMessageSquare, LuPlus } from "react-icons/lu";
 
 const PLACEHOLDER_SESSIONS = [
-  { id: "1", title: "Feeling anxious about work", time: "2h ago" },
+  { id: "1", title: "Feeling anxious about work", time: "2 hours ago" },
   { id: "2", title: "Intrusive thoughts session", time: "Yesterday" },
   { id: "3", title: "Morning check-in", time: "2 days ago" },
 ];
@@ -26,6 +25,11 @@ export default function ChatsCard() {
           New chat
         </button>
       </div>
+
+      <p className="text-xs text-muted">
+        Example conversations. <strong>New chat</strong> opens a space to talk
+        about what is on your mind.
+      </p>
 
       <ul className="space-y-0.5">
         {PLACEHOLDER_SESSIONS.map((s) => (
