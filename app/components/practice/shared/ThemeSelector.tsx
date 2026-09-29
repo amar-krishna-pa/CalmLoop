@@ -44,9 +44,6 @@ export default function ThemeSelector({
         </button>
       </div>
 
-      <p className="mb-2 text-xs text-muted">
-        Themes describe what a fear is about. They are optional.
-      </p>
       <div className="relative flex flex-wrap gap-2">
         <AnimatePresence initial={false} mode="popLayout">
           {selectedThemes.map((theme) => (

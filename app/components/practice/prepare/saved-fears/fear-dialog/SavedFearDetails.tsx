@@ -60,12 +60,7 @@ export default function SavedFearDetails({
       <HorizontalDivider />
 
       <section className="space-y-2" aria-label="Safety behaviors">
-        <h3 className="text-xs font-medium text-primary">
-          Safety behaviors
-        </h3>
-        <p className="text-xs text-muted">
-          Things you do to feel more certain or reduce anxiety, such as repeated checking.
-        </p>
+        <h3 className="text-xs font-medium text-primary">Safety behaviors</h3>
 
         {fear.behaviors.length === 0 ? (
           <p className="text-xs text-muted">

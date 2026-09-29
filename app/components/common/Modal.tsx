@@ -54,7 +54,7 @@ export default function Modal({
       if (event.key !== "Tab" || !panel) return;
 
       const focusable = Array.from(
-        panel.querySelectorAll<HTMLElement>(FOCUSABLE)
+        panel.querySelectorAll<HTMLElement>(FOCUSABLE),
       );
       if (focusable.length === 0) return;
 
@@ -86,7 +86,7 @@ export default function Modal({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-md"
+      className="fixed inset-0 z-50 flex items-center justify-center p-5 backdrop-blur-md"
       style={{ backgroundColor: "var(--modal-overlay)" }}
       onClick={onClose}
     >
@@ -124,6 +124,6 @@ export default function Modal({
         {children}
       </div>
     </motion.div>,
-    document.body
+    document.body,
   );
 }

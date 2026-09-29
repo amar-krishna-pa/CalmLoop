@@ -9,10 +9,7 @@ type Props = {
   onChange: ({ behaviors }: { behaviors: PreviewBehavior[] }) => void;
 };
 
-export default function SafetyBehaviorsEditor({
-  behaviors,
-  onChange,
-}: Props) {
+export default function SafetyBehaviorsEditor({ behaviors, onChange }: Props) {
   function addBehavior() {
     onChange({
       behaviors: [...behaviors, { id: crypto.randomUUID(), value: "" }],
@@ -48,10 +45,6 @@ export default function SafetyBehaviorsEditor({
         </button>
       </div>
 
-      <p className="mb-2 text-xs text-muted">
-        Things you do to feel more certain or reduce anxiety, such as repeated
-        checking. You can leave this blank if none came up.
-      </p>
       <div className="relative">
         <AnimatePresence initial={false} mode="popLayout">
           {behaviors.length === 0 ? (
@@ -60,8 +53,9 @@ export default function SafetyBehaviorsEditor({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              className="w-full"
             >
-              <p className="mb-2 flex h-10 items-center text-xs text-muted">
+              <p className="mb-2 flex h-10 w-full items-center justify-center text-center text-xs text-muted">
                 No safety behaviors added yet
               </p>
             </motion.div>

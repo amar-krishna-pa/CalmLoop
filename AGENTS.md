@@ -17,6 +17,12 @@ pnpm drizzle-kit studio     # Open Drizzle Studio (DB browser)
 
 No test suite exists yet. There is no `pnpm test` command.
 
+## Language and spelling
+
+Use US English throughout the codebase, including copy, prompts, documentation,
+comments, identifiers, filenames, folder names and API routes. Preserve
+user-authored content, external contracts and historical migrations verbatim.
+
 ## User-facing copy
 
 Apply this tone to all new or edited text: empty states, errors, validation,

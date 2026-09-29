@@ -1,7 +1,16 @@
 "use client";
 
 import { useRef, useState, type ReactNode } from "react";
-import { Combobox, ComboboxInput, ComboboxTrigger, ComboboxContent, ComboboxList, ComboboxItem, ComboboxEmpty, ComboboxStatus } from "@/app/components/ui/combobox";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxTrigger,
+  ComboboxContent,
+  ComboboxList,
+  ComboboxItem,
+  ComboboxEmpty,
+  ComboboxStatus,
+} from "@/app/components/ui/combobox";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import { AnimatePresence, motion } from "motion/react";
 import { LuChevronDown } from "react-icons/lu";
@@ -17,16 +26,28 @@ type Props = {
   onSelect: ({ fear }: { fear: { id: string; name: string } }) => void;
 };
 
-export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad, onSelect, leadingAction, triggerLabel = "Match an existing fear" }: Props) {
+export default function SavedFearCombobox({
+  savedFears,
+  isLoading,
+  error,
+  onLoad,
+  onSelect,
+  leadingAction,
+  triggerLabel = "Match an existing fear",
+}: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
   const inputGroupRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div ref={containerRef} className="relative flex w-full flex-wrap items-center gap-x-2" onKeyDown={(event) => {
-      if (open && event.key === "Escape") event.stopPropagation();
-    }}>
+    <div
+      ref={containerRef}
+      className="relative flex w-full flex-wrap items-center gap-x-2"
+      onKeyDown={(event) => {
+        if (open && event.key === "Escape") event.stopPropagation();
+      }}
+    >
       <Combobox<{ id: string; name: string }>
         items={savedFears ?? []}
         itemToStringLabel={(fear) => fear.name}
@@ -45,7 +66,11 @@ export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad
         }}
       >
         {leadingAction}
-        {leadingAction && <span aria-hidden="true" className="text-2xs text-muted">·</span>}
+        {leadingAction && (
+          <span aria-hidden="true" className="text-2xs text-muted">
+            ·
+          </span>
+        )}
         <button
           type="button"
           aria-expanded={isExpanded}
@@ -67,7 +92,7 @@ export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad
               exit={{ height: 0, opacity: 0 }}
               className="w-full basis-full overflow-hidden"
             >
-              <div className="p-1 pt-2">
+              <div className="pt-2">
                 <div ref={inputGroupRef} className="relative w-full">
                   <ComboboxInput
                     aria-label="Search saved fears"
@@ -75,11 +100,20 @@ export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad
                     className="input-base w-full border-subtle/60 bg-modal/70 pr-9"
                   />
                   <ComboboxTrigger
-                    aria-label={isLoading ? "Loading saved fears" : "Show saved fears"}
+                    aria-label={
+                      isLoading ? "Loading saved fears" : "Show saved fears"
+                    }
                     className="absolute inset-y-0 right-0 flex w-9 cursor-pointer items-center justify-center text-muted"
                   >
-                    {isLoading ? <LoadingSpinner /> : (
-                      <LuChevronDown className={cn("transition-transform duration-fast", open && "rotate-180")} />
+                    {isLoading ? (
+                      <LoadingSpinner />
+                    ) : (
+                      <LuChevronDown
+                        className={cn(
+                          "transition-transform duration-fast",
+                          open && "rotate-180",
+                        )}
+                      />
                     )}
                   </ComboboxTrigger>
                 </div>
@@ -93,18 +127,29 @@ export default function SavedFearCombobox({ savedFears, isLoading, error, onLoad
               {isLoading ? "Loading saved fears…" : error}
             </ComboboxStatus>
             {error && (
-              <button type="button" onClick={onLoad} disabled={isLoading} className="flex min-h-8 w-full items-center justify-center text-2xs text-accent disabled:opacity-60">
+              <button
+                type="button"
+                onClick={onLoad}
+                disabled={isLoading}
+                className="flex min-h-8 w-full items-center justify-center text-2xs text-accent disabled:opacity-60"
+              >
                 {isLoading ? <LoadingSpinner /> : "Try again"}
               </button>
             )}
             {!isLoading && !error && savedFears !== null && (
               <ComboboxEmpty className="py-2 text-xs font-normal text-muted">
-                {savedFears.length === 0 ? "No saved fears yet." : "No matching fears. You can try another word."}
+                {savedFears.length === 0
+                  ? "No saved fears yet."
+                  : "No matching fears. You can try another word."}
               </ComboboxEmpty>
             )}
             <ComboboxList>
               {(fear: { id: string; name: string }) => (
-                <ComboboxItem key={fear.id} value={fear} className="cursor-pointer rounded-md px-3 py-2 text-xs font-normal text-primary data-highlighted:bg-accent/10 data-highlighted:text-accent">
+                <ComboboxItem
+                  key={fear.id}
+                  value={fear}
+                  className="cursor-pointer rounded-md px-3 py-2 text-xs font-normal text-primary data-highlighted:bg-accent/10 data-highlighted:text-accent"
+                >
                   {fear.name}
                 </ComboboxItem>
               )}

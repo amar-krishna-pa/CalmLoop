@@ -37,14 +37,15 @@ export default function ExtractedFearEditor({
   console.log(fear);
 
   return (
-    <section className="rounded-xl bg-modal-section/70 p-4">
+    <section className="rounded-xl bg-modal-section/70 p-1">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-1.5 text-xs font-medium text-primary">
           <div className="flex items-center gap-2">
-            <label htmlFor={situationId}>Situation</label>
+            <label htmlFor={situationId}>Fear</label>
             <span className="inline-flex items-center rounded bg-accent/20 px-1.5 py-0.5 text-2xs font-semibold text-accent">
               {fear.fearId ? "Matched" : "New"}
             </span>
+
             {fearCount > 1 && (
               <button
                 type="button"
@@ -56,6 +57,7 @@ export default function ExtractedFearEditor({
               </button>
             )}
           </div>
+
           <input
             id={situationId}
             value={fear.name}
@@ -66,8 +68,10 @@ export default function ExtractedFearEditor({
             maxLength={120}
             className="input-base border-subtle/60 bg-modal/70 disabled:cursor-not-allowed disabled:opacity-60"
           />
-            <SavedFearCombobox
-              leadingAction={fear.fearId ? (
+
+          <SavedFearCombobox
+            leadingAction={
+              fear.fearId ? (
                 <button
                   type="button"
                   onClick={() => onChange({ fear: { ...fear, fearId: null } })}
@@ -75,18 +79,23 @@ export default function ExtractedFearEditor({
                 >
                   Save as a new fear instead
                 </button>
-              ) : undefined}
-              triggerLabel={fear.fearId === null ? "Match an existing fear" : "Change match"}
-              savedFears={savedFears}
-              isLoading={isLoadingSavedFears}
-              error={savedFearsError}
-              onLoad={onLoadSavedFears}
-              onSelect={({ fear: savedFear }) =>
-                onChange({
-                  fear: { ...fear, fearId: savedFear.id, name: savedFear.name },
-                })
-              }
-            />
+              ) : undefined
+            }
+            triggerLabel={
+              fear.fearId === null
+                ? "Want to match an existing fear?"
+                : "Change match"
+            }
+            savedFears={savedFears}
+            isLoading={isLoadingSavedFears}
+            error={savedFearsError}
+            onLoad={onLoadSavedFears}
+            onSelect={({ fear: savedFear }) =>
+              onChange({
+                fear: { ...fear, fearId: savedFear.id, name: savedFear.name },
+              })
+            }
+          />
         </div>
 
         <ThemeSelector

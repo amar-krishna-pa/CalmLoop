@@ -40,7 +40,9 @@ export default function FearInputCard({ onSaved }: Props) {
 
       // An entry with no OCD content in it is a correct result, not a failure.
       if (fears.length === 0) {
-        toast.info("We couldn’t identify a fear in this entry. You can add a little context or leave it here.");
+        toast.info(
+          "We couldn’t identify a fear in this entry. You can add a little context or leave it here.",
+        );
         setPreviewFears(null);
         return;
       }
@@ -112,7 +114,7 @@ export default function FearInputCard({ onSaved }: Props) {
               disabled={!value.trim() || isExtracting}
               aria-label={isExtracting ? "Finding fears" : "Find fears"}
               aria-busy={isExtracting}
-              className="flex h-8 min-w-24 shrink-0 items-center justify-center rounded-lg bg-accent px-3 text-xs font-medium text-on-accent hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
+              className="flex h-8 min-w-24 shrink-0 items-center justify-center rounded-lg bg-accent px-3 text-xs font-medium text-on-accent hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
             >
               {isExtracting ? <LoadingSpinner /> : "Find fears"}
             </button>
