@@ -23,7 +23,11 @@ const FILTERS = [
 
 type ExposureFilter = (typeof FILTERS)[number]["value"];
 
-export default function ExposuresCard() {
+type Props = {
+  targetExposureId: string | null;
+};
+
+export default function ExposuresCard({ targetExposureId }: Props) {
   const [exposures, setExposures] = useState<Exposure[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
@@ -37,6 +41,7 @@ export default function ExposuresCard() {
   );
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const focusedExposureIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -80,6 +85,32 @@ export default function ExposuresCard() {
 
     return () => controller.abort();
   }, [attempt]);
+
+  useEffect(() => {
+    if (
+      exposures === null ||
+      targetExposureId === null ||
+      focusedExposureIdRef.current === targetExposureId ||
+      !exposures.some((exposure) => exposure.id === targetExposureId)
+    ) {
+      return;
+    }
+
+    const target = document.getElementById(`exposure-${targetExposureId}`);
+    if (!target) return;
+
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    target.focus({ preventScroll: true });
+    focusedExposureIdRef.current = targetExposureId;
+
+    const url = new URL(window.location.href);
+    url.searchParams.delete("exposureId");
+    window.history.replaceState(
+      null,
+      "",
+      `${url.pathname}${url.search}${url.hash}`,
+    );
+  }, [exposures, targetExposureId]);
 
   const availableExposures: Exposure[] = [];
   const inProgressExposures: Exposure[] = [];
@@ -261,7 +292,7 @@ export default function ExposuresCard() {
         aria-label="Exposure situations"
         role="region"
         tabIndex={exposures !== null && !error ? 0 : -1}
-        className="flex-1 min-h-0 snap-y snap-mandatory scroll-py-2 overflow-y-auto pr-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        className="min-h-0 flex-1 snap-y snap-mandatory scroll-p-1 overflow-y-auto p-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
       >
         {error ? (
           <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
@@ -297,12 +328,17 @@ export default function ExposuresCard() {
               {showInProgress &&
                 inProgressExposures.map((exposure) => (
                   <motion.li
+                    id={`exposure-${exposure.id}`}
                     layout
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     key={exposure.id}
-                    className="snap-start"
+                    tabIndex={-1}
+                    aria-current={
+                      exposure.id === targetExposureId ? "true" : undefined
+                    }
+                    className="snap-start scroll-m-1 rounded-xl outline-offset-2 focus:outline-2 focus:outline-accent"
                   >
                     <ExposureListItem
                       exposure={exposure}
@@ -317,12 +353,17 @@ export default function ExposuresCard() {
               {showAvailable &&
                 availableExposures.map((exposure) => (
                   <motion.li
+                    id={`exposure-${exposure.id}`}
                     layout
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     key={exposure.id}
-                    className="snap-start"
+                    tabIndex={-1}
+                    aria-current={
+                      exposure.id === targetExposureId ? "true" : undefined
+                    }
+                    className="snap-start scroll-m-1 rounded-xl outline-offset-2 focus:outline-2 focus:outline-accent"
                   >
                     <ExposureListItem
                       exposure={exposure}

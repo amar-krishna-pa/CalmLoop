@@ -127,11 +127,17 @@ export default function FearOccurrences({
                   <span aria-hidden="true" className="h-4 w-px bg-subtle" />
 
                   <Link
-                    href="/practice?tab=exposures"
-                    aria-label="Go to Exposures to view practice situations"
+                    href={{
+                      pathname: "/practice",
+                      query: {
+                        tab: "exposures",
+                        exposureId: occurrence.id,
+                      },
+                    }}
+                    aria-label="View this situation in Exposures"
                     className="cursor-pointer rounded-lg py-1 text-sm font-medium text-accent transition-opacity duration-fast hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   >
-                    View Exposures
+                    View exposure
                   </Link>
                 </div>
               </div>
