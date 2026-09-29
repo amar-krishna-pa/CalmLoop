@@ -7,9 +7,11 @@ import { usePathname } from "next/navigation";
 import { GoSun, GoMoon } from "react-icons/go";
 import ProfileDropdown from "./ProfileDropdown";
 import NavItem from "./NavItem";
+import PrivacyScreen from "./PrivacyScreen";
 
 type HeaderProps = {
   userName?: string | null;
+  privacyScreenVisible?: boolean;
 };
 
 const NAV_ITEMS = [
@@ -20,7 +22,10 @@ const NAV_ITEMS = [
   { label: "Learn", href: "/learn" },
 ];
 
-export default function Header({ userName }: HeaderProps) {
+export default function Header({
+  userName,
+  privacyScreenVisible = false,
+}: HeaderProps) {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -59,6 +64,10 @@ export default function Header({ userName }: HeaderProps) {
       </div>
 
       <div className="flex items-center gap-2 sm:gap-3">
+        {userName && (
+          <PrivacyScreen initiallyVisible={privacyScreenVisible} />
+        )}
+
         {mounted && (
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}

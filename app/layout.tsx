@@ -5,7 +5,7 @@ import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
 import Header from "./components/common/header/Header";
 import PageTransition from "./components/common/PageTransition";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { auth } from "@/app/lib/auth/auth";
 
 const geistSans = Geist({
@@ -29,6 +29,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth.api.getSession({ headers: await headers() });
+  const privacyScreenVisible =
+    (await cookies()).get("calmloop_privacy_screen")?.value === "visible";
 
   return (
     <html
@@ -38,7 +40,10 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Header userName={session?.user?.name ?? null} />
+          <Header
+            userName={session?.user?.name ?? null}
+            privacyScreenVisible={privacyScreenVisible}
+          />
           <main className="h-[calc(100dvh-3.5rem)]">
             <PageTransition>{children}</PageTransition>
           </main>
