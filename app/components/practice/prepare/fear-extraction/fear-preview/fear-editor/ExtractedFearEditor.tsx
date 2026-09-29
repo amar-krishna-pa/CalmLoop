@@ -35,8 +35,6 @@ export default function ExtractedFearEditor({
   const situationId = useId();
   const [isThemeEditorExpanded, setIsThemeEditorExpanded] = useState(false);
 
-  console.log(fear);
-
   return (
     <section className="rounded-xl bg-modal-section/70 p-1">
       <div className="flex flex-col gap-4">

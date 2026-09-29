@@ -89,7 +89,7 @@ export default function SudsDropdown({ id, value, onChange }: Props) {
   }, [isOpen]);
 
   const menu = (
-    <div inert={!isOpen} aria-hidden={!isOpen}>
+    <div inert={!isOpen}>
       <AnimatePresence initial={false}>
         {isOpen && menuPosition && (
           <motion.div
