@@ -86,7 +86,7 @@ export default function ExtractionPreviewModal({
   const savePayload = SaveFearsSchema.safeParse({
     fears: fears.map((fear) => ({
       ...fear,
-      behaviours: fear.behaviours.map(({ value }) => value),
+      behaviors: fear.behaviors.map(({ value }) => value),
     })),
   });
 

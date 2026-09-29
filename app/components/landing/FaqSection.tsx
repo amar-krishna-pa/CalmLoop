@@ -55,7 +55,7 @@ export default function FaqSection() {
     {
       question: "What are ERP and ACT?",
       answer:
-        "Exposure and response prevention (ERP) involves gradually facing feared situations while practising without compulsions, the actions you feel driven to repeat. Acceptance and commitment therapy (ACT) focuses on making room for difficult thoughts and feelings while acting on what matters to you.",
+        "Exposure and response prevention (ERP) involves gradually facing feared situations while practicing without compulsions, the actions you feel driven to repeat. Acceptance and commitment therapy (ACT) focuses on making room for difficult thoughts and feelings while acting on what matters to you.",
     },
     {
       question: "How are my entries used?",

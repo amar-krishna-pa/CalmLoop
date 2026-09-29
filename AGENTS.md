@@ -196,7 +196,7 @@ Use brief, purposeful transitions when UI elements are inserted, removed, expand
 
 When creating or changing interactive UI, include purposeful animations for user-triggered state changes as part of the implementation.
 
-Use `app/components/practice/shared/SafetyBehavioursEditor.tsx` as the reference for editable lists and switching between populated and empty states. Use `app/components/practice/shared/ThemeSelector.tsx` as the reference for selectable chips and collapsible panels. Consistency means shared timing defaults and state-change behaviour; choose movement appropriate to the control rather than applying the same animation to every element. Follow the rules below even where a reference does not yet implement them.
+Use `app/components/practice/shared/SafetyBehaviorsEditor.tsx` as the reference for editable lists and switching between populated and empty states. Use `app/components/practice/shared/ThemeSelector.tsx` as the reference for selectable chips and collapsible panels. Consistency means shared timing defaults and state-change behavior; choose movement appropriate to the control rather than applying the same animation to every element. Follow the rules below even where a reference does not yet implement them.
 
 - Use Motion from `motion/react` for enter/exit and layout animations. Use CSS transitions for simple hover and focus feedback and icon state changes such as chevron rotation. Apply `transition-transform` with a shared duration utility directly to the icon; do not add a Motion wrapper just to rotate an icon.
 - Wrap conditionally rendered animated elements in `AnimatePresence` so removal animations finish before the elements unmount.
@@ -224,10 +224,10 @@ Every component must live in its own file. Defining a component function inside 
 
 Card forms follow the weight of the entry:
 
-- **Quick capture (1–3 fields)** — render the form inline at the top of the card, above the scrollable list (Trigger Log, Fear Hierarchy, Safety Behaviours).
+- **Quick capture (1–3 fields)** — render the form inline at the top of the card, above the scrollable list (Trigger Log, Fear Hierarchy, Safety Behaviors).
 - **Structured entry (4+ fields)** — keep the card list-only with an action button in the card header, and put the form inside `<Modal>` from `app/components/common/Modal.tsx` (ERP Tracker). An inline form that large crowds out the list, which is the part with actual value.
 
-`Modal` handles focus trapping, Escape-to-close, backdrop click, body scroll lock, and renders through a portal. Give modal form fields real `<label>` elements rather than placeholder-only labelling.
+`Modal` handles focus trapping, Escape-to-close, backdrop click, body scroll lock, and renders through a portal. Give modal form fields real `<label>` elements rather than placeholder-only labeling.
 
 ## TypeScript conventions
 

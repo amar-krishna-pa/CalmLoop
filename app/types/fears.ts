@@ -1,6 +1,6 @@
 import type { THEMES } from "@/app/constants/fears/themes";
 
-export type PreviewBehaviour = {
+export type PreviewBehavior = {
   id: string;
   value: string;
 };
@@ -10,7 +10,7 @@ export type ExtractedFearPreview = {
   name: string;
   themes: (typeof THEMES)[number][];
   evidence: string;
-  behaviours: PreviewBehaviour[];
+  behaviors: PreviewBehavior[];
 };
 
 export type PreviewFear = ExtractedFearPreview & {

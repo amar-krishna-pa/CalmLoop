@@ -16,7 +16,7 @@ const WARNING_SIGNS: WarningSign[] = [
 ];
 
 const COPING_STEPS: CopingStep[] = [
-  { id: "1", step: "Choose a small situation from my saved fears to practise" },
+  { id: "1", step: "Choose a small situation from my saved fears to practice" },
   { id: "2", step: "Write a brief note about what came up" },
   { id: "3", step: "Talk with my therapist about what has changed" },
   { id: "4", step: "Discuss a manageable practice step with my therapist" },

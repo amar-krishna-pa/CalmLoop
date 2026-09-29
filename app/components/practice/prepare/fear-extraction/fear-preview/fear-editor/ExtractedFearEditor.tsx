@@ -4,7 +4,7 @@ import { useId, useState } from "react";
 import SavedFearCombobox from "@/app/components/practice/prepare/fear-extraction/fear-preview/fear-editor/SavedFearCombobox";
 import { LuTrash2 } from "react-icons/lu";
 
-import SafetyBehavioursEditor from "@/app/components/practice/shared/SafetyBehavioursEditor";
+import SafetyBehaviorsEditor from "@/app/components/practice/shared/SafetyBehaviorsEditor";
 import SudsDropdown from "@/app/components/practice/shared/SudsDropdown";
 import ThemeSelector from "@/app/components/practice/shared/ThemeSelector";
 import type { PreviewFear } from "@/app/types/fears";
@@ -109,10 +109,10 @@ export default function ExtractedFearEditor({
           }
         />
 
-        <SafetyBehavioursEditor
-          behaviours={fear.behaviours}
-          onChange={({ behaviours }) =>
-            onChange({ fear: { ...fear, behaviours } })
+        <SafetyBehaviorsEditor
+          behaviors={fear.behaviors}
+          onChange={({ behaviors }) =>
+            onChange({ fear: { ...fear, behaviors } })
           }
         />
 

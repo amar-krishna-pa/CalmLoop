@@ -147,7 +147,7 @@ export const fears = pgTable(
       .references(() => user.id, { onDelete: "cascade" }),
     name: text("name").notNull(),
     themes: text("themes").array().notNull().default([]),
-    behaviours: text("behaviours").array().notNull().default([]),
+    behaviors: text("behaviors").array().notNull().default([]),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
       .defaultNow()

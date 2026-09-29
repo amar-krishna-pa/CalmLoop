@@ -5,7 +5,7 @@ import HorizontalDivider from "@/app/components/common/HorizontalDivider";
 import FearOccurrences from "@/app/components/practice/prepare/saved-fears/fear-dialog/occurrences/FearOccurrences";
 
 type Props = {
-  fear: { id: string; name: string; themes: string[]; behaviours: string[] };
+  fear: { id: string; name: string; themes: string[]; behaviors: string[] };
   occurrences: Occurrence[] | null;
   onEdit: () => void;
   onEditOccurrence: ({ occurrence }: { occurrence: Occurrence }) => void;
@@ -59,23 +59,23 @@ export default function SavedFearDetails({
 
       <HorizontalDivider />
 
-      <section className="space-y-2" aria-label="Safety behaviours">
+      <section className="space-y-2" aria-label="Safety behaviors">
         <h3 className="text-xs font-medium text-primary">
-          Safety behaviours
+          Safety behaviors
         </h3>
         <p className="text-xs text-muted">
           Things you do to feel more certain or reduce anxiety, such as repeated checking.
         </p>
 
-        {fear.behaviours.length === 0 ? (
+        {fear.behaviors.length === 0 ? (
           <p className="text-xs text-muted">
-            No safety behaviours added yet. You can leave this as it is.
+            No safety behaviors added yet. You can leave this as it is.
           </p>
         ) : (
           <ul className="list-disc space-y-2 pl-4 text-sm text-muted">
-            {Array.from(new Set(fear.behaviours)).map((behaviour) => (
-              <li key={behaviour} className="wrap-break-words">
-                {behaviour}
+            {Array.from(new Set(fear.behaviors)).map((behavior) => (
+              <li key={behavior} className="wrap-break-words">
+                {behavior}
               </li>
             ))}
           </ul>

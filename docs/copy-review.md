@@ -22,7 +22,7 @@ theme enum values and user-authored content are not product copy and were preser
 | Past entries | “Occurrences”, “No occurrences found.” | “Past entries”; explain what will appear. Align dialog and loading labels. |
 | Exposures | “Your exposure list is empty.” | “No practice situations yet”; name Prepare in bold and explain how saved entries reach this list. |
 | Navigation | “Use in Practice” implied transferring an entry | “View Exposures”; the existing link only opens that tab. |
-| Shared editors | Unexplained safety behaviours and themes | Explain both inline. State that themes are optional and behaviours can be left blank. |
+| Shared editors | Unexplained safety behaviors and themes | Explain both inline. State that themes are optional and behaviors can be left blank. |
 | Saving errors | Repeated requests to confirm or retry saving | State uncertainty once and mention the retained draft where the form actually keeps it. |
 | API errors | “Unauthorized”, “Invalid request”, “Extraction failed” | Plain sign-in, request and processing messages. Preserve response status codes and ownership behavior. |
 | Today | “adherence”, “Missed”, achievement-oriented streak labels | “recorded as taken”, “Not taken”, “Consecutive active days”. |
@@ -33,7 +33,7 @@ theme enum values and user-authored content are not product copy and were preser
 | Landing | “Break the loop”, “locking in long-term resilience” | Invite exploration at the user's pace without promising outcomes. |
 | Landing feature list | Unimplemented tools presented as available | Describe saved situations, entries and ratings; identify planning examples. |
 | Privacy and availability | “100%”, “never shared”, “Fully encrypted & secure”, “24/7” app promises | Describe actual storage and Groq processing; remove unsupported guarantees. |
-| Chat demo and prompt | Trust-memory reassurance, fixed-time challenges, guaranteed relief | Brief acknowledgement and a small optional step without resolving the feared uncertainty. |
+| Chat demo and prompt | Trust-memory reassurance, fixed-time challenges, guaranteed relief | Brief acknowledgment and a small optional step without resolving the feared uncertainty. |
 | Crisis copy | Pressured heading and outdated contact details | “Crisis support in India”; keep emergency instructions direct and update provider details. |
 | Metadata | Create Next App defaults | CalmLoop title and a plain description. |
 

@@ -65,7 +65,7 @@ export default function PsychoeducationCard() {
       </div>
 
       <p className="text-xs text-muted border-l-2 border-accent/40 pl-3 leading-relaxed">
-        Exposure and response prevention (ERP) involves gradually facing feared situations while practising without compulsions. A therapist can help you choose manageable steps.
+        Exposure and response prevention (ERP) involves gradually facing feared situations while practicing without compulsions. A therapist can help you choose manageable steps.
       </p>
     </div>
   );

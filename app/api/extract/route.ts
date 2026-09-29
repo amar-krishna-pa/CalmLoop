@@ -74,7 +74,7 @@ export async function POST(request: Request) {
       name: matched ? matched.name : fear.proposedName,
       themes: fear.themes,
       evidence: fear.evidence,
-      behaviours: fear.behaviours.map((value) => ({
+      behaviors: fear.behaviors.map((value) => ({
         id: crypto.randomUUID(),
         value,
       })),

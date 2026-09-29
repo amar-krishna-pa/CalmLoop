@@ -25,7 +25,7 @@ const Fear = z.object({
     .describe(
       "What kind of fear this is. Take this from what the person is afraid of, never from the ritual they performed. A fear can have more than one theme. 'Symmetry and ordering' is about how things are arranged; 'Just right' is about the feeling of incompleteness until something is correct."
     ),
-  behaviours: z
+  behaviors: z
     .array(z.string())
     .describe(
       "Everything the person did to feel safer, including mental acts, asking someone for reassurance, and avoiding something. Each one a short repeatable action — 'Washing hands', 'Praying for protection', 'Avoiding the restaurant'. Empty array if the entry describes none. Never invent one."

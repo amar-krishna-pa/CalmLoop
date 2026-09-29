@@ -8,7 +8,7 @@ export const ExposureSchema = z.object({
   fearId: z.string().uuid(),
   fearName: z.string(),
   themes: z.array(z.enum(THEMES)),
-  behaviours: z.array(z.string()),
+  behaviors: z.array(z.string()),
   evidence: z.string(),
   initialSuds: z.number().int().min(0).max(10),
   currentSuds: z.number().int().min(0).max(10).nullable(),

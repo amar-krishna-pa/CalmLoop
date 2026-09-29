@@ -43,8 +43,8 @@ export async function PATCH(
     .set({
       name: parsed.data.name,
       themes: parsed.data.themes,
-      ...(parsed.data.behaviours !== undefined
-        ? { behaviours: parsed.data.behaviours }
+      ...(parsed.data.behaviors !== undefined
+        ? { behaviors: parsed.data.behaviors }
         : {}),
     })
     .where(
@@ -54,7 +54,7 @@ export async function PATCH(
       id: fears.id,
       name: fears.name,
       themes: fears.themes,
-      behaviours: fears.behaviours,
+      behaviors: fears.behaviors,
     });
 
   if (!updated) {

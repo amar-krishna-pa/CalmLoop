@@ -16,7 +16,7 @@ export async function GET() {
       fearId: fears.id,
       fearName: fears.name,
       themes: fears.themes,
-      behaviours: fears.behaviours,
+      behaviors: fears.behaviors,
       evidence: fearOccurrences.evidence,
       initialSuds: fearOccurrences.initialSuds,
       currentSuds: fearOccurrences.currentSuds,

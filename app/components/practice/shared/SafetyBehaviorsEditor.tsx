@@ -1,34 +1,34 @@
 "use client";
 
 import { LuPlus, LuTrash2 } from "react-icons/lu";
-import type { PreviewBehaviour } from "@/app/types/fears";
+import type { PreviewBehavior } from "@/app/types/fears";
 import { AnimatePresence, motion } from "motion/react";
 
 type Props = {
-  behaviours: PreviewBehaviour[];
-  onChange: ({ behaviours }: { behaviours: PreviewBehaviour[] }) => void;
+  behaviors: PreviewBehavior[];
+  onChange: ({ behaviors }: { behaviors: PreviewBehavior[] }) => void;
 };
 
-export default function SafetyBehavioursEditor({
-  behaviours,
+export default function SafetyBehaviorsEditor({
+  behaviors,
   onChange,
 }: Props) {
-  function addBehaviour() {
+  function addBehavior() {
     onChange({
-      behaviours: [...behaviours, { id: crypto.randomUUID(), value: "" }],
+      behaviors: [...behaviors, { id: crypto.randomUUID(), value: "" }],
     });
   }
 
-  function removeBehaviour({ id }: { id: string }) {
+  function removeBehavior({ id }: { id: string }) {
     onChange({
-      behaviours: behaviours.filter((behaviour) => behaviour.id !== id),
+      behaviors: behaviors.filter((behavior) => behavior.id !== id),
     });
   }
 
-  function updateBehaviour({ id, value }: { id: string; value: string }) {
+  function updateBehavior({ id, value }: { id: string; value: string }) {
     onChange({
-      behaviours: behaviours.map((behaviour) =>
-        behaviour.id === id ? { ...behaviour, value } : behaviour,
+      behaviors: behaviors.map((behavior) =>
+        behavior.id === id ? { ...behavior, value } : behavior,
       ),
     });
   }
@@ -37,11 +37,11 @@ export default function SafetyBehavioursEditor({
     <div>
       <div className="mb-1.5 flex items-center justify-between gap-3">
         <span className="text-xs font-medium text-primary">
-          Safety behaviours
+          Safety behaviors
         </span>
         <button
           type="button"
-          onClick={addBehaviour}
+          onClick={addBehavior}
           className="inline-flex min-h-6 cursor-pointer items-center gap-1 text-2xs font-medium leading-none text-accent"
         >
           <LuPlus size={13} className="shrink-0" /> Add
@@ -54,7 +54,7 @@ export default function SafetyBehavioursEditor({
       </p>
       <div className="relative">
         <AnimatePresence initial={false} mode="popLayout">
-          {behaviours.length === 0 ? (
+          {behaviors.length === 0 ? (
             <motion.div
               key="empty"
               initial={{ opacity: 0 }}
@@ -62,20 +62,20 @@ export default function SafetyBehavioursEditor({
               exit={{ opacity: 0 }}
             >
               <p className="mb-2 flex h-10 items-center text-xs text-muted">
-                No safety behaviours added yet
+                No safety behaviors added yet
               </p>
             </motion.div>
           ) : (
             <motion.div
-              key="behaviours"
+              key="behaviors"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
               <AnimatePresence initial={false}>
-                {behaviours.map((behaviour, behaviourIndex) => (
+                {behaviors.map((behavior, behaviorIndex) => (
                   <motion.div
-                    key={behaviour.id}
+                    key={behavior.id}
                     initial={{
                       opacity: 0,
                       height: 0,
@@ -89,21 +89,21 @@ export default function SafetyBehavioursEditor({
                   >
                     <div className="flex items-center gap-2 px-0.5 pt-0.5 pb-1.5">
                       <input
-                        value={behaviour.value}
+                        value={behavior.value}
                         onChange={(event) =>
-                          updateBehaviour({
-                            id: behaviour.id,
+                          updateBehavior({
+                            id: behavior.id,
                             value: event.target.value,
                           })
                         }
                         maxLength={120}
-                        aria-label={`Safety behaviour ${behaviourIndex + 1}`}
+                        aria-label={`Safety behavior ${behaviorIndex + 1}`}
                         className="input-base h-10 border-subtle/60 bg-modal/70"
                       />
                       <button
                         type="button"
-                        onClick={() => removeBehaviour({ id: behaviour.id })}
-                        aria-label={`Remove safety behaviour ${behaviourIndex + 1}`}
+                        onClick={() => removeBehavior({ id: behavior.id })}
+                        aria-label={`Remove safety behavior ${behaviorIndex + 1}`}
                         className="icon-btn h-auto w-10 shrink-0 self-stretch cursor-pointer hover:border-danger hover:text-danger"
                       >
                         <LuTrash2 size={14} />

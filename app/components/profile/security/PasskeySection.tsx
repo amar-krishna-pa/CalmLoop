@@ -63,7 +63,7 @@ export default function PasskeySection() {
   async function handleAddPasskey() {
     if (!passkeyName.trim()) {
       setNameError(
-        "A name helps you recognise this passkey later. For example, My phone."
+        "A name helps you recognize this passkey later. For example, My phone."
       );
       return;
     }

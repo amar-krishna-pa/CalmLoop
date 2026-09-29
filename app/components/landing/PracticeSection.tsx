@@ -25,7 +25,7 @@ const phases: Phase[] = [
         detail: "Describe what happened and how distressing it felt.",
       },
       {
-        name: "Safety behaviours",
+        name: "Safety behaviors",
         detail: "Note actions used to seek certainty or relief, such as repeated checking.",
       },
     ],

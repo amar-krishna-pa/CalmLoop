@@ -21,7 +21,7 @@ const TABS: { id: Tab; label: string; sublabel: string }[] = [
   {
     id: "exposures",
     label: "Exposures",
-    sublabel: "Explore situations to practise",
+    sublabel: "Explore situations to practice",
   },
   {
     id: "maintain",

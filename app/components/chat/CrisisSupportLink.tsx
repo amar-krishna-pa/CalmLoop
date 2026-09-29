@@ -14,7 +14,7 @@ const HELPLINES = [
     name: "Vandrevala Foundation",
     number: "+91 9999 666 555",
     tel: "+919999666555",
-    note: "Free counselling · 24/7",
+    note: "Free counseling · 24/7",
   },
   {
     name: "iCall",

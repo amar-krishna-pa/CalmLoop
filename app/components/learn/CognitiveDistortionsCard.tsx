@@ -9,7 +9,7 @@ const DISTORTIONS: Distortion[] = [
     desc: "Believing that having a thought is the same as acting on it",
   },
   {
-    name: "Catastrophising",
+    name: "Catastrophizing",
     desc: "Assuming the worst possible outcome will happen",
   },
   {

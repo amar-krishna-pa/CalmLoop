@@ -6,16 +6,16 @@ import { fearOccurrences, fears } from "@/app/lib/db/schema";
 import { SaveFearsSchema } from "@/app/lib/zod/save-fears-schema";
 import { maybeUpdateStreak } from "@/app/services/streak/maybe-update-streak";
 
-function mergeBehaviours({
+function mergeBehaviors({
   existing,
   incoming,
 }: {
   existing: string[];
   incoming: string[];
 }): string[] {
-  const seen = new Set(existing.map((behaviour) => behaviour.toLowerCase()));
+  const seen = new Set(existing.map((behavior) => behavior.toLowerCase()));
   const additions = incoming.filter(
-    (behaviour) => !seen.has(behaviour.toLowerCase())
+    (behavior) => !seen.has(behavior.toLowerCase())
   );
   return [...existing, ...additions];
 }
@@ -31,7 +31,7 @@ export async function GET() {
       id: fears.id,
       name: fears.name,
       themes: fears.themes,
-      behaviours: fears.behaviours,
+      behaviors: fears.behaviors,
     })
     .from(fears)
     .where(eq(fears.userId, session.user.id))
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
   for (const fear of parsed.data.fears) {
     if (fear.fearId) {
       const [existing] = await db
-        .select({ behaviours: fears.behaviours })
+        .select({ behaviors: fears.behaviors })
         .from(fears)
         .where(and(eq(fears.id, fear.fearId), eq(fears.userId, userId)));
 
@@ -77,9 +77,9 @@ export async function POST(request: Request) {
       const [updated] = await db
         .update(fears)
         .set({
-          behaviours: mergeBehaviours({
-            existing: existing?.behaviours ?? [],
-            incoming: fear.behaviours,
+          behaviors: mergeBehaviors({
+            existing: existing?.behaviors ?? [],
+            incoming: fear.behaviors,
           }),
         })
         .where(and(eq(fears.id, fear.fearId), eq(fears.userId, userId)))
@@ -106,7 +106,7 @@ export async function POST(request: Request) {
         userId,
         name: fear.name,
         themes: fear.themes,
-        behaviours: fear.behaviours,
+        behaviors: fear.behaviors,
       })
       .returning({ id: fears.id, name: fears.name });
 
