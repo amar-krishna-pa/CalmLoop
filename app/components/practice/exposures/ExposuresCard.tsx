@@ -27,6 +27,16 @@ type Props = {
   targetExposureId: string | null;
 };
 
+function getEffectiveSuds(exposure: Exposure) {
+  return exposure.currentSuds ?? exposure.initialSuds;
+}
+
+function sortByEffectiveSuds(exposures: Exposure[]) {
+  return [...exposures].sort(
+    (left, right) => getEffectiveSuds(left) - getEffectiveSuds(right),
+  );
+}
+
 export default function ExposuresCard({ targetExposureId }: Props) {
   const [exposures, setExposures] = useState<Exposure[] | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -122,6 +132,9 @@ export default function ExposuresCard({ targetExposureId }: Props) {
       availableExposures.push(exposure);
     }
   }
+
+  const sortedInProgressExposures = sortByEffectiveSuds(inProgressExposures);
+  const sortedAvailableExposures = sortByEffectiveSuds(availableExposures);
 
   const availableCount = availableExposures.length;
   const inProgressCount = inProgressExposures.length;
@@ -326,7 +339,7 @@ export default function ExposuresCard({ targetExposureId }: Props) {
           <ul className="relative space-y-3">
             <AnimatePresence initial={false} mode="popLayout">
               {showInProgress &&
-                inProgressExposures.map((exposure) => (
+                sortedInProgressExposures.map((exposure) => (
                   <motion.li
                     id={`exposure-${exposure.id}`}
                     layout
@@ -351,7 +364,7 @@ export default function ExposuresCard({ targetExposureId }: Props) {
                 ))}
 
               {showAvailable &&
-                availableExposures.map((exposure) => (
+                sortedAvailableExposures.map((exposure) => (
                   <motion.li
                     id={`exposure-${exposure.id}`}
                     layout
