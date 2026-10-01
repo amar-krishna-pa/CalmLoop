@@ -138,7 +138,7 @@ export default function ExtractedFearEditor({
             htmlFor={fear.previewId}
             className="text-xs font-medium text-primary"
           >
-            How distressing did this feel?
+            How distressing did this exact situation feel?
           </label>
           <SudsDropdown
             id={fear.previewId}
