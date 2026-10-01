@@ -171,11 +171,6 @@ export const fearOccurrences = pgTable(
     evidence: text("evidence").notNull(),
     // Set by the person in the save preview, never by extraction.
     initialSuds: integer("initial_suds").notNull(),
-    // Remains null until the person records a rating after an ERP session.
-    currentSuds: integer("current_suds"),
-    practiceStatus: exposurePracticeStatus("practice_status")
-      .notNull()
-      .default("available"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
       .defaultNow()
