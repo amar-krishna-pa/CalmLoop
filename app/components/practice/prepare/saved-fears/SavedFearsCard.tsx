@@ -11,6 +11,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { SavedFearSchema, type SavedFear } from "@/app/lib/zod/saved-fear-schema";
 import SavedFearDialog from "@/app/components/practice/prepare/saved-fears/fear-dialog/SavedFearDialog";
 import SavedFearItem from "@/app/components/practice/prepare/saved-fears/list/SavedFearItem";
+import { toast } from "sonner";
 
 const SavedFearsSchema = z.object({ fears: z.array(SavedFearSchema) });
 
@@ -20,6 +21,7 @@ export default function SavedFearsCard() {
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
   const [isRetrying, setIsRetrying] = useState(false);
+  const [deletingFearId, setDeletingFearId] = useState<string | null>(null);
   const [selectedTheme, setSelectedTheme] = useState<
     (typeof THEMES)[number] | null
   >(null);
@@ -35,6 +37,22 @@ export default function SavedFearsCard() {
   const visibleFears = fears?.filter(
     (fear) => selectedTheme === null || fear.themes.includes(selectedTheme),
   );
+
+  async function deleteFear({ fearId }: { fearId: string }) {
+    setDeletingFearId(fearId);
+
+    try {
+      const response = await fetch(`/api/fears/${fearId}`, { method: "DELETE" });
+      if (!response.ok) throw new Error("Could not delete fear");
+
+      setFears((current) => current?.filter((fear) => fear.id !== fearId) ?? null);
+      if (openFearId === fearId) setOpenFearId(null);
+    } catch {
+      toast.error("We couldn’t delete this fear. You can try again.");
+    } finally {
+      setDeletingFearId(null);
+    }
+  }
 
   useEffect(() => {
     const controller = new AbortController();
@@ -158,6 +176,8 @@ export default function SavedFearsCard() {
                   <SavedFearItem
                     fear={fear}
                     onOpen={() => setOpenFearId(fear.id)}
+                    onDelete={() => void deleteFear({ fearId: fear.id })}
+                    isDeleting={deletingFearId === fear.id}
                   />
                 </motion.li>
               ))}

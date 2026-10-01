@@ -20,7 +20,7 @@ export default function SavedFearDetails({
   onOccurrencesLoaded,
 }: Props) {
   return (
-    <div className="min-h-0 flex-1 space-y-4 overflow-y-auto">
+    <div className="min-h-0 flex-1 space-y-4 overflow-y-auto pr-2">
       <div className="space-y-2">
         <section className="flex items-baseline gap-4" aria-label="Fear">
           <p className="min-w-0 flex-1 wrap-break-words text-sm text-muted">
@@ -56,8 +56,6 @@ export default function SavedFearDetails({
           )}
         </section>
       </div>
-
-      <HorizontalDivider />
 
       <section className="space-y-2" aria-label="Safety behaviors">
         <h3 className="text-xs font-medium text-primary">Safety behaviors</h3>
