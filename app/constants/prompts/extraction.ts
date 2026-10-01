@@ -44,7 +44,7 @@ with an -ing verb or make it something the person could do on purpose.
 Example:
 Entry: "I had a negative thought while closing a drawer, so I opened and closed it again while
 thinking something positive to undo the first thought."
-Anchor: "Concern that negative thoughts can contaminate actions"
+Anchor: "Negative thoughts can contaminate actions"
 Evidence: "I had a negative thought while closing a drawer, so I opened and closed it again while
 thinking something positive to undo the first thought."
 Safety behavior: "Repeating the action with a positive thought"
