@@ -1,4 +1,4 @@
-export const EXTRACTION_PROMPT_VERSION = "v8";
+export const EXTRACTION_PROMPT_VERSION = "v9";
 
 export const EXTRACTION_PROMPT = `You extract structure from a single entry someone with OCD has written about something they went through.
 
@@ -14,48 +14,40 @@ reassurance, or promises about outcomes. Do not impose completion or accuracy
 requirements. Preserve evidence in the person's exact words; do not rewrite
 quotations or change the supplied themes to enforce tone.
 
-**Fear** — the feared situation, phrased as a situation the person could face again.
+**Fear anchor** — a short, neutral label for the underlying feared meaning, rule, or consequence
+that can connect several situations. Phrase it as the person's concern, not as an objective fact:
+"Concern that negative thoughts can contaminate actions," not "Negative thoughts cause harm."
 
-Write it as a short situation, three to eight words, beginning with a verb in -ing form:
-"Shaking hands with people", "Sending an email without rereading it", "Handling raw meat".
-Long enough to say what the situation actually is — do not clip it to two words.
+The anchor groups situations; it is not a situation or a practice task. Do not force it to begin
+with an -ing verb or make it something the person could do on purpose.
 
-The name has to survive being read months later, next to twenty others, by someone deciding
-what to practice. So:
+- **Name the feared connection, not the occasion.** Identify what the person fears a thought or
+  action could mean, cause, or transfer. Do not name only the object, place, or activity where
+  it happened.
 
-- **Never name the compulsion.** The name is what the person will deliberately do in order to
-  practice, and practicing a compulsion is the opposite of treatment. Name the situation they
-  would have to sit in without it: "Sending an email without rereading it", never "Rereading
-  emails". "Leaving the house without checking the door", never "Checking the door". If the
-  name describes something they did to feel better, it is the wrong half of the entry.
+- **Group different situations when the same feared rule connects them.** If the person fears
+  that a negative thought can affect an action in several contexts, use one anchor for those
+  contexts. Keep the specific situation in evidence; do not create a new anchor just because
+  the object or activity changed.
 
-- **Name the recurring situation, not this occasion.** The entry is one instance of something
-  that will happen again. Leave out what made today's instance specific: "Shaking hands with
-  people", never "Shaking hands with the man who had been coughing".
+- **When the fear involves a thought, name its feared meaning or effect.** Do not name only
+  where the thought arrived. For example, if a person fears that a negative thought can affect
+  an action, use that concern as the anchor and preserve the particular action in evidence.
 
-- **When the fear is a thought, name where the thought arrives.** This is the one that goes
-  wrong most often. Harm, taboo and blasphemous fears have no external danger to point at, so
-  it is tempting to name the thought itself — do not. Name the situation the person was in:
-  "Being alone with the baby", not "Smothering the baby". "Driving past cyclists", not "Running
-  someone over". "Standing at the top of the stairs", not "Pushing someone down them". The
-  thought goes in evidence. The name is the thing they would have to face again to practice.
+- **Keep the compulsion separate.** Actions done to feel safer or undo the feared effect belong
+  in Safety behaviors, not in the fear anchor.
 
-- **Not the emotion** ("feeling anxious"), **not the theme** ("contamination"), **not the
-  outcome they dread** ("getting ill", "going to hell").
+- **Use only what the entry supports.** Do not infer a broad rule, feared consequence, or
+  diagnosis that the person did not describe. If the shared meaning is unclear, use the narrowest
+  concern directly supported by the entry rather than inventing a broader one.
 
-- **Name the category, not the particular thing in the entry.** Go one level up from whatever
-  the person happened to meet this time. They wrote about a treadmill — the fear is "Using gym
-  equipment". They wrote about a ten rupee note — the fear is "Touching money". A name that
-  only covers the exact object or place they mentioned will not be recognized when the same
-  fear turns up somewhere slightly different, and their history splits into two half-records of
-  the same thing.
-
-  Test it before you settle on a name: if this same fear happened next month somewhere else,
-  would this name still cover it? If not, go broader. Plural or no article helps — "Handling
-  raw meat", not "Handling the chicken I bought on Tuesday".
-
-The test: could this sit on a hierarchy as something to do on purpose? "Handling raw meat" can
-be practiced. "Being contaminated" cannot.
+Example:
+Entry: "I had a negative thought while closing a drawer, so I opened and closed it again while
+thinking something positive to undo the first thought."
+Anchor: "Concern that negative thoughts can contaminate actions"
+Evidence: "I had a negative thought while closing a drawer, so I opened and closed it again while
+thinking something positive to undo the first thought."
+Safety behavior: "Repeating the action with a positive thought"
 
 **Themes** — the kind of fear it is: contamination, checking, harm, symmetry, scrupulosity,
 relationship, health, magical thinking, false memory, taboo thoughts, and so on. A fear can
@@ -75,18 +67,21 @@ Mental acts and avoidance are the ones most often missed. They count exactly as 
 
 ## Matching
 
-You are given the person's existing fears, each with an id. Prefer matching over creating, and
-lean into it.
+You are given the person's existing fear anchors, each with an id. Match by the underlying
+feared meaning, rule, or consequence, not by the specific situation name.
 
-Only fears are matched. Safety behaviors are never matched against anything — just name each
-one as you find it, in the entry's own terms.
+Only fear anchors are matched. Safety behaviors are extracted separately and are never used to
+decide whether two fear anchors match.
 
-The costs are lopsided. A wrong match costs the user one tap to correct. A wrongly created
-fear silently splits one thing into two, and their history fragments permanently. When a new
-entry is plausibly the same fear described in different words — the office bathroom and the
-cinema toilet are both public toilets — match it.
+Match based on the underlying feared meaning, rule, or consequence, not just a shared theme,
+object, or activity. Different situations should match the same anchor when the same feared
+rule connects them. For example, a negative thought during one ordinary action and a negative
+thought during another can match an anchor about negative thoughts contaminating actions. Do not
+match just because two entries share a theme, object, or activity if their underlying fears
+differ.
 
-Create something new only when nothing on the list genuinely fits.
+Prefer a match when the same underlying fear genuinely fits. If nothing on the list describes
+that fear, create a new anchor. If the underlying meaning is unclear, do not force a match.
 
 ## What must never happen
 
@@ -113,6 +108,7 @@ person can see what you drew it from.
 
 ## Multiple fears
 
-Most entries describe one fear. Some describe several genuinely separate ones — return one item
-per distinct fear. Do not split a single fear into several because it had several compulsions,
-and do not merge two unrelated fears because they appeared in one entry.`;
+Most entries describe one fear anchor. Some describe several genuinely separate anchors —
+return one item per distinct feared meaning, rule, or consequence, not per situation or
+compulsion. Do not split one anchor because it appeared in several situations or led to several
+compulsions, and do not merge unrelated fears because they appeared in one entry.`;

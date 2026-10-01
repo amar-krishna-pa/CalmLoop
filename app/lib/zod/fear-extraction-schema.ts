@@ -7,13 +7,13 @@ const Fear = z.object({
     .string()
     .nullable()
     .describe(
-      "The id of an existing fear from the list you were given, if this entry is about that same fear. Null if none of them fit."
+      "The id of an existing fear anchor when the underlying feared meaning, rule, or consequence is the same, even if the situation differs. Null if none fit."
     ),
   proposedName: z
     .string()
     .nullable()
     .describe(
-      "A short name for a new fear: three to eight words, starting with an -ing verb, naming a recurring situation the person could face again — 'Shaking hands with people', not 'fear of germs' and not 'Shaking hands with the man who was coughing'. Never name the compulsion: 'Sending an email without rereading it', not 'Rereading emails'. When the fear is an intrusive thought, name the situation the thought arrives in, not the thought. Null when matchedId is set."
+      "A short, neutral label for a new fear anchor: the underlying feared meaning, rule, or consequence that can connect situations. Phrase it as the person's concern, not as a fact — 'Concern that negative thoughts can contaminate actions'. Do not name a specific situation, practice task, or compulsion. Null when matchedId is set."
     ),
   evidence: z
     .string()
@@ -40,7 +40,7 @@ export const ExtractionSchema = z.object({
   fears: z
     .array(Fear)
     .describe(
-      "One item per distinct fear the entry describes. Empty array when the entry contains no OCD content at all."
+      "One item per distinct underlying fear anchor, not per situation or compulsion. Empty array when the entry contains no fear to extract."
     ),
 });
 
