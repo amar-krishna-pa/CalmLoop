@@ -65,3 +65,34 @@ export async function PATCH(
 
   return Response.json({ fear: updated });
 }
+
+export async function DELETE(
+  _request: Request,
+  { params }: { params: Promise<{ fearId: string }> },
+) {
+  const session = await checkSession();
+  if (!session) {
+    return Response.json({ error: "Please sign in to continue." }, { status: 401 });
+  }
+
+  const { fearId } = await params;
+  const parsedId = z.string().uuid().safeParse(fearId);
+  if (!parsedId.success) {
+    return Response.json({ error: "This fear isn’t available." }, { status: 404 });
+  }
+
+  const [deleted] = await db
+    .delete(fears)
+    .where(
+      and(eq(fears.id, parsedId.data), eq(fears.userId, session.user.id)),
+    )
+    .returning({ id: fears.id });
+
+  if (!deleted) {
+    return Response.json({ error: "This fear isn’t available." }, { status: 404 });
+  }
+
+  await maybeUpdateStreak({ user: session.user });
+
+  return Response.json({ fearId: deleted.id });
+}
