@@ -23,10 +23,6 @@ const FILTERS = [
 
 type ExposureFilter = (typeof FILTERS)[number]["value"];
 
-type Props = {
-  targetExposureId: string | null;
-};
-
 function getEffectiveSuds(exposure: Exposure) {
   return exposure.currentSuds ?? exposure.initialSuds;
 }
@@ -37,7 +33,7 @@ function sortByEffectiveSuds(exposures: Exposure[]) {
   );
 }
 
-export default function ExposuresCard({ targetExposureId }: Props) {
+export default function ExposuresCard() {
   const [exposures, setExposures] = useState<Exposure[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
@@ -51,7 +47,6 @@ export default function ExposuresCard({ targetExposureId }: Props) {
   );
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const focusedExposureIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -95,32 +90,6 @@ export default function ExposuresCard({ targetExposureId }: Props) {
 
     return () => controller.abort();
   }, [attempt]);
-
-  useEffect(() => {
-    if (
-      exposures === null ||
-      targetExposureId === null ||
-      focusedExposureIdRef.current === targetExposureId ||
-      !exposures.some((exposure) => exposure.id === targetExposureId)
-    ) {
-      return;
-    }
-
-    const target = document.getElementById(`exposure-${targetExposureId}`);
-    if (!target) return;
-
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
-    target.focus({ preventScroll: true });
-    focusedExposureIdRef.current = targetExposureId;
-
-    const url = new URL(window.location.href);
-    url.searchParams.delete("exposureId");
-    window.history.replaceState(
-      null,
-      "",
-      `${url.pathname}${url.search}${url.hash}`,
-    );
-  }, [exposures, targetExposureId]);
 
   const availableExposures: Exposure[] = [];
   const inProgressExposures: Exposure[] = [];
@@ -211,12 +180,13 @@ export default function ExposuresCard({ targetExposureId }: Props) {
         await response.json(),
       );
 
-      setExposures((currentExposures) =>
-        currentExposures?.map((exposure) =>
-          exposure.id === data.exposure.id
-            ? { ...exposure, practiceStatus: data.exposure.practiceStatus }
-            : exposure,
-        ) ?? null,
+      setExposures(
+        (currentExposures) =>
+          currentExposures?.map((exposure) =>
+            exposure.id === data.exposure.id
+              ? { ...exposure, practiceStatus: data.exposure.practiceStatus }
+              : exposure,
+          ) ?? null,
       );
     } catch {
       toast.error(
@@ -237,9 +207,7 @@ export default function ExposuresCard({ targetExposureId }: Props) {
     setExposures(
       (currentExposures) =>
         currentExposures?.map((exposure) =>
-          exposure.id === exposureId
-            ? { ...exposure, currentSuds }
-            : exposure,
+          exposure.id === exposureId ? { ...exposure, currentSuds } : exposure,
         ) ?? null,
     );
     setCheckInExposureId(null);
@@ -341,17 +309,12 @@ export default function ExposuresCard({ targetExposureId }: Props) {
               {showInProgress &&
                 sortedInProgressExposures.map((exposure) => (
                   <motion.li
-                    id={`exposure-${exposure.id}`}
                     layout
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     key={exposure.id}
-                    tabIndex={-1}
-                    aria-current={
-                      exposure.id === targetExposureId ? "true" : undefined
-                    }
-                    className="snap-start scroll-m-1 rounded-xl outline-offset-2 focus:outline-2 focus:outline-accent"
+                    className="snap-start rounded-xl"
                   >
                     <ExposureListItem
                       exposure={exposure}
@@ -366,17 +329,12 @@ export default function ExposuresCard({ targetExposureId }: Props) {
               {showAvailable &&
                 sortedAvailableExposures.map((exposure) => (
                   <motion.li
-                    id={`exposure-${exposure.id}`}
                     layout
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     key={exposure.id}
-                    tabIndex={-1}
-                    aria-current={
-                      exposure.id === targetExposureId ? "true" : undefined
-                    }
-                    className="snap-start scroll-m-1 rounded-xl outline-offset-2 focus:outline-2 focus:outline-accent"
+                    className="snap-start rounded-xl"
                   >
                     <ExposureListItem
                       exposure={exposure}

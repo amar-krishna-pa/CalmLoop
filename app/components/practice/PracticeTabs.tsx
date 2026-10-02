@@ -33,7 +33,6 @@ const TABS: { id: Tab; label: string; sublabel: string }[] = [
 export default function PracticeTabs() {
   const searchParams = useSearchParams();
   const requestedTab = searchParams.get("tab");
-  const requestedExposureId = searchParams.get("exposureId");
 
   const activeTab =
     TABS.find((tab) => tab.id === requestedTab)?.id ?? "prepare";
@@ -114,9 +113,7 @@ export default function PracticeTabs() {
               </div>
             )}
 
-            {activeTab === "exposures" && (
-              <ExposuresCard targetExposureId={requestedExposureId} />
-            )}
+            {activeTab === "exposures" && <ExposuresCard />}
 
             {activeTab === "maintain" && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
