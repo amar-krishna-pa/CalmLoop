@@ -122,7 +122,7 @@ export default function EditOccurrenceForm({
               onChange={(event) => setEvidence(event.target.value)}
               maxLength={2000}
               rows={6}
-              className="input-base resize-y border-subtle/60 bg-modal/70"
+              className="input-base h-32 resize-y border-subtle/60 bg-modal/70"
             />
           </div>
 
