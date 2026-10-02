@@ -45,8 +45,8 @@ export default function FearOccurrences({
         if (!response.ok) {
           throw new Error(
             response.status === 401
-              ? "Please sign in to view past entries."
-              : "We couldn’t load past entries. You can try again.",
+              ? "Please sign in to view situations."
+              : "We couldn’t load situations. You can try again.",
           );
         }
 
@@ -60,7 +60,7 @@ export default function FearOccurrences({
           setError(
             error instanceof Error && error.message.startsWith("Please sign in")
               ? error.message
-              : "We couldn’t load past entries. You can try again.",
+              : "We couldn’t load situations. You can try again.",
           );
         }
       }
@@ -74,8 +74,8 @@ export default function FearOccurrences({
   }, [fearId, attempt, occurrences, onOccurrencesLoaded]);
 
   return (
-    <section className="space-y-1" aria-label="Past entries">
-      <h3 className="text-xs font-medium text-primary">Past entries</h3>
+    <section className="space-y-1" aria-label="Situations">
+      <h3 className="text-xs font-medium text-primary">Situations</h3>
       <div className="min-h-52">
         {error ? (
           <div className="space-y-2">
@@ -98,8 +98,7 @@ export default function FearOccurrences({
           <FearOccurrencesLoader />
         ) : occurrences.length === 0 ? (
           <p className="text-sm text-muted">
-            No past entries yet. Entries connected to this fear will appear
-            here.
+            No situations yet. Situations linked to this fear will appear here.
           </p>
         ) : (
           <ol className="space-y-5">

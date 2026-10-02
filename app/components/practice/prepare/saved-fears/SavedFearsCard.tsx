@@ -132,7 +132,7 @@ export default function SavedFearsCard() {
         </div>
         <p className="text-xs text-muted">
           One fear can show up in different situations. View a fear to see its
-          past entries.
+          situations.
         </p>
       </div>
 
