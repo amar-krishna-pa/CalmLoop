@@ -1,9 +1,9 @@
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
-import { fearOccurrences } from "@/app/lib/db/schema";
+import { erpSessions, fearOccurrences } from "@/app/lib/db/schema";
 
 // Next.js requires positional request and context arguments for route handlers.
 export async function GET(
@@ -28,7 +28,14 @@ export async function GET(
       evidence: fearOccurrences.evidence,
       behaviors: fearOccurrences.behaviors,
       initialSuds: fearOccurrences.initialSuds,
-      currentSuds: fearOccurrences.currentSuds,
+      currentSuds: sql<number | null>`(
+        SELECT ${erpSessions.suds}
+        FROM ${erpSessions}
+        WHERE ${erpSessions.fearOccurrenceId} = ${fearOccurrences.id}
+          AND ${erpSessions.userId} = ${userId}
+        ORDER BY ${erpSessions.completedAt} DESC, ${erpSessions.id} DESC
+        LIMIT 1
+      )`,
       createdAt: fearOccurrences.createdAt,
     })
     .from(fearOccurrences)

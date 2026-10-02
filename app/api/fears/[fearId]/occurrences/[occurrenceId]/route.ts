@@ -1,9 +1,9 @@
-import { and, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
-import { fearOccurrences } from "@/app/lib/db/schema";
+import { erpSessions, fearOccurrences } from "@/app/lib/db/schema";
 import { UpdateOccurrenceSchema } from "@/app/lib/zod/update-occurrence-schema";
 import { maybeUpdateStreak } from "@/app/services/streak/maybe-update-streak";
 
@@ -62,7 +62,6 @@ export async function PATCH(
       evidence: fearOccurrences.evidence,
       behaviors: fearOccurrences.behaviors,
       initialSuds: fearOccurrences.initialSuds,
-      currentSuds: fearOccurrences.currentSuds,
       createdAt: fearOccurrences.createdAt,
     });
 
@@ -70,7 +69,21 @@ export async function PATCH(
     return Response.json({ error: "This entry isn’t available." }, { status: 404 });
   }
 
+  const [latestSession] = await db
+    .select({ suds: erpSessions.suds })
+    .from(erpSessions)
+    .where(
+      and(
+        eq(erpSessions.fearOccurrenceId, updated.id),
+        eq(erpSessions.userId, session.user.id),
+      ),
+    )
+    .orderBy(desc(erpSessions.completedAt), desc(erpSessions.id))
+    .limit(1);
+
   await maybeUpdateStreak({ user: session.user });
 
-  return Response.json({ occurrence: updated });
+  return Response.json({
+    occurrence: { ...updated, currentSuds: latestSession?.suds ?? null },
+  });
 }
