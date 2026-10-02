@@ -109,7 +109,7 @@ export default function FearOccurrences({
               const behaviors = [...new Set(occurrence.behaviors)];
 
               return (
-                <li key={occurrence.id} className="space-y-0">
+                <li key={occurrence.id} className="snap-start space-y-0">
                   <div className="flex items-center justify-between gap-3">
                     <time
                       dateTime={occurrence.createdAt}

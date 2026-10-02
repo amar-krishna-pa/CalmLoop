@@ -21,8 +21,8 @@ export default function SavedFearDetails({
   onOccurrencesLoaded,
 }: Props) {
   return (
-    <div className="min-h-0 flex-1 space-y-4 overflow-y-auto pr-2">
-      <div className="space-y-2">
+    <div className="flex min-h-0 flex-1 flex-col gap-4">
+      <div className="shrink-0 space-y-2 pr-2">
         <section className="flex items-baseline gap-4" aria-label="Fear">
           <p className="min-w-0 flex-1 wrap-break-words text-sm text-muted">
             {fear.name}
@@ -60,12 +60,14 @@ export default function SavedFearDetails({
 
       <HorizontalDivider />
 
-      <FearOccurrences
-        fearId={fear.id}
-        occurrences={occurrences}
-        onEdit={onEditOccurrence}
-        onOccurrencesLoaded={onOccurrencesLoaded}
-      />
+      <div className="min-h-0 flex-1 snap-y snap-proximity overflow-y-auto pr-2">
+        <FearOccurrences
+          fearId={fear.id}
+          occurrences={occurrences}
+          onEdit={onEditOccurrence}
+          onOccurrencesLoaded={onOccurrencesLoaded}
+        />
+      </div>
     </div>
   );
 }
