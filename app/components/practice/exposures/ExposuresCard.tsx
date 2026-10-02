@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { z } from "zod";
 import ExposureFearSelectorLoader from "@/app/components/loaders/ExposureFearSelectorLoader";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import ExposureFearSelector from "@/app/components/practice/exposures/ExposureFearSelector";
+import ExposureSituations from "@/app/components/practice/exposures/ExposureSituations";
 import {
   SavedFearSchema,
   type SavedFear,
@@ -18,6 +20,8 @@ export default function ExposuresCard() {
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
   const [isRetrying, setIsRetrying] = useState(false);
+
+  const selectedFear = fears?.find((fear) => fear.id === selectedFearId);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -108,6 +112,21 @@ export default function ExposuresCard() {
               value={selectedFearId}
               onChange={({ fearId }) => setSelectedFearId(fearId)}
             />
+            <AnimatePresence initial={false} mode="wait">
+              {selectedFear && (
+                <motion.div
+                  key={selectedFear.id}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, pointerEvents: "none" }}
+                >
+                  <ExposureSituations
+                    fearId={selectedFear.id}
+                    fearName={selectedFear.name}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         )}
       </div>
