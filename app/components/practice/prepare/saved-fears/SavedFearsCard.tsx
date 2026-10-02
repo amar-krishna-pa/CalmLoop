@@ -8,7 +8,10 @@ import SavedFearsThemeFilterLoader from "@/app/components/loaders/SavedFearsThem
 import { THEMES } from "@/app/constants/fears/themes";
 import SavedFearsThemeFilter from "@/app/components/practice/prepare/saved-fears/list/SavedFearsThemeFilter";
 import { AnimatePresence, motion } from "motion/react";
-import { SavedFearSchema, type SavedFear } from "@/app/lib/zod/saved-fear-schema";
+import {
+  SavedFearSchema,
+  type SavedFear,
+} from "@/app/lib/zod/saved-fear-schema";
 import SavedFearDialog from "@/app/components/practice/prepare/saved-fears/fear-dialog/SavedFearDialog";
 import SavedFearItem from "@/app/components/practice/prepare/saved-fears/list/SavedFearItem";
 import { toast } from "sonner";
@@ -42,10 +45,14 @@ export default function SavedFearsCard() {
     setDeletingFearId(fearId);
 
     try {
-      const response = await fetch(`/api/fears/${fearId}`, { method: "DELETE" });
+      const response = await fetch(`/api/fears/${fearId}`, {
+        method: "DELETE",
+      });
       if (!response.ok) throw new Error("Could not delete fear");
 
-      setFears((current) => current?.filter((fear) => fear.id !== fearId) ?? null);
+      setFears(
+        (current) => current?.filter((fear) => fear.id !== fearId) ?? null,
+      );
       if (openFearId === fearId) setOpenFearId(null);
     } catch {
       toast.error("We couldn’t delete this fear. You can try again.");
@@ -100,20 +107,33 @@ export default function SavedFearsCard() {
       aria-labelledby="saved-fears-heading"
       className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4 card-medium"
     >
-      <div className="flex items-center justify-between gap-3">
-        <h2
-          id="saved-fears-heading"
-          className="text-sm font-semibold text-primary"
-        >
-          Saved fears
-        </h2>
+      <div className="space-y-1">
+        <div className="flex items-center justify-between gap-3">
+          <h2
+            id="saved-fears-heading"
+            className="text-sm font-semibold text-primary"
+          >
+            Saved fears
+          </h2>
 
-          <span aria-live="polite" className="w-28 shrink-0 text-right text-xs text-muted">
-        {fears !== null && (<>
-            {selectedTheme !== null ? `${visibleFears?.length ?? 0} of ` : ""}
-            {fears.length} {fears.length === 1 ? "fear" : "fears"}
-        </>)}
+          <span
+            aria-live="polite"
+            className="w-28 shrink-0 text-right text-xs text-muted"
+          >
+            {fears !== null && (
+              <>
+                {selectedTheme !== null
+                  ? `${visibleFears?.length ?? 0} of `
+                  : ""}
+                {fears.length} {fears.length === 1 ? "fear" : "fears"}
+              </>
+            )}
           </span>
+        </div>
+        <p className="text-xs text-muted">
+          One fear can show up in different situations. View a fear to see its
+          past entries.
+        </p>
       </div>
 
       <div className="flex min-h-10 flex-wrap items-center gap-2">
@@ -157,8 +177,8 @@ export default function SavedFearsCard() {
             </p>
 
             <p className="max-w-sm text-xs text-muted">
-              You can describe a situation above and save your entry. Even one is
-              enough to get started.
+              You can describe a situation above and save your entry. Even one
+              is enough to get started.
             </p>
           </div>
         ) : (

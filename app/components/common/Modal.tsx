@@ -13,7 +13,7 @@ type Props = {
   onClose: () => void;
   children: React.ReactNode;
   size?: "default" | "large";
-  fixedHeight?: boolean;
+  fixedHeight?: boolean | "compact";
 };
 
 const FOCUSABLE =
@@ -99,7 +99,8 @@ export default function Modal({
         className={cn(
           "w-full max-h-[85vh] overflow-hidden bg-modal dark:bg-modal/70 backdrop-blur-xl border border-subtle/60 rounded-xl p-5 flex flex-col gap-4 shadow-xl",
           size === "large" ? "max-w-3xl" : "max-w-md",
-          fixedHeight && "h-150 max-h-[85dvh]",
+          fixedHeight && "max-h-[85dvh]",
+          fixedHeight === "compact" ? "h-105" : fixedHeight && "h-150",
         )}
       >
         <div className="flex items-start justify-between gap-3">

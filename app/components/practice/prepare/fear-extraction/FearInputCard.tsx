@@ -87,18 +87,23 @@ export default function FearInputCard({ onSaved }: Props) {
   return (
     <>
       <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-3 card-short">
-        <div className="flex items-center gap-2">
-          <LuPencilLine size={15} className="text-muted" />
-          <h2 className="text-sm font-semibold text-primary">
-            Describe a situation
-          </h2>
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <LuPencilLine size={15} className="text-muted" />
+            <h2 className="text-sm font-semibold text-primary">
+              Describe a situation
+            </h2>
+          </div>
+          <p className="text-xs text-muted">
+            Tell us what happened, as you would to a friend.
+          </p>
         </div>
 
         <div className="flex flex-1 min-h-0 flex-col gap-3">
           <textarea
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="Describe the situation as if you were telling a friend."
+            placeholder="What happened?"
             disabled={isExtracting}
             maxLength={5000}
             className="min-h-0 flex-1 w-full resize-none rounded-xl border border-subtle bg-primary px-3 py-2 text-sm text-primary placeholder:text-muted transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/10 disabled:cursor-not-allowed disabled:opacity-60"

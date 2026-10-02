@@ -16,16 +16,25 @@ type Props = {
 };
 
 export default function SavedFearDialog({ fear, onClose, onSaved }: Props) {
-  const [view, setView] = useState<"details" | "edit" | "occurrence">("details");
+  const [view, setView] = useState<"details" | "edit" | "occurrence">(
+    "details",
+  );
   const [occurrences, setOccurrences] = useState<Occurrence[] | null>(null);
-  const [editingOccurrence, setEditingOccurrence] =
-    useState<Occurrence | null>(null);
+  const [editingOccurrence, setEditingOccurrence] = useState<Occurrence | null>(
+    null,
+  );
 
   const savingRef = useRef(false);
 
   return (
     <Modal
-      title={view === "occurrence" ? "Edit entry" : view === "edit" ? "Edit fear" : "Fear details"}
+      title={
+        view === "occurrence"
+          ? "Edit entry"
+          : view === "edit"
+            ? "Edit fear"
+            : "Fear details"
+      }
       onClose={() => {
         if (savingRef.current) return;
 
@@ -33,7 +42,7 @@ export default function SavedFearDialog({ fear, onClose, onSaved }: Props) {
         else onClose();
       }}
       size="large"
-      fixedHeight
+      fixedHeight="compact"
     >
       <div className="relative flex min-h-0 flex-1 flex-col">
         <AnimatePresence initial={false} mode="popLayout">
@@ -68,10 +77,11 @@ export default function SavedFearDialog({ fear, onClose, onSaved }: Props) {
                   savingRef.current = isSaving;
                 }}
                 onSaved={({ occurrence: updated }) => {
-                  setOccurrences((current) =>
-                    current?.map((occurrence) =>
-                      occurrence.id === updated.id ? updated : occurrence,
-                    ) ?? null,
+                  setOccurrences(
+                    (current) =>
+                      current?.map((occurrence) =>
+                        occurrence.id === updated.id ? updated : occurrence,
+                      ) ?? null,
                   );
                   setEditingOccurrence(updated);
                   setView("details");
