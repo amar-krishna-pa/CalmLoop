@@ -1,16 +1,22 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { z } from "zod";
 import HorizontalDivider from "@/app/components/common/HorizontalDivider";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import SafetyBehaviorsEditor from "@/app/components/practice/shared/SafetyBehaviorsEditor";
 import SudsDropdown from "@/app/components/practice/shared/SudsDropdown";
-import { OccurrenceSchema, type Occurrence } from "@/app/lib/zod/occurrence-schema";
+import {
+  OccurrenceSchema,
+  type Occurrence,
+} from "@/app/lib/zod/occurrence-schema";
 import { UpdateOccurrenceSchema } from "@/app/lib/zod/update-occurrence-schema";
 import type { PreviewBehavior } from "@/app/types/fears";
 
-const SavedOccurrenceResponseSchema = z.object({ occurrence: OccurrenceSchema });
+const SavedOccurrenceResponseSchema = z.object({
+  occurrence: OccurrenceSchema,
+});
 
 type Props = {
   fearId: string;
@@ -142,13 +148,32 @@ export default function EditOccurrenceForm({
 
       <div className="shrink-0 space-y-3">
         <HorizontalDivider />
-        <div className="h-20 overflow-y-auto" aria-live="polite">
-          {error && <p role="alert" className="text-sm text-danger">{error}</p>}
-          {!savePayload.success && (
-            <p className="text-xs text-muted">
-              Enter a situation with 1–2,000 characters and use 1–120 characters for each safety behavior.
-            </p>
-          )}
+        <div className="empty:hidden" aria-live="polite">
+          <AnimatePresence initial={false}>
+            {(error || !savePayload.success) && (
+              <motion.div
+                key="feedback"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="space-y-2">
+                  {error && (
+                    <p role="alert" className="text-sm text-danger">
+                      {error}
+                    </p>
+                  )}
+                  {!savePayload.success && (
+                    <p className="text-xs text-muted">
+                      Enter a situation with 1–2,000 characters and use 1–120
+                      characters for each safety behavior.
+                    </p>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
@@ -167,7 +192,7 @@ export default function EditOccurrenceForm({
             type="submit"
             disabled={isSaving || !savePayload.success}
             aria-label={isSaving ? "Saving entry" : "Save entry"}
-            className="btn-accent flex min-h-11 w-full items-center justify-center px-5 disabled:cursor-not-allowed disabled:opacity-50 sm:w-40"
+            className="btn-accent flex min-h-11 w-full items-center justify-center px-5 disabled:cursor-not-allowed disabled:opacity-50 sm:w-40 cursor-pointer"
           >
             {isSaving ? <LoadingSpinner /> : "Save entry"}
           </button>

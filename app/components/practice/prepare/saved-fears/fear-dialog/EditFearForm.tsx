@@ -1,9 +1,13 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import HorizontalDivider from "@/app/components/common/HorizontalDivider";
 import ThemeSelector from "@/app/components/practice/shared/ThemeSelector";
-import { SavedFearSchema, type SavedFear } from "@/app/lib/zod/saved-fear-schema";
+import {
+  SavedFearSchema,
+  type SavedFear,
+} from "@/app/lib/zod/saved-fear-schema";
 import { UpdateFearSchema } from "@/app/lib/zod/update-fear-schema";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 
@@ -51,8 +55,8 @@ export default function EditFearForm({
         setError(
           response.status === 401
             ? "Please sign in to save your changes."
-              : response.status === 404
-                ? "This fear isn’t available. You can copy your draft before closing this window."
+            : response.status === 404
+              ? "This fear isn’t available. You can copy your draft before closing this window."
               : response.status === 400
                 ? "The fear name and themes couldn’t be saved. Review them and try again."
                 : "We couldn’t save your changes. Your draft is still here.",
@@ -120,25 +124,37 @@ export default function EditFearForm({
               )
             }
           />
-
         </fieldset>
       </div>
 
       <div className="shrink-0 space-y-3">
         <HorizontalDivider />
 
-        <div className="h-20 overflow-y-auto" aria-live="polite">
-          {error && (
-            <p role="alert" className="text-sm text-danger">
-              {error}
-            </p>
-          )}
-
-          {!savePayload.success && (
-            <p className="text-xs text-muted">
-              Enter a fear name with 1–120 characters.
-            </p>
-          )}
+        <div className="empty:hidden" aria-live="polite">
+          <AnimatePresence initial={false}>
+            {(error || !savePayload.success) && (
+              <motion.div
+                key="feedback"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="space-y-2">
+                  {error && (
+                    <p role="alert" className="text-sm text-danger">
+                      {error}
+                    </p>
+                  )}
+                  {!savePayload.success && (
+                    <p className="text-xs text-muted">
+                      Enter a fear name with 1–120 characters.
+                    </p>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
@@ -157,7 +173,7 @@ export default function EditFearForm({
             type="submit"
             disabled={isSaving || !savePayload.success}
             aria-label={isSaving ? "Saving fear" : "Save changes"}
-            className="btn-accent flex min-h-11 w-full items-center justify-center px-5 disabled:cursor-not-allowed disabled:opacity-50 sm:w-40"
+            className="btn-accent flex min-h-11 w-full items-center justify-center px-5 disabled:cursor-not-allowed disabled:opacity-50 sm:w-40 cursor-pointer"
           >
             {isSaving ? <LoadingSpinner /> : "Save changes"}
           </button>
