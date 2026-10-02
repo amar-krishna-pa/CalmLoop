@@ -1,4 +1,4 @@
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
   pgTable,
   text,
@@ -10,6 +10,7 @@ import {
   jsonb,
   date,
   pgEnum,
+  check,
 } from "drizzle-orm/pg-core";
 import { EXPOSURE_PRACTICE_STATUSES } from "@/app/constants/exposures/practice-statuses";
 
@@ -183,6 +184,38 @@ export const fearOccurrences = pgTable(
   ],
 );
 
+// A reusable practice plan for a saved fear. Attempts are recorded separately.
+export const exposureTasks = pgTable(
+  "exposure_tasks",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    fearId: uuid("fear_id")
+      .notNull()
+      .references(() => fears.id, { onDelete: "cascade" }),
+    action: text("action").notNull(),
+    compulsionsToAvoid: text("compulsions_to_avoid")
+      .array()
+      .notNull()
+      .default([]),
+    expectedSuds: integer("expected_suds").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .notNull(),
+  },
+  (table) => [
+    index("exposure_tasks_user_fear_idx").on(table.userId, table.fearId),
+    check(
+      "exposure_tasks_expected_suds_range",
+      sql`${table.expectedSuds} BETWEEN 0 AND 10`,
+    ),
+  ],
+);
+
 // One row per completed ERP session, preserving the occurrence's rating history.
 export const erpSessions = pgTable(
   "erp_sessions",
@@ -215,6 +248,7 @@ export const userRelations = relations(user, ({ many }) => ({
   passkeys: many(passkey),
   chatSessions: many(chatSessions),
   fears: many(fears),
+  exposureTasks: many(exposureTasks),
   erpSessions: many(erpSessions),
 }));
 
@@ -263,6 +297,18 @@ export const fearRelations = relations(fears, ({ one, many }) => ({
     references: [user.id],
   }),
   occurrences: many(fearOccurrences),
+  exposureTasks: many(exposureTasks),
+}));
+
+export const exposureTaskRelations = relations(exposureTasks, ({ one }) => ({
+  user: one(user, {
+    fields: [exposureTasks.userId],
+    references: [user.id],
+  }),
+  fear: one(fears, {
+    fields: [exposureTasks.fearId],
+    references: [fears.id],
+  }),
 }));
 
 export const fearOccurrenceRelations = relations(
