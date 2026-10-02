@@ -61,8 +61,21 @@ export default function SavedFearDialog({ fear, onClose, onSaved }: Props) {
             ) : view === "occurrence" && editingOccurrence ? (
               <EditOccurrenceForm
                 key={editingOccurrence.id}
+                fearId={fear.id}
                 occurrence={editingOccurrence}
                 onDiscard={() => setView("details")}
+                onSavingChange={({ isSaving }) => {
+                  savingRef.current = isSaving;
+                }}
+                onSaved={({ occurrence: updated }) => {
+                  setOccurrences((current) =>
+                    current?.map((occurrence) =>
+                      occurrence.id === updated.id ? updated : occurrence,
+                    ) ?? null,
+                  );
+                  setEditingOccurrence(updated);
+                  setView("details");
+                }}
               />
             ) : (
               <SavedFearDetails

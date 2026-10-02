@@ -98,7 +98,7 @@ export default function FearInputCard({ onSaved }: Props) {
           <textarea
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="What happened? You can include how you responded."
+            placeholder="Describe the situation as if you were telling a friend."
             disabled={isExtracting}
             maxLength={5000}
             className="min-h-0 flex-1 w-full resize-none rounded-xl border border-subtle bg-primary px-3 py-2 text-sm text-primary placeholder:text-muted transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/10 disabled:cursor-not-allowed disabled:opacity-60"
