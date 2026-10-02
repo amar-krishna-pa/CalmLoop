@@ -1,13 +1,16 @@
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, sql } from "drizzle-orm";
 
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
-import { fearOccurrences, fears } from "@/app/lib/db/schema";
+import { erpSessions, fearOccurrences, fears } from "@/app/lib/db/schema";
 
 export async function GET() {
   const session = await checkSession();
   if (!session) {
-    return Response.json({ error: "Please sign in to continue." }, { status: 401 });
+    return Response.json(
+      { error: "Please sign in to continue." },
+      { status: 401 },
+    );
   }
 
   const exposures = await db
@@ -19,8 +22,14 @@ export async function GET() {
       behaviors: fearOccurrences.behaviors,
       evidence: fearOccurrences.evidence,
       initialSuds: fearOccurrences.initialSuds,
-      currentSuds: fearOccurrences.currentSuds,
-      practiceStatus: fearOccurrences.practiceStatus,
+      currentSuds: sql<number | null>`(
+        SELECT ${erpSessions.suds}
+        FROM ${erpSessions}
+        WHERE ${erpSessions.fearOccurrenceId} = ${fearOccurrences.id}
+          AND ${erpSessions.userId} = ${session.user.id}
+        ORDER BY ${erpSessions.completedAt} DESC, ${erpSessions.id} DESC
+        LIMIT 1
+      )`,
       createdAt: fearOccurrences.createdAt,
     })
     .from(fearOccurrences)
