@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1790865764364,
+      "tag": "0000_move_safety_behaviors_to_occurrences",
+      "breakpoints": true
+    }
+  ]
+}

@@ -127,9 +127,14 @@ export default function ExtractedFearEditor({
         />
 
         <SafetyBehaviorsEditor
-          behaviors={fear.behaviors}
+          behaviors={fear.occurrence.behaviors}
           onChange={({ behaviors }) =>
-            onChange({ fear: { ...fear, behaviors } })
+            onChange({
+              fear: {
+                ...fear,
+                occurrence: { ...fear.occurrence, behaviors },
+              },
+            })
           }
         />
 
@@ -142,9 +147,14 @@ export default function ExtractedFearEditor({
           </label>
           <SudsDropdown
             id={fear.previewId}
-            value={fear.initialSuds}
+            value={fear.occurrence.initialSuds}
             onChange={({ value }) =>
-              onChange({ fear: { ...fear, initialSuds: value } })
+              onChange({
+                fear: {
+                  ...fear,
+                  occurrence: { ...fear.occurrence, initialSuds: value },
+                },
+              })
             }
           />
         </div>

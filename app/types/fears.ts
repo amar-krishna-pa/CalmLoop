@@ -9,11 +9,15 @@ export type ExtractedFearPreview = {
   fearId: string | null;
   name: string;
   themes: (typeof THEMES)[number][];
-  evidence: string;
-  behaviors: PreviewBehavior[];
+  occurrence: {
+    evidence: string;
+    behaviors: PreviewBehavior[];
+  };
 };
 
 export type PreviewFear = ExtractedFearPreview & {
   previewId: string;
-  initialSuds: number | null;
+  occurrence: ExtractedFearPreview["occurrence"] & {
+    initialSuds: number | null;
+  };
 };

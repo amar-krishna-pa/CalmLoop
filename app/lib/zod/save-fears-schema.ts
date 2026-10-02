@@ -6,9 +6,11 @@ const FearToSave = z.object({
   fearId: z.string().uuid().nullable(),
   name: z.string().trim().min(1).max(120),
   themes: z.array(z.enum(THEMES)),
-  behaviors: z.array(z.string().trim().min(1).max(120)),
-  evidence: z.string().trim().min(1).max(2000),
-  initialSuds: z.number().int().min(0).max(10),
+  occurrence: z.object({
+    behaviors: z.array(z.string().trim().min(1).max(120)),
+    evidence: z.string().trim().min(1).max(2000),
+    initialSuds: z.number().int().min(0).max(10),
+  }),
 });
 
 export const SaveFearsSchema = z.object({

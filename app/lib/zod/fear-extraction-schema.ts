@@ -2,6 +2,19 @@ import { z } from "zod";
 
 import { THEMES } from "@/app/constants/fears/themes";
 
+const Occurrence = z.object({
+  evidence: z
+    .string()
+    .describe(
+      "The exact words in the entry that this occurrence came from. Quote them, do not paraphrase."
+    ),
+  behaviors: z
+    .array(z.string())
+    .describe(
+      "Safety behaviors described for this occurrence only, including mental acts, asking someone for reassurance, and avoidance. Each one a short repeatable action. Empty array if this occurrence describes none. Never invent one."
+    ),
+});
+
 const Fear = z.object({
   matchedId: z
     .string()
@@ -15,21 +28,14 @@ const Fear = z.object({
     .describe(
       "A short, neutral label for a new fear anchor: the underlying feared meaning, rule, or consequence that can connect situations. Phrase it as the person's concern, not as a fact — 'Concern that negative thoughts can contaminate actions'. Do not name a specific situation, practice task, or compulsion. Null when matchedId is set."
     ),
-  evidence: z
-    .string()
-    .describe(
-      "The exact words in the entry that this fear came from. Quote them, do not paraphrase."
-    ),
   themes: z
     .array(z.enum(THEMES))
     .describe(
       "What kind of fear this is. Take this from what the person is afraid of, never from the ritual they performed. A fear can have more than one theme. 'Symmetry and ordering' is about how things are arranged; 'Just right' is about the feeling of incompleteness until something is correct."
     ),
-  behaviors: z
-    .array(z.string())
-    .describe(
-      "Everything the person did to feel safer, including mental acts, asking someone for reassurance, and avoiding something. Each one a short repeatable action — 'Washing hands', 'Praying for protection', 'Avoiding the restaurant'. Empty array if the entry describes none. Never invent one."
-    ),
+  occurrence: Occurrence.describe(
+    "The specific situation from this entry connected to the fear anchor, with only the evidence and safety behaviors for that situation."
+  ),
 });
 
 export const ExtractRequestSchema = z.object({

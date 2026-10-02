@@ -73,11 +73,13 @@ export async function POST(request: Request) {
       fearId: matched ? matched.id : null,
       name: matched ? matched.name : fear.proposedName,
       themes: fear.themes,
-      evidence: fear.evidence,
-      behaviors: fear.behaviors.map((value) => ({
-        id: crypto.randomUUID(),
-        value,
-      })),
+      occurrence: {
+        evidence: fear.occurrence.evidence,
+        behaviors: fear.occurrence.behaviors.map((value) => ({
+          id: crypto.randomUUID(),
+          value,
+        })),
+      },
     };
   });
 

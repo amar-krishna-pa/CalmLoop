@@ -3,11 +3,9 @@
 import { useId, useRef, useState } from "react";
 import HorizontalDivider from "@/app/components/common/HorizontalDivider";
 import ThemeSelector from "@/app/components/practice/shared/ThemeSelector";
-import SafetyBehaviorsEditor from "@/app/components/practice/shared/SafetyBehaviorsEditor";
 import { SavedFearSchema, type SavedFear } from "@/app/lib/zod/saved-fear-schema";
 import { UpdateFearSchema } from "@/app/lib/zod/update-fear-schema";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
-import type { PreviewBehavior } from "@/app/types/fears";
 
 type Props = {
   onDiscard: () => void;
@@ -26,20 +24,13 @@ export default function EditFearForm({
 
   const [name, setName] = useState(fear.name);
   const [themes, setThemes] = useState(fear.themes);
-  const [behaviors, setBehaviors] = useState<PreviewBehavior[]>(() =>
-    fear.behaviors.map((value) => ({ id: crypto.randomUUID(), value })),
-  );
   const [isThemeEditorExpanded, setIsThemeEditorExpanded] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const savingRef = useRef(false);
 
-  const savePayload = UpdateFearSchema.safeParse({
-    name,
-    themes,
-    behaviors: behaviors.map(({ value }) => value),
-  });
+  const savePayload = UpdateFearSchema.safeParse({ name, themes });
 
   async function saveFear() {
     if (savingRef.current || !savePayload.success) return;
@@ -60,10 +51,10 @@ export default function EditFearForm({
         setError(
           response.status === 401
             ? "Please sign in to save your changes."
-            : response.status === 404
-              ? "This fear isn’t available. You can copy your draft before closing this window."
+              : response.status === 404
+                ? "This fear isn’t available. You can copy your draft before closing this window."
               : response.status === 400
-                ? "The name and each safety behavior need 1–120 characters."
+                ? "The fear name and themes couldn’t be saved. Review them and try again."
                 : "We couldn’t save your changes. Your draft is still here.",
         );
         return;
@@ -130,10 +121,6 @@ export default function EditFearForm({
             }
           />
 
-          <SafetyBehaviorsEditor
-            behaviors={behaviors}
-            onChange={({ behaviors: updated }) => setBehaviors(updated)}
-          />
         </fieldset>
       </div>
 
@@ -149,7 +136,7 @@ export default function EditFearForm({
 
           {!savePayload.success && (
             <p className="text-xs text-muted">
-              The name and each safety behavior need 1–120 characters. You can remove unused rows.
+              Enter a fear name with 1–120 characters.
             </p>
           )}
         </div>

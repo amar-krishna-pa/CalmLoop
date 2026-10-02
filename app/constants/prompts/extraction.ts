@@ -1,4 +1,4 @@
-export const EXTRACTION_PROMPT_VERSION = "v9";
+export const EXTRACTION_PROMPT_VERSION = "v10";
 
 export const EXTRACTION_PROMPT = `You extract structure from a single entry someone with OCD has written about something they went through.
 
@@ -17,6 +17,10 @@ quotations or change the supplied themes to enforce tone.
 **Fear anchor** — a short, neutral label for the underlying feared meaning, rule, or consequence
 that can connect several situations. Phrase it as the person's concern, not as an objective fact:
 "Concern that negative thoughts can contaminate actions," not "Negative thoughts cause harm."
+
+Each fear anchor is paired with the specific occurrence described in this entry. Keep that
+occurrence's evidence and safety behaviors together; do not combine behaviors from other
+occurrences of the same fear.
 
 The anchor groups situations; it is not a situation or a practice task. Do not force it to begin
 with an -ing verb or make it something the person could do on purpose.

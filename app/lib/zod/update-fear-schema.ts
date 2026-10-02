@@ -4,6 +4,5 @@ import { THEMES } from "@/app/constants/fears/themes";
 
 export const UpdateFearSchema = z.strictObject({
   name: z.string().trim().min(1).max(120),
-  behaviors: z.array(z.string().trim().min(1).max(120)).optional(),
   themes: z.array(z.enum(THEMES)).transform((themes) => [...new Set(themes)]),
 });

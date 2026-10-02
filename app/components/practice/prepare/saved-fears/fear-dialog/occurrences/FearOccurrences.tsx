@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import Link from "next/link";
 import { z } from "zod";
@@ -28,6 +29,8 @@ export default function FearOccurrences({
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
   const [isRetrying, setIsRetrying] = useState(false);
+  const [expandedBehaviorsOccurrenceId, setExpandedBehaviorsOccurrenceId] =
+    useState<string | null>(null);
 
   useEffect(() => {
     if (occurrences !== null) return;
@@ -100,69 +103,126 @@ export default function FearOccurrences({
         </p>
       ) : (
         <ol className="space-y-5">
-          {occurrences.map((occurrence) => (
-            <li key={occurrence.id} className="space-y-0">
-              <div className="flex items-center justify-between gap-3">
-                <time
-                  dateTime={occurrence.createdAt}
-                  className="text-xs text-muted"
-                >
-                  {new Date(occurrence.createdAt).toLocaleString(undefined, {
-                    dateStyle: "medium",
-                    timeStyle: "short",
-                  })}
-                </time>
+          {occurrences.map((occurrence) => {
+            const areBehaviorsExpanded =
+              expandedBehaviorsOccurrenceId === occurrence.id;
+            const behaviors = [...new Set(occurrence.behaviors)];
 
-                <div className="flex shrink-0 items-center gap-3 justify-between">
+            return (
+              <li key={occurrence.id} className="space-y-0">
+                <div className="flex items-center justify-between gap-3">
+                  <time
+                    dateTime={occurrence.createdAt}
+                    className="text-xs text-muted"
+                  >
+                    {new Date(occurrence.createdAt).toLocaleString(undefined, {
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    })}
+                  </time>
+
+                  <div className="flex shrink-0 items-center gap-3 justify-between">
+                    <button
+                      type="button"
+                      onClick={() => onEdit({ occurrence })}
+                      aria-label="Edit entry"
+                      className="cursor-pointer rounded-lg py-1 text-sm font-medium text-accent transition-opacity duration-fast hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                    >
+                      Edit
+                    </button>
+
+                    <span aria-hidden="true" className="h-4 w-px bg-subtle" />
+
+                    <Link
+                      href={{
+                        pathname: "/practice",
+                        query: {
+                          tab: "exposures",
+                          exposureId: occurrence.id,
+                        },
+                      }}
+                      className="cursor-pointer rounded-lg py-1 text-sm font-medium text-accent transition-opacity duration-fast hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                    >
+                      View exposure
+                    </Link>
+                  </div>
+                </div>
+
+                <p className="whitespace-pre-wrap wrap-break-words text-sm text-primary">
+                  {occurrence.evidence}
+                </p>
+
+                <dl className="flex flex-wrap gap-x-2 gap-y-1 text-xs text-muted">
+                  <div className="flex gap-1">
+                    <dt>Initial distress:</dt>
+                    <dd>{occurrence.initialSuds}/10</dd>
+                  </div>
+
+                  <p>|</p>
+
+                  <div className="flex gap-1">
+                    <dt>Latest distress:</dt>
+                    <dd>
+                      {occurrence.currentSuds === null
+                        ? "Not recorded"
+                        : `${occurrence.currentSuds}/10`}
+                    </dd>
+                  </div>
+                </dl>
+
+                <div className="pt-2">
                   <button
                     type="button"
-                    onClick={() => onEdit({ occurrence })}
-                    aria-label="Edit entry"
-                    className="cursor-pointer rounded-lg py-1 text-sm font-medium text-accent transition-opacity duration-fast hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                    aria-expanded={areBehaviorsExpanded}
+                    aria-controls={
+                      areBehaviorsExpanded
+                        ? `safety-behaviors-${occurrence.id}`
+                        : undefined
+                    }
+                    onClick={() =>
+                      setExpandedBehaviorsOccurrenceId((current) =>
+                        current === occurrence.id ? null : occurrence.id,
+                      )
+                    }
+                    className="cursor-pointer rounded-lg py-1 text-xs font-medium text-accent transition-opacity duration-fast hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   >
-                    Edit
+                    {areBehaviorsExpanded
+                      ? "Hide safety behaviors"
+                      : `Show safety behaviors (${behaviors.length})`}
                   </button>
 
-                  <span aria-hidden="true" className="h-4 w-px bg-subtle" />
-
-                  <Link
-                    href={{
-                      pathname: "/practice",
-                      query: {
-                        tab: "exposures",
-                        exposureId: occurrence.id,
-                      },
-                    }}
-                    className="cursor-pointer rounded-lg py-1 text-sm font-medium text-accent transition-opacity duration-fast hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-                  >
-                    View exposure
-                  </Link>
+                  <AnimatePresence initial={false}>
+                    {areBehaviorsExpanded && (
+                      <motion.div
+                        key={`safety-behaviors-${occurrence.id}`}
+                        id={`safety-behaviors-${occurrence.id}`}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="space-y-1 py-2">
+                          {behaviors.length === 0 ? (
+                            <p className="text-xs text-muted">
+                              No safety behaviors recorded for this entry.
+                            </p>
+                          ) : (
+                            <ul className="list-disc space-y-1 pl-4 text-sm text-muted">
+                              {behaviors.map((behavior) => (
+                                <li key={behavior} className="wrap-break-words">
+                                  {behavior}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-              </div>
-
-              <p className="whitespace-pre-wrap wrap-break-words text-sm text-primary">
-                {occurrence.evidence}
-              </p>
-
-              <dl className="flex flex-wrap gap-x-2 gap-y-1 text-xs text-muted">
-                <div className="flex gap-1">
-                  <dt>Initial distress:</dt>
-                  <dd>{occurrence.initialSuds}/10</dd>
-                </div>
-
-                <p>|</p>
-
-                <div className="flex gap-1">
-                  <dt>Latest distress:</dt>
-                  <dd>
-                    {occurrence.currentSuds === null
-                      ? "Not recorded"
-                      : `${occurrence.currentSuds}/10`}
-                  </dd>
-                </div>
-              </dl>
-            </li>
-          ))}
+              </li>
+            );
+          })}
         </ol>
       )}
       </div>

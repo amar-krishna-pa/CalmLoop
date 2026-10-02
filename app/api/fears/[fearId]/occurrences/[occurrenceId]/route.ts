@@ -47,6 +47,7 @@ export async function PATCH(
     .update(fearOccurrences)
     .set({
       evidence: parsed.data.evidence,
+      behaviors: parsed.data.behaviors,
       initialSuds: parsed.data.initialSuds,
     })
     .where(
@@ -59,6 +60,7 @@ export async function PATCH(
     .returning({
       id: fearOccurrences.id,
       evidence: fearOccurrences.evidence,
+      behaviors: fearOccurrences.behaviors,
       initialSuds: fearOccurrences.initialSuds,
       currentSuds: fearOccurrences.currentSuds,
       createdAt: fearOccurrences.createdAt,

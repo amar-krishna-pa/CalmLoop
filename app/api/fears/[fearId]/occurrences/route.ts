@@ -26,6 +26,7 @@ export async function GET(
     .select({
       id: fearOccurrences.id,
       evidence: fearOccurrences.evidence,
+      behaviors: fearOccurrences.behaviors,
       initialSuds: fearOccurrences.initialSuds,
       currentSuds: fearOccurrences.currentSuds,
       createdAt: fearOccurrences.createdAt,

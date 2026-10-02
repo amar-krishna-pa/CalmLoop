@@ -3,9 +3,10 @@
 import type { Occurrence } from "@/app/lib/zod/occurrence-schema";
 import HorizontalDivider from "@/app/components/common/HorizontalDivider";
 import FearOccurrences from "@/app/components/practice/prepare/saved-fears/fear-dialog/occurrences/FearOccurrences";
+import type { SavedFear } from "@/app/lib/zod/saved-fear-schema";
 
 type Props = {
-  fear: { id: string; name: string; themes: string[]; behaviors: string[] };
+  fear: SavedFear;
   occurrences: Occurrence[] | null;
   onEdit: () => void;
   onEditOccurrence: ({ occurrence }: { occurrence: Occurrence }) => void;
@@ -56,24 +57,6 @@ export default function SavedFearDetails({
           )}
         </section>
       </div>
-
-      <section className="space-y-2" aria-label="Safety behaviors">
-        <h3 className="text-xs font-medium text-primary">Safety behaviors</h3>
-
-        {fear.behaviors.length === 0 ? (
-          <p className="text-xs text-muted">
-            No safety behaviors added yet. You can leave this as it is.
-          </p>
-        ) : (
-          <ul className="list-disc space-y-2 pl-4 text-sm text-muted">
-            {Array.from(new Set(fear.behaviors)).map((behavior) => (
-              <li key={behavior} className="wrap-break-words">
-                {behavior}
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
 
       <HorizontalDivider />
 

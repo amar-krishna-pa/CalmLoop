@@ -147,7 +147,6 @@ export const fears = pgTable(
       .references(() => user.id, { onDelete: "cascade" }),
     name: text("name").notNull(),
     themes: text("themes").array().notNull().default([]),
-    behaviors: text("behaviors").array().notNull().default([]),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
       .defaultNow()
@@ -169,6 +168,7 @@ export const fearOccurrences = pgTable(
       .notNull()
       .references(() => fears.id, { onDelete: "cascade" }),
     evidence: text("evidence").notNull(),
+    behaviors: text("behaviors").array().notNull().default([]),
     // Set by the person in the save preview, never by extraction.
     initialSuds: integer("initial_suds").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),

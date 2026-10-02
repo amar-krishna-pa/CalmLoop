@@ -34,7 +34,10 @@ export default function ExtractionPreviewModal({
     initialFears.map((fear) => ({
       ...fear,
       previewId: crypto.randomUUID(),
-      initialSuds: null,
+      occurrence: {
+        ...fear.occurrence,
+        initialSuds: null,
+      },
     })),
   );
   const [savedFears, setSavedFears] = useState<
@@ -90,8 +93,14 @@ export default function ExtractionPreviewModal({
 
   const savePayload = SaveFearsSchema.safeParse({
     fears: fears.map((fear) => ({
-      ...fear,
-      behaviors: fear.behaviors.map(({ value }) => value),
+      fearId: fear.fearId,
+      name: fear.name,
+      themes: fear.themes,
+      occurrence: {
+        evidence: fear.occurrence.evidence,
+        initialSuds: fear.occurrence.initialSuds,
+        behaviors: fear.occurrence.behaviors.map(({ value }) => value),
+      },
     })),
   });
 
