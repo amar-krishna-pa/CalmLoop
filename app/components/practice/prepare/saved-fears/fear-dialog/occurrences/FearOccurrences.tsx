@@ -144,17 +144,6 @@ export default function FearOccurrences({
                       <dt>Initial distress:</dt>
                       <dd>{occurrence.initialSuds}/10</dd>
                     </div>
-
-                    <p>|</p>
-
-                    <div className="flex gap-1">
-                      <dt>Latest distress:</dt>
-                      <dd>
-                        {occurrence.currentSuds === null
-                          ? "Not recorded"
-                          : `${occurrence.currentSuds}/10`}
-                      </dd>
-                    </div>
                   </dl>
 
                   <div className="pt-2">
