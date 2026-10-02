@@ -17,6 +17,14 @@ pnpm drizzle-kit studio     # Open Drizzle Studio (DB browser)
 
 No test suite exists yet. There is no `pnpm test` command.
 
+## Formatting
+
+Use the project's `.prettierrc.json` as the formatting source of truth. Before
+handing off code changes, run `pnpm exec prettier --write` with explicit paths to
+the files changed for the task, then check them with `pnpm exec prettier --check`.
+Do not format the whole repository or unrelated files. Keep formatting consistent
+with Prettier so saving in the editor does not introduce another formatting diff.
+
 ## Language and spelling
 
 Use US English throughout the codebase, including copy, prompts, documentation,
