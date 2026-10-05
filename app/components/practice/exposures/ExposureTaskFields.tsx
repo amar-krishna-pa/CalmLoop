@@ -48,7 +48,7 @@ export default function ExposureTaskFields({
       disabled={isSaving}
       className="modal-scrollbar -m-1 min-h-0 min-w-0 flex-1 space-y-4 overflow-y-auto p-1"
     >
-      <dl className="space-y-1.5 rounded-lg bg-modal-section/70 p-3">
+      <dl className="space-y-1.5 rounded-lg bg-modal-section/70">
         <dt className="text-xs font-medium text-muted">Saved fear</dt>
         <dd className="whitespace-pre-wrap wrap-break-words text-sm text-primary">
           {fearName}

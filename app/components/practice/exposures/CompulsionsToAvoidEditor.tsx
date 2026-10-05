@@ -15,7 +15,7 @@ export default function CompulsionsToAvoidEditor({
   onChange,
 }: Props) {
   return (
-    <div className="space-y-1.5">
+    <div>
       <div className="flex items-center justify-between gap-3">
         <h4 className="text-xs font-medium text-primary">
           Compulsions to avoid
@@ -36,10 +36,6 @@ export default function CompulsionsToAvoidEditor({
           Add compulsion
         </button>
       </div>
-      <p className="text-xs text-muted">
-        Repeated actions or mental rituals you plan to leave out during
-        practice.
-      </p>
 
       <div className="relative">
         <AnimatePresence initial={false} mode="popLayout">
@@ -51,7 +47,7 @@ export default function CompulsionsToAvoidEditor({
               exit={{ opacity: 0 }}
               className="w-full"
             >
-              <p className="flex h-10 items-center text-xs text-muted">
+              <p className="flex items-center text-xs text-muted">
                 No compulsions added. Added compulsions will appear here.
               </p>
             </motion.div>
@@ -73,12 +69,6 @@ export default function CompulsionsToAvoidEditor({
                     className="-m-1 overflow-hidden"
                   >
                     <div className="space-y-1 p-1 pb-3">
-                      <label
-                        htmlFor={compulsion.id}
-                        className="text-xs text-muted"
-                      >
-                        Compulsion to avoid
-                      </label>
                       <div className="flex items-center gap-2">
                         <input
                           id={compulsion.id}
