@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { z } from "zod";
+import HorizontalDivider from "@/app/components/common/HorizontalDivider";
 import ExposureFearSelectorLoader from "@/app/components/loaders/ExposureFearSelectorLoader";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import ExposureFearSelector from "@/app/components/practice/exposures/ExposureFearSelector";
 import ExposureSituations from "@/app/components/practice/exposures/ExposureSituations";
+import ExposureTasksSection from "@/app/components/practice/exposures/ExposureTasksSection";
 import {
   SavedFearSchema,
   type SavedFear,
@@ -116,11 +118,18 @@ export default function ExposuresCard() {
               {selectedFear && (
                 <motion.div
                   key={selectedFear.id}
+                  className="space-y-5"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0, pointerEvents: "none" }}
                 >
                   <ExposureSituations
+                    fearId={selectedFear.id}
+                    fearName={selectedFear.name}
+                  />
+                  <HorizontalDivider />
+
+                  <ExposureTasksSection
                     fearId={selectedFear.id}
                     fearName={selectedFear.name}
                   />
