@@ -1,4 +1,5 @@
 import type { ExposureTask } from "@/app/lib/zod/exposure-task-schema";
+import RecordPracticeButton from "@/app/components/practice/exposures/RecordPracticeButton";
 
 type Props = { tasks: ExposureTask[] };
 
@@ -64,6 +65,12 @@ export default function ExposureTasksList({ tasks }: Props) {
                 )}
               </dd>
             </dl>
+            <div className="flex justify-end">
+              <RecordPracticeButton
+                exposureTaskId={task.id}
+                taskAction={task.action}
+              />
+            </div>
           </li>
         );
       })}
