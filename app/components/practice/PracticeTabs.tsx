@@ -10,7 +10,7 @@ import HomeworkCard from "@/app/components/practice/maintain/HomeworkCard";
 import RelapsePreventionCard from "@/app/components/practice/maintain/RelapsePreventionCard";
 import ExposuresCard from "@/app/components/practice/exposures/ExposuresCard";
 
-type Tab = "prepare" | "exposures" | "maintain";
+type Tab = "prepare" | "exposure" | "maintain";
 
 const TABS: { id: Tab; label: string; sublabel: string }[] = [
   {
@@ -19,8 +19,8 @@ const TABS: { id: Tab; label: string; sublabel: string }[] = [
     sublabel: "Map out triggers and responses",
   },
   {
-    id: "exposures",
-    label: "Exposures",
+    id: "exposure",
+    label: "Exposure",
     sublabel: "Explore situations to practice",
   },
   {
@@ -38,7 +38,7 @@ export default function PracticeTabs() {
     TABS.find((tab) => tab.id === requestedTab)?.id ?? "prepare";
 
   const [savedFearsVersion, setSavedFearsVersion] = useState(0);
-  const fillsHeight = activeTab === "prepare" || activeTab === "exposures";
+  const fillsHeight = activeTab === "prepare" || activeTab === "exposure";
 
   function selectTab(tab: Tab) {
     const url = new URL(window.location.href);
@@ -107,7 +107,7 @@ export default function PracticeTabs() {
               </div>
             )}
 
-            {activeTab === "exposures" && <ExposuresCard />}
+            {activeTab === "exposure" && <ExposuresCard />}
 
             {activeTab === "maintain" && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
