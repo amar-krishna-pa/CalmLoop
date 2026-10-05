@@ -105,9 +105,9 @@ export default function SavedFearsCard() {
   return (
     <section
       aria-labelledby="saved-fears-heading"
-      className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-4 card-medium"
+      className="bg-card border border-subtle rounded-xl p-4 flex flex-1 flex-col gap-4 card-medium practice-card-height"
     >
-      <div className="space-y-1">
+      <div className="shrink-0 space-y-1">
         <div className="flex items-center justify-between gap-3">
           <h2
             id="saved-fears-heading"
@@ -136,7 +136,7 @@ export default function SavedFearsCard() {
         </p>
       </div>
 
-      <div className="flex min-h-10 flex-wrap items-center gap-2">
+      <div className="flex min-h-10 shrink-0 flex-wrap items-center gap-2">
         {fears === null && (!error || isRetrying) && (
           <SavedFearsThemeFilterLoader />
         )}

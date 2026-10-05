@@ -38,6 +38,7 @@ export default function PracticeTabs() {
     TABS.find((tab) => tab.id === requestedTab)?.id ?? "prepare";
 
   const [savedFearsVersion, setSavedFearsVersion] = useState(0);
+  const fillsHeight = activeTab === "prepare" || activeTab === "exposures";
 
   function selectTab(tab: Tab) {
     const url = new URL(window.location.href);
@@ -50,8 +51,7 @@ export default function PracticeTabs() {
   return (
     <div
       className={cn(
-        activeTab === "exposures" &&
-          "flex min-h-0 flex-1 flex-col overflow-hidden",
+        fillsHeight && "flex min-h-0 flex-1 flex-col overflow-hidden",
       )}
     >
       <div className="mb-6 grid min-h-16 shrink-0 grid-cols-3 gap-1 rounded-xl border border-subtle bg-surface p-1 sm:min-h-20">
@@ -59,10 +59,9 @@ export default function PracticeTabs() {
           <button
             key={tab.id}
             onClick={() => selectTab(tab.id)}
-            className={cn(
-              "relative isolate flex min-w-0 flex-col items-center justify-center rounded-lg px-3 py-2.5 text-center cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
-              activeTab !== tab.id && "hover:bg-accent/5",
-            )}
+            className={
+              "relative isolate flex min-w-0 flex-col items-center justify-center rounded-lg px-3 py-2.5 text-center cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            }
           >
             {activeTab === tab.id && (
               <motion.span
@@ -89,22 +88,17 @@ export default function PracticeTabs() {
         ))}
       </div>
 
-      <div
-        className={cn(
-          "relative",
-          activeTab === "exposures" && "min-h-0 flex-1",
-        )}
-      >
+      <div className={cn("relative", fillsHeight && "min-h-0 flex-1")}>
         <AnimatePresence initial={false} mode="popLayout">
           <motion.div
             key={activeTab}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, pointerEvents: "none" }}
-            className={cn(activeTab === "exposures" && "h-full")}
+            className={cn(fillsHeight && "h-full min-h-0")}
           >
             {activeTab === "prepare" && (
-              <div className="flex flex-col gap-4">
+              <div className="flex h-full min-h-0 flex-col gap-4">
                 <FearInputCard
                   onSaved={() => setSavedFearsVersion((version) => version + 1)}
                 />

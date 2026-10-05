@@ -66,7 +66,7 @@ export default function ExposuresCard() {
   return (
     <section
       aria-labelledby="exposures-heading"
-      className="card-tall flex flex-col gap-5 rounded-xl border border-subtle bg-card p-4 sm:p-5"
+      className="card-tall practice-card-height flex flex-col gap-5 rounded-xl border border-subtle bg-card p-4 sm:p-5"
     >
       <div className="shrink-0 space-y-1">
         <h2

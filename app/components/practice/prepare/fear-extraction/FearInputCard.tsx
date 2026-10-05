@@ -86,7 +86,7 @@ export default function FearInputCard({ onSaved }: Props) {
 
   return (
     <>
-      <div className="bg-card border border-subtle rounded-xl p-4 flex flex-col gap-3 card-short">
+      <div className="bg-card border border-subtle rounded-xl p-4 flex min-h-0 max-h-[45%] shrink-0 flex-col gap-3 card-short">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <LuPencilLine size={15} className="text-muted" />

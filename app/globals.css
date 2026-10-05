@@ -157,7 +157,8 @@ html {
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif; /* Geist → Arial → Helvetica */
+  font-family:
+    var(--font-sans), Arial, Helvetica, sans-serif; /* Geist → Arial → Helvetica */
   font-size: var(--text-base);
 }
 
@@ -237,7 +238,9 @@ body {
 
   /* ── Base input / textarea ──────────────────────────────────────────────── */
   .input-base {
-    background-color: var(--bg-surface); /* Slightly sunken look vs the page bg */
+    background-color: var(
+      --bg-surface
+    ); /* Slightly sunken look vs the page bg */
     border: 1px solid var(--border-subtle);
     color: var(--text-primary);
     border-radius: 8px;
@@ -279,8 +282,9 @@ body {
     height: var(--card-tall);
   }
 
-  .exposures-card-height {
+  .practice-card-height {
     height: 100%;
+    min-height: 0;
   }
 
   /* ── Range slider ───────────────────────────────────────────────────────────
