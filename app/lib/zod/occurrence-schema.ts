@@ -5,7 +5,6 @@ export const OccurrenceSchema = z.object({
   evidence: z.string(),
   behaviors: z.array(z.string()),
   initialSuds: z.number().int().min(0).max(10),
-  currentSuds: z.number().int().min(0).max(10).nullable(),
   createdAt: z.iso.datetime(),
 });
 

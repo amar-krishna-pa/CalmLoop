@@ -216,7 +216,7 @@ export const exposureTasks = pgTable(
   ],
 );
 
-// One row per completed ERP session, preserving the occurrence's rating history.
+// One row per completed practice attempt for a reusable exposure task.
 export const erpSessions = pgTable(
   "erp_sessions",
   {
@@ -224,19 +224,18 @@ export const erpSessions = pgTable(
     userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-    fearOccurrenceId: uuid("fear_occurrence_id")
+    exposureTaskId: uuid("exposure_task_id")
       .notNull()
-      .references(() => fearOccurrences.id, { onDelete: "cascade" }),
+      .references(() => exposureTasks.id, { onDelete: "cascade" }),
     suds: integer("suds").notNull(),
     notes: text("notes"),
     completedAt: timestamp("completed_at").defaultNow().notNull(),
   },
   (table) => [
     index("erp_sessions_user_id_idx").on(table.userId),
-
-    index("erp_sessions_user_fear_completed_at_idx").on(
+    index("erp_sessions_user_task_completed_at_idx").on(
       table.userId,
-      table.fearOccurrenceId,
+      table.exposureTaskId,
       table.completedAt,
     ),
   ],
@@ -300,20 +299,24 @@ export const fearRelations = relations(fears, ({ one, many }) => ({
   exposureTasks: many(exposureTasks),
 }));
 
-export const exposureTaskRelations = relations(exposureTasks, ({ one }) => ({
-  user: one(user, {
-    fields: [exposureTasks.userId],
-    references: [user.id],
+export const exposureTaskRelations = relations(
+  exposureTasks,
+  ({ one, many }) => ({
+    user: one(user, {
+      fields: [exposureTasks.userId],
+      references: [user.id],
+    }),
+    fear: one(fears, {
+      fields: [exposureTasks.fearId],
+      references: [fears.id],
+    }),
+    erpSessions: many(erpSessions),
   }),
-  fear: one(fears, {
-    fields: [exposureTasks.fearId],
-    references: [fears.id],
-  }),
-}));
+);
 
 export const fearOccurrenceRelations = relations(
   fearOccurrences,
-  ({ one, many }) => ({
+  ({ one }) => ({
     fear: one(fears, {
       fields: [fearOccurrences.fearId],
       references: [fears.id],
@@ -322,7 +325,6 @@ export const fearOccurrenceRelations = relations(
       fields: [fearOccurrences.userId],
       references: [user.id],
     }),
-    erpSessions: many(erpSessions),
   }),
 );
 
@@ -331,8 +333,8 @@ export const erpSessionRelations = relations(erpSessions, ({ one }) => ({
     fields: [erpSessions.userId],
     references: [user.id],
   }),
-  fearOccurrence: one(fearOccurrences, {
-    fields: [erpSessions.fearOccurrenceId],
-    references: [fearOccurrences.id],
+  exposureTask: one(exposureTasks, {
+    fields: [erpSessions.exposureTaskId],
+    references: [exposureTasks.id],
   }),
 }));
