@@ -11,6 +11,9 @@ type Props = {
   id: string;
   value: number | null;
   onChange: ({ value }: { value: number }) => void;
+  disabled?: boolean;
+  "aria-invalid"?: boolean;
+  "aria-describedby"?: string;
 };
 
 const SUDS_OPTIONS = Array.from({ length: 11 }, (_, value) => value);
@@ -29,7 +32,14 @@ function getOptionLabel({ value }: { value: number }) {
   return String(value);
 }
 
-export default function SudsDropdown({ id, value, onChange }: Props) {
+export default function SudsDropdown({
+  id,
+  value,
+  onChange,
+  disabled = false,
+  "aria-invalid": ariaInvalid,
+  "aria-describedby": ariaDescribedBy,
+}: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [opensUpward, setOpensUpward] = useState(false);
   const [menuPosition, setMenuPosition] = useState<MenuPosition | null>(null);
@@ -89,7 +99,7 @@ export default function SudsDropdown({ id, value, onChange }: Props) {
   }, [isOpen]);
 
   const menu = (
-    <div inert={!isOpen}>
+    <div inert={!isOpen || disabled}>
       <AnimatePresence initial={false}>
         {isOpen && menuPosition && (
           <motion.div
@@ -101,11 +111,16 @@ export default function SudsDropdown({ id, value, onChange }: Props) {
             exit={{ opacity: 0, y: opensUpward ? 4 : -4 }}
             className="fixed z-60 max-h-64 overflow-y-auto rounded-lg border border-subtle/60 bg-modal p-1 shadow-lg"
           >
-            <div role="listbox" aria-label="Distress rating">
+            <div
+              id={`${id}-options`}
+              role="listbox"
+              aria-label="Distress rating"
+            >
               {SUDS_OPTIONS.map((option) => (
                 <button
                   key={option}
                   type="button"
+                  disabled={disabled}
                   role="option"
                   aria-selected={option === value}
                   tabIndex={isOpen ? 0 : -1}
@@ -138,8 +153,13 @@ export default function SudsDropdown({ id, value, onChange }: Props) {
       <button
         id={id}
         type="button"
+        role="combobox"
+        disabled={disabled}
         onClick={toggleDropdown}
+        aria-invalid={ariaInvalid}
+        aria-describedby={ariaDescribedBy}
         aria-haspopup="listbox"
+        aria-controls={`${id}-options`}
         aria-expanded={isOpen}
         className="input-base flex cursor-pointer items-center justify-between gap-2 border-subtle/60 bg-modal/70 text-left"
       >

@@ -230,6 +230,16 @@ Use `app/components/practice/shared/SafetyBehaviorsEditor.tsx` as the reference 
 
 ## Component conventions
 
+### Dropdowns
+
+Use the existing shared dropdown components so menus, triggers, selected states,
+and motion match the rest of the app. Use `SudsDropdown` from
+`app/components/practice/shared/SudsDropdown.tsx` for 0–10 distress ratings and
+the shared combobox components in `app/components/ui/combobox.tsx` for searchable
+choices. Avoid native `<select>` elements or one-off dropdown styling when a
+shared component fits. Preserve field labels, validation descriptions, disabled
+states, and keyboard behavior when reusing a dropdown.
+
 ### Never define components inside other component files
 
 Every component must live in its own file. Defining a component function inside another component's file is an anti-pattern — extract it to its own file and import it.

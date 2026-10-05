@@ -3,6 +3,7 @@
 import CompulsionsToAvoidEditor, {
   type CompulsionDraft,
 } from "@/app/components/practice/exposures/CompulsionsToAvoidEditor";
+import SudsDropdown from "@/app/components/practice/shared/SudsDropdown";
 
 export type ExposureTaskFieldErrors = {
   action?: string[];
@@ -109,26 +110,16 @@ export default function ExposureTaskFields({
           How distressing do you expect this task to feel? 0 means no distress;
           10 means extreme distress.
         </p>
-        <select
+        <SudsDropdown
           id={`${formId}-distress`}
-          value={expectedSuds ?? ""}
-          onChange={(event) =>
-            onExpectedSudsChange({
-              expectedSuds:
-                event.target.value === "" ? null : Number(event.target.value),
-            })
+          value={expectedSuds}
+          onChange={({ value }) =>
+            onExpectedSudsChange({ expectedSuds: value })
           }
+          disabled={isSaving}
           aria-invalid={Boolean(fieldErrors.expectedSuds)}
           aria-describedby={`${formId}-distress-help ${formId}-distress-feedback`}
-          className="input-base cursor-pointer"
-        >
-          <option value="">Choose a rating</option>
-          {Array.from({ length: 11 }, (_, value) => (
-            <option key={value} value={value}>
-              {value}
-            </option>
-          ))}
-        </select>
+        />
         <p
           id={`${formId}-distress-feedback`}
           aria-live="polite"
