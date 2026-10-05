@@ -68,6 +68,7 @@ export default function ExposureTaskFields({
           onChange={(event) => onActionChange({ action: event.target.value })}
           rows={2}
           maxLength={2000}
+          placeholder="Avoid doing..."
           aria-invalid={Boolean(fieldErrors.action)}
           aria-describedby={`${formId}-action-feedback`}
           className="input-base min-h-20 resize-y"
