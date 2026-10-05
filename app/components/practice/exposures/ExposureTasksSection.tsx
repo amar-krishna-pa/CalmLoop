@@ -6,9 +6,14 @@ import { z } from "zod";
 import ExposureTasksLoader from "@/app/components/loaders/ExposureTasksLoader";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import CreateExposureTaskButton from "@/app/components/practice/exposures/CreateExposureTaskButton";
+import ExposureTasksList from "@/app/components/practice/exposures/ExposureTasksList";
+import {
+  ExposureTaskSchema,
+  type ExposureTask,
+} from "@/app/lib/zod/exposure-task-schema";
 
 const TasksResponseSchema = z.object({
-  tasks: z.array(z.object({ id: z.string().uuid() })),
+  tasks: z.array(ExposureTaskSchema),
 });
 
 type Props = { fearId: string; fearName: string };
@@ -16,7 +21,7 @@ type Props = { fearId: string; fearName: string };
 export default function ExposureTasksSection({ fearId, fearName }: Props) {
   const headingId = useId();
 
-  const [hasTasks, setHasTasks] = useState<boolean | null>(null);
+  const [tasks, setTasks] = useState<ExposureTask[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
   const [isRetrying, setIsRetrying] = useState(false);
@@ -47,8 +52,9 @@ export default function ExposureTasksSection({ fearId, fearName }: Props) {
         }
 
         const data = TasksResponseSchema.parse(await response.json());
+
         if (!controller.signal.aborted) {
-          setHasTasks(data.tasks.length > 0);
+          setTasks(data.tasks);
           setError(null);
         }
       } catch {
@@ -76,9 +82,10 @@ export default function ExposureTasksSection({ fearId, fearName }: Props) {
           fearName={fearName}
           onSaved={() => {
             controllerRef.current?.abort();
-            setHasTasks(true);
+            setTasks(null);
             setError(null);
             setIsRetrying(false);
+            setAttempt((current) => current + 1);
           }}
         />
       </div>
@@ -102,11 +109,11 @@ export default function ExposureTasksSection({ fearId, fearName }: Props) {
             {isRetrying ? <LoadingSpinner /> : "Try again"}
           </button>
         </div>
-      ) : hasTasks === null ? (
+      ) : tasks === null ? (
         <ExposureTasksLoader />
       ) : (
         <AnimatePresence initial={false}>
-          {!hasTasks && (
+          {tasks.length === 0 ? (
             <motion.p
               key="empty"
               initial={false}
@@ -116,6 +123,8 @@ export default function ExposureTasksSection({ fearId, fearName }: Props) {
             >
               No tasks saved for this fear yet.
             </motion.p>
+          ) : (
+            <ExposureTasksList key="list" tasks={tasks} />
           )}
         </AnimatePresence>
       )}
