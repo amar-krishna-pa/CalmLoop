@@ -10,7 +10,7 @@ import HomeworkCard from "@/app/components/practice/maintain/HomeworkCard";
 import RelapsePreventionCard from "@/app/components/practice/maintain/RelapsePreventionCard";
 import ExposuresCard from "@/app/components/practice/exposures/ExposuresCard";
 
-type Tab = "prepare" | "exposure" | "maintain";
+type Tab = "prepare" | "exposure" | "insights";
 
 const TABS: { id: Tab; label: string; sublabel: string }[] = [
   {
@@ -24,9 +24,9 @@ const TABS: { id: Tab; label: string; sublabel: string }[] = [
     sublabel: "Explore situations to practice",
   },
   {
-    id: "maintain",
-    label: "Maintain",
-    sublabel: "Plan practice and support",
+    id: "insights",
+    label: "Insights",
+    sublabel: "Explore patterns in your fears and practice",
   },
 ];
 
@@ -109,7 +109,7 @@ export default function PracticeTabs() {
 
             {activeTab === "exposure" && <ExposuresCard />}
 
-            {activeTab === "maintain" && (
+            {activeTab === "insights" && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <HomeworkCard />
                 <RelapsePreventionCard />
