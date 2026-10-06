@@ -124,7 +124,7 @@ export default function PracticeHistory({ exposureTaskId, taskAction }: Props) {
               <ol
                 aria-label="Practice attempts, newest first"
                 tabIndex={0}
-                className="modal-scrollbar max-h-64 space-y-3 overflow-y-auto focus-visible:outline-2 focus-visible:outline-accent lg:min-h-0 lg:max-h-none lg:flex-1"
+                className="modal-scrollbar max-h-64 space-y-3 overflow-y-auto pr-3 focus-visible:outline-2 focus-visible:outline-accent lg:min-h-0 lg:max-h-none lg:flex-1"
               >
                 {[...attempts].reverse().map((attempt) => (
                   <li
