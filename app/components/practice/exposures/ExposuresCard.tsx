@@ -101,21 +101,22 @@ export default function ExposuresCard() {
         ) : fears === null ? (
           <ExposureFearSelectorLoader />
         ) : fears.length === 0 ? (
-          <div className="space-y-1 text-sm text-muted">
+          <div className="flex h-full flex-col items-center justify-center gap-1 text-center text-sm text-muted">
             <p>No saved fears yet.</p>
             <p>
-              Fears saved in <strong>Prepare</strong> will appear here.
+              Fears saved in the <strong>Prepare</strong> tab can be used here
+              to create exposure tasks.
             </p>
           </div>
         ) : (
-          <div className="space-y-5">
+          <div className="relative flex min-h-full flex-col gap-5">
             <ExposureFearSelector
               fears={fears}
               value={selectedFearId}
               onChange={({ fearId }) => setSelectedFearId(fearId)}
             />
-            <AnimatePresence initial={false} mode="wait">
-              {selectedFear && (
+            <AnimatePresence initial={false} mode="popLayout">
+              {selectedFear ? (
                 <motion.div
                   key={selectedFear.id}
                   className="space-y-5"
@@ -134,6 +135,16 @@ export default function ExposuresCard() {
                     fearName={selectedFear.name}
                   />
                 </motion.div>
+              ) : (
+                <motion.p
+                  key="no-fear-selected"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex flex-1 items-center justify-center text-center text-sm text-muted"
+                >
+                  Select a fear from the dropdown to get started.
+                </motion.p>
               )}
             </AnimatePresence>
           </div>
