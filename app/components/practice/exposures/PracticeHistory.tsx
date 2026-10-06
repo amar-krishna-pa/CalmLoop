@@ -5,6 +5,7 @@ import { z } from "zod";
 import HorizontalDivider from "@/app/components/common/HorizontalDivider";
 import PracticeHistoryLoader from "@/app/components/loaders/PracticeHistoryLoader";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
+import PracticeHistoryGraph from "@/app/components/practice/exposures/PracticeHistoryGraph";
 import {
   PracticeAttemptSchema,
   type PracticeAttempt,
@@ -102,27 +103,55 @@ export default function PracticeHistory({ exposureTaskId, taskAction }: Props) {
           here.
         </p>
       ) : (
-        <ol aria-label="Practice attempts, newest first" className="space-y-3">
-          {[...attempts].reverse().map((attempt) => (
-            <li
-              key={attempt.id}
-              className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-modal-section py-3 text-xs"
-            >
-              <time dateTime={attempt.completedAt} className="text-primary">
-                {new Date(attempt.completedAt).toLocaleString(undefined, {
-                  dateStyle: "medium",
-                  timeStyle: "short",
-                })}
-              </time>
-              <p className="text-muted">
-                After-practice distress:{" "}
-                <span className="font-medium tabular-nums text-primary">
-                  {attempt.suds}/10
-                </span>
-              </p>
-            </li>
-          ))}
-        </ol>
+        <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:items-stretch">
+          <div className="min-w-0">
+            <PracticeHistoryGraph attempts={attempts} />
+          </div>
+
+          <div className="lg:hidden">
+            <HorizontalDivider />
+          </div>
+
+          <section
+            aria-label="Practice attempts"
+            className="relative min-w-0 lg:min-h-0"
+          >
+            <div className="flex flex-col gap-3 lg:absolute lg:inset-0">
+              <h3 className="text-xs font-medium text-primary">
+                Practice attempts
+              </h3>
+
+              <ol
+                aria-label="Practice attempts, newest first"
+                tabIndex={0}
+                className="modal-scrollbar max-h-64 space-y-3 overflow-y-auto focus-visible:outline-2 focus-visible:outline-accent lg:min-h-0 lg:max-h-none lg:flex-1"
+              >
+                {[...attempts].reverse().map((attempt) => (
+                  <li
+                    key={attempt.id}
+                    className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-modal-section py-3 text-xs"
+                  >
+                    <time
+                      dateTime={attempt.completedAt}
+                      className="text-primary"
+                    >
+                      {new Date(attempt.completedAt).toLocaleString(undefined, {
+                        dateStyle: "medium",
+                        timeStyle: "short",
+                      })}
+                    </time>
+                    <p className="text-muted">
+                      After-practice distress:{" "}
+                      <span className="font-medium tabular-nums text-primary">
+                        {attempt.suds}/10
+                      </span>
+                    </p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </section>
+        </div>
       )}
     </div>
   );

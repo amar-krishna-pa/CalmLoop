@@ -12,7 +12,7 @@ type Props = {
   description?: string;
   onClose: () => void;
   children: React.ReactNode;
-  size?: "default" | "large";
+  size?: "default" | "large" | "wide";
   fixedHeight?: boolean | "compact";
 };
 
@@ -98,7 +98,9 @@ export default function Modal({
         onClick={(e) => e.stopPropagation()}
         className={cn(
           "w-full max-h-[85vh] overflow-hidden bg-modal dark:bg-modal/70 backdrop-blur-xl border border-subtle/60 rounded-xl p-5 flex flex-col gap-4 shadow-xl",
-          size === "large" ? "max-w-3xl" : "max-w-md",
+          size === "default" && "max-w-md",
+          size === "large" && "max-w-3xl",
+          size === "wide" && "max-w-5xl",
           fixedHeight && "max-h-[85dvh]",
           fixedHeight === "compact" ? "h-105" : fixedHeight && "h-150",
         )}

@@ -29,8 +29,7 @@ export default function PracticeHistoryButton({
           <Modal
             title="Practice history"
             onClose={() => setIsOpen(false)}
-            size="large"
-            fixedHeight="compact"
+            size="wide"
           >
             <PracticeHistory
               exposureTaskId={exposureTaskId}
