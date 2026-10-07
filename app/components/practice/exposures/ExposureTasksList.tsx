@@ -20,26 +20,23 @@ export default function ExposureTasksList({ tasks, onPracticeSaved }: Props) {
         return (
           <li
             key={task.id}
-            className="space-y-4 rounded-xl border border-subtle bg-surface p-4 [counter-increment:exposure-task]"
+            className="space-y-3 rounded-xl border border-subtle bg-surface p-4 [counter-increment:exposure-task]"
           >
-            <div className="flex flex-col items-start gap-3 sm:flex-row sm:justify-between sm:gap-6">
-              <div className="min-w-0 flex-1 space-y-1">
+            <div className="min-w-0 space-y-2">
+              <div className="min-w-0 space-y-1">
                 <p
                   aria-hidden="true"
                   className="text-xs font-medium tabular-nums text-muted after:content-[counter(exposure-task)]"
                 >
                   Task{" "}
                 </p>
-                <h4 className="min-w-0 flex-1 whitespace-pre-wrap wrap-break-words text-sm font-semibold leading-relaxed text-primary">
+                <h4 className="whitespace-pre-wrap wrap-break-words text-base font-semibold leading-relaxed text-primary">
                   {task.action}
                 </h4>
               </div>
-              <dl className="flex shrink-0 items-center gap-3 rounded-lg bg-card px-3 py-2 sm:flex-col sm:items-end sm:gap-1">
-                <dt className="text-xs text-muted">Expected distress</dt>
-                <dd className="text-lg font-semibold tabular-nums text-primary">
-                  {task.expectedSuds}
-                  <span className="text-xs font-normal text-muted"> / 10</span>
-                </dd>
+              <dl className="flex flex-wrap items-baseline gap-x-2 text-xs text-muted">
+                <dt>Expected distress</dt>
+                <dd className="tabular-nums">{task.expectedSuds} / 10</dd>
               </dl>
             </div>
             <dl className="space-y-1.5 text-xs">
@@ -70,7 +67,12 @@ export default function ExposureTasksList({ tasks, onPracticeSaved }: Props) {
                 )}
               </dd>
             </dl>
-            <div className="relative flex flex-wrap justify-end gap-2">
+            <div className="relative flex flex-wrap items-center gap-2">
+              <RecordPracticeButton
+                exposureTaskId={task.id}
+                taskAction={task.action}
+                onSaved={() => onPracticeSaved({ exposureTaskId: task.id })}
+              />
               <AnimatePresence initial={false} mode="popLayout">
                 {task.hasPracticeHistory && (
                   <motion.div
@@ -87,11 +89,6 @@ export default function ExposureTasksList({ tasks, onPracticeSaved }: Props) {
                   </motion.div>
                 )}
               </AnimatePresence>
-              <RecordPracticeButton
-                exposureTaskId={task.id}
-                taskAction={task.action}
-                onSaved={() => onPracticeSaved({ exposureTaskId: task.id })}
-              />
             </div>
           </li>
         );

@@ -7,6 +7,7 @@ import ExposureTasksLoader from "@/app/components/loaders/ExposureTasksLoader";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import CreateExposureTaskButton from "@/app/components/practice/exposures/CreateExposureTaskButton";
 import ExposureTasksList from "@/app/components/practice/exposures/ExposureTasksList";
+import ExposureSituations from "@/app/components/practice/exposures/ExposureSituations";
 import {
   ExposureTaskSchema,
   type ExposureTask,
@@ -77,17 +78,20 @@ export default function ExposureTasksSection({ fearId, fearName }: Props) {
         <h3 id={headingId} className="text-sm font-semibold text-primary">
           Tasks
         </h3>
-        <CreateExposureTaskButton
-          fearId={fearId}
-          fearName={fearName}
-          onSaved={() => {
-            controllerRef.current?.abort();
-            setTasks(null);
-            setError(null);
-            setIsRetrying(false);
-            setAttempt((current) => current + 1);
-          }}
-        />
+        <div className="flex flex-wrap items-center gap-2">
+          <ExposureSituations fearId={fearId} fearName={fearName} />
+          <CreateExposureTaskButton
+            fearId={fearId}
+            fearName={fearName}
+            onSaved={() => {
+              controllerRef.current?.abort();
+              setTasks(null);
+              setError(null);
+              setIsRetrying(false);
+              setAttempt((current) => current + 1);
+            }}
+          />
+        </div>
       </div>
 
       {error ? (

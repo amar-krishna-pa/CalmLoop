@@ -7,7 +7,6 @@ import HorizontalDivider from "@/app/components/common/HorizontalDivider";
 import ExposureFearSelectorLoader from "@/app/components/loaders/ExposureFearSelectorLoader";
 import LoadingSpinner from "@/app/components/loaders/LoadingSpinner";
 import ExposureFearSelector from "@/app/components/practice/exposures/ExposureFearSelector";
-import ExposureSituations from "@/app/components/practice/exposures/ExposureSituations";
 import ExposureTasksSection from "@/app/components/practice/exposures/ExposureTasksSection";
 import {
   SavedFearSchema,
@@ -124,10 +123,6 @@ export default function ExposuresCard() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0, pointerEvents: "none" }}
                 >
-                  <ExposureSituations
-                    fearId={selectedFear.id}
-                    fearName={selectedFear.name}
-                  />
                   <HorizontalDivider />
 
                   <ExposureTasksSection

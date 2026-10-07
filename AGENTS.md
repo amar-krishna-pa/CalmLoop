@@ -66,6 +66,18 @@ marketing, educational content and AI-generated responses.
 
 See `docs/copy-review.md` for the review, examples and remaining functional gaps.
 
+## Visual hierarchy
+
+All UI changes must follow a clear visual hierarchy and natural reading flow.
+Use content order, typography, contrast, spacing, and alignment to guide users
+from the main content to supporting details and the relevant action. Give
+secondary information and actions less visual emphasis than the primary content
+and action. Keep related content and controls close together, and preserve the
+intended reading order on small screens.
+
+If you are unsure about the intended visual hierarchy or which content or action
+should take priority, always ask the user before implementing the UI change.
+
 ## Architecture
 
 ### Route groups

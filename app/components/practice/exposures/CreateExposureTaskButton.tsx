@@ -26,7 +26,7 @@ export default function CreateExposureTaskButton({
         type="button"
         aria-haspopup="dialog"
         onClick={() => setIsOpen(true)}
-        className="btn-accent min-h-10 cursor-pointer px-4 text-xs"
+        className="min-h-10 cursor-pointer rounded-lg border border-accent px-4 text-xs font-medium text-primary transition-colors duration-fast hover:bg-accent/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
       >
         Create task
       </button>

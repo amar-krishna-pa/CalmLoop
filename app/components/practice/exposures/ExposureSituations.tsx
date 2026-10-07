@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence } from "motion/react";
-import { LuArrowUpRight, LuHistory } from "react-icons/lu";
+import { LuHistory } from "react-icons/lu";
 import { z } from "zod";
 import HorizontalDivider from "@/app/components/common/HorizontalDivider";
 import Modal from "@/app/components/common/Modal";
@@ -69,38 +69,27 @@ export default function ExposureSituations({ fearId, fearName }: Props) {
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setIsOpen(true)}
-        aria-haspopup="dialog"
-        className="flex w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-subtle bg-surface/50 p-3 text-left transition-colors duration-fast hover:bg-accent/5 focus-visible:outline-2 focus-visible:outline-accent"
-      >
-        <span className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+        <button
+          type="button"
+          onClick={() => setIsOpen(true)}
+          aria-haspopup="dialog"
+          aria-describedby={`${fearId}-situations-description`}
+          className="flex min-h-10 cursor-pointer items-center gap-2 rounded-lg border border-accent px-3 py-2 text-xs font-medium text-primary transition-colors duration-fast hover:bg-accent/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        >
           <LuHistory
-            size={17}
+            size={15}
             aria-hidden="true"
             className="shrink-0 text-muted"
           />
-
-          <span className="space-y-1">
-            <span className="block text-xs font-medium text-primary">
-              Review situations
-            </span>
-
-            <span className="block text-2xs text-muted">
-              {occurrences !== null &&
-                `${occurrences.length} recorded ${occurrences.length === 1 ? "situation" : "situations"} · `}
-              Distress and safety behaviors
-            </span>
-          </span>
-        </span>
-
-        <LuArrowUpRight
-          size={16}
-          aria-hidden="true"
-          className="shrink-0 text-muted"
-        />
-      </button>
+          Review situations
+        </button>
+        <p id={`${fearId}-situations-description`} className="sr-only">
+          {occurrences !== null &&
+            `${occurrences.length} recorded ${occurrences.length === 1 ? "situation" : "situations"} · `}
+          Distress and safety behaviors
+        </p>
+      </div>
 
       <AnimatePresence initial={false}>
         {isOpen && (
