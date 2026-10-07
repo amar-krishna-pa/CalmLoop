@@ -124,7 +124,20 @@ export default function ExposureTasksSection({ fearId, fearName }: Props) {
               No tasks saved for this fear yet.
             </motion.p>
           ) : (
-            <ExposureTasksList key="list" tasks={tasks} />
+            <ExposureTasksList
+              key="list"
+              tasks={tasks}
+              onPracticeSaved={({ exposureTaskId }) => {
+                setTasks(
+                  (current) =>
+                    current?.map((task) =>
+                      task.id === exposureTaskId
+                        ? { ...task, hasPracticeHistory: true }
+                        : task,
+                    ) ?? null,
+                );
+              }}
+            />
           )}
         </AnimatePresence>
       )}

@@ -5,11 +5,16 @@ import { AnimatePresence } from "motion/react";
 import Modal from "@/app/components/common/Modal";
 import RecordPracticeForm from "@/app/components/practice/exposures/RecordPracticeForm";
 
-type Props = { exposureTaskId: string; taskAction: string };
+type Props = {
+  exposureTaskId: string;
+  taskAction: string;
+  onSaved: () => void;
+};
 
 export default function RecordPracticeButton({
   exposureTaskId,
   taskAction,
+  onSaved,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const savingRef = useRef(false);
@@ -36,7 +41,10 @@ export default function RecordPracticeButton({
               exposureTaskId={exposureTaskId}
               taskAction={taskAction}
               onCancel={closeModal}
-              onSaved={() => setIsOpen(false)}
+              onSaved={() => {
+                setIsOpen(false);
+                onSaved();
+              }}
               onSavingChange={({ isSaving }) => {
                 savingRef.current = isSaving;
               }}

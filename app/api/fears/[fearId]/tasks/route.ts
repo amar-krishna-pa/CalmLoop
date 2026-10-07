@@ -1,9 +1,9 @@
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, exists, getTableColumns, sql } from "drizzle-orm";
 import { z } from "zod";
 
 import { checkSession } from "@/app/lib/auth/check-session";
 import { db } from "@/app/lib/db";
-import { exposureTasks, fears } from "@/app/lib/db/schema";
+import { erpSessions, exposureTasks, fears } from "@/app/lib/db/schema";
 import { CreateExposureTaskSchema } from "@/app/lib/zod/create-exposure-task-schema";
 import { maybeUpdateStreak } from "@/app/services/streak/maybe-update-streak";
 
@@ -43,7 +43,20 @@ export async function GET(
   }
 
   const tasks = await db
-    .select()
+    .select({
+      ...getTableColumns(exposureTasks),
+      hasPracticeHistory: exists(
+        db
+          .select({ value: sql`1` })
+          .from(erpSessions)
+          .where(
+            and(
+              eq(erpSessions.exposureTaskId, exposureTasks.id),
+              eq(erpSessions.userId, userId),
+            ),
+          ),
+      ),
+    })
     .from(exposureTasks)
     .where(
       and(

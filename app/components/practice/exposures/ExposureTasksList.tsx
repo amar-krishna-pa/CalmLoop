@@ -1,10 +1,14 @@
+import { AnimatePresence, motion } from "motion/react";
 import type { ExposureTask } from "@/app/lib/zod/exposure-task-schema";
 import RecordPracticeButton from "@/app/components/practice/exposures/RecordPracticeButton";
 import PracticeHistoryButton from "@/app/components/practice/exposures/PracticeHistoryButton";
 
-type Props = { tasks: ExposureTask[] };
+type Props = {
+  tasks: ExposureTask[];
+  onPracticeSaved: ({ exposureTaskId }: { exposureTaskId: string }) => void;
+};
 
-export default function ExposureTasksList({ tasks }: Props) {
+export default function ExposureTasksList({ tasks, onPracticeSaved }: Props) {
   return (
     <ol
       role="list"
@@ -66,14 +70,27 @@ export default function ExposureTasksList({ tasks }: Props) {
                 )}
               </dd>
             </dl>
-            <div className="flex flex-wrap justify-end gap-2">
-              <PracticeHistoryButton
-                exposureTaskId={task.id}
-                taskAction={task.action}
-              />
+            <div className="relative flex flex-wrap justify-end gap-2">
+              <AnimatePresence initial={false} mode="popLayout">
+                {task.hasPracticeHistory && (
+                  <motion.div
+                    key="practice-history"
+                    layout="position"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <PracticeHistoryButton
+                      exposureTaskId={task.id}
+                      taskAction={task.action}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
               <RecordPracticeButton
                 exposureTaskId={task.id}
                 taskAction={task.action}
+                onSaved={() => onPracticeSaved({ exposureTaskId: task.id })}
               />
             </div>
           </li>
