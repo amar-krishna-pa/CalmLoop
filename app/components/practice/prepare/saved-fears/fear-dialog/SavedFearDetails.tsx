@@ -24,7 +24,7 @@ export default function SavedFearDetails({
     <div className="flex min-h-0 flex-1 flex-col gap-4">
       <div className="shrink-0 space-y-2 pr-2">
         <section className="flex items-baseline gap-4" aria-label="Fear">
-          <p className="min-w-0 flex-1 wrap-break-words text-sm text-muted">
+          <p className="min-w-0 flex-1 wrap-break-words text-base font-semibold text-primary">
             {fear.name}
           </p>
           <button
